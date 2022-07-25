@@ -1,0 +1,11 @@
+DETALLE DE PEDIDO
+-----------------------------
+RAZON SOCIAL: RIBOLDI S.A.
+PEDIDO: 20
+-----------------------------
+RNCyFS: CDEFG4592
+Fecha: 2022-07-25
+Rango: 9987001 - 9996000
+Serie: A
+Cantidad: 9000
+-----------------------------
