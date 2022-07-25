@@ -297,9 +297,21 @@ class bdquery():
 			cur.close()
 			return listado
 			
+		def traenotas(self,indice):
+			cur=self.conexion.cursor()
+			cur.execute('''select observaciones from gestiones where indice=?''',([indice]))
+			self.conexion.commit()
+			obs=cur.fetchone()
+			return obs
+			
 		def updategestion(self,indice,estado):
 			cur=self.conexion.cursor()
 			cur.execute("UPDATE gestiones SET estado = (?) WHERE indice = (?)",([estado,indice]))
+			self.conexion.commit()
+			cur.close()
+		def notaupdate(self,indice,obs):
+			cur=self.conexion.cursor()
+			cur.execute("UPDATE gestiones SET observaciones = (?) WHERE indice = (?)",([obs,indice]))
 			self.conexion.commit()
 			cur.close()
 			

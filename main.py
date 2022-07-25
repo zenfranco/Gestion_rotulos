@@ -114,6 +114,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.tb_gestiones.itemDoubleClicked.connect(self.gestionselected)
 		self.btn_actualizargestion.clicked.connect(self.gestionupdate)
 		self.btn_nuevagestion.clicked.connect(self.listargestiones)
+		self.btn_ingresarnota.clicked.connect(self.notaupdate)
 		
 		
 
@@ -525,10 +526,14 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		fecha=self.tb_gestiones.item(fila, 1).text()
 		estado=self.tb_gestiones.item(fila, 3).text()
 		
+		q=bdquery()
+		obs=q.traenotas(int(indice))
+		
 		self.signal_gestion_asociado.setText(str(registro))
 		self.signal_gestion_fecha.setText(str(fecha))
 		self.signal_gestion_estado.setText(str(estado))
 		self.signal_gestion_indice.setText(str(indice))
+		self.signal_gestion_observaciones.setPlainText(str(obs))
 		
 	def gestionupdate(self):
 		indice=int(self.signal_gestion_indice.text())
@@ -537,6 +542,12 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		q.updategestion(indice,estado)
 		
 		self.combo_estados_gestiones.setCurrentIndex(0)
+		
+	def notaupdate(self):
+		indice=int(self.signal_gestion_indice.text())
+		obs=str(self.signal_gestion_observaciones.plainText())
+		q=bdquery()
+		q.updategestion(indice,obs)
 		
 		
 		
