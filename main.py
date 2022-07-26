@@ -518,6 +518,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			self.tb_gestiones.setItem(fila,5,QtGui.QTableWidgetItem(str(i[5])))
 									
 			fila=fila+1
+		self.signal_gestiones.setText(str(totalfilas))
 			
 	def gestionselected(self):
 		fila = self.tb_gestiones.currentRow()
@@ -533,7 +534,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.signal_gestion_fecha.setText(str(fecha))
 		self.signal_gestion_estado.setText(str(estado))
 		self.signal_gestion_indice.setText(str(indice))
-		self.signal_gestion_observaciones.setPlainText(str(obs))
+		self.signal_gestion_observaciones.setText(str("".join(obs)))
 		
 	def gestionupdate(self):
 		indice=int(self.signal_gestion_indice.text())
@@ -545,9 +546,9 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 	def notaupdate(self):
 		indice=int(self.signal_gestion_indice.text())
-		obs=str(self.signal_gestion_observaciones.plainText())
+		obs=str(self.signal_gestion_observaciones.toPlainText())
 		q=bdquery()
-		q.updategestion(indice,obs)
+		q.insertarnota(indice,obs)
 		
 		
 		

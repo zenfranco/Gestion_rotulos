@@ -809,7 +809,7 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>450</y>
+            <y>460</y>
             <width>141</width>
             <height>16</height>
            </rect>
@@ -828,7 +828,7 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>470</y>
+            <y>480</y>
             <width>231</width>
             <height>22</height>
            </rect>
@@ -903,7 +903,7 @@ border-radius:15px;
             <x>10</x>
             <y>240</y>
             <width>231</width>
-            <height>201</height>
+            <height>211</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -1019,30 +1019,11 @@ background-color:rgb(235, 235, 235);</string>
             <string>...</string>
            </property>
           </widget>
-          <widget class="QPlainTextEdit" name="signal_gestion_observaciones">
-           <property name="geometry">
-            <rect>
-             <x>11</x>
-             <y>90</y>
-             <width>211</width>
-             <height>71</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color:rgb(236, 255, 111)</string>
-           </property>
-           <property name="plainText">
-            <string/>
-           </property>
-           <property name="tabStopWidth">
-            <number>80</number>
-           </property>
-          </widget>
           <widget class="QPushButton" name="btn_ingresarnota">
            <property name="geometry">
             <rect>
              <x>40</x>
-             <y>171</y>
+             <y>180</y>
              <width>151</width>
              <height>20</height>
             </rect>
@@ -1051,6 +1032,64 @@ background-color:rgb(235, 235, 235);</string>
             <string>Insertar Nota</string>
            </property>
           </widget>
+          <widget class="QTextEdit" name="signal_gestion_observaciones">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>90</y>
+             <width>211</width>
+             <height>81</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>Calibri</family>
+             <pointsize>9</pointsize>
+             <italic>true</italic>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 127);</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QLabel" name="label_86">
+          <property name="geometry">
+           <rect>
+            <x>260</x>
+            <y>100</y>
+            <width>141</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <family>Calibri</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Gestiones mostradas:</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="signal_gestiones">
+          <property name="geometry">
+           <rect>
+            <x>400</x>
+            <y>100</y>
+            <width>141</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <family>Calibri</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>...</string>
+          </property>
          </widget>
         </widget>
        </widget>
