@@ -875,7 +875,7 @@ border-radius:15px;
           </item>
           <item>
            <property name="text">
-            <string>8- Pendiente de DAV</string>
+            <string>8- DAV Gestionados</string>
            </property>
           </item>
           <item>
