@@ -860,22 +860,27 @@ border-radius:15px;
           </item>
           <item>
            <property name="text">
-            <string>5-Esperando documentacion</string>
+            <string>5-En Impresion</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>6-En Impresion</string>
+            <string>6-Pendiente de DAV</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>7-Documentacion + Nota Enviadas</string>
+            <string>7-Esperando documentacion</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>8- DAV Gestionados</string>
+            <string>8-Documentacion + Nota Enviadas</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>9-DAV Gestionados</string>
            </property>
           </item>
           <item>
@@ -995,6 +1000,7 @@ background-color:rgb(235, 235, 235);</string>
            <property name="font">
             <font>
              <family>Calibri</family>
+             <pointsize>9</pointsize>
              <weight>75</weight>
              <bold>true</bold>
             </font>
