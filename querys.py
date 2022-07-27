@@ -288,10 +288,10 @@ class bdquery():
 			return asociado
 			
 			
-		def traergestiones(self,estado):
+		def traergestiones(self,estado,nombre):
 			cur=self.conexion.cursor()
 			cur.execute('''select razon_social,fecha_inicio,(JulianDay(date()) - JulianDay(fecha_inicio)) demora,estado,tipo, indice from gestiones g
-			inner join asociados a on a.num_reg = g.num_reg where estado LIKE ? order by demora desc''',([estado]))
+			inner join asociados a on a.num_reg = g.num_reg where estado LIKE ? and razon_social LIKE ? order by demora desc''',([estado, nombre]))
 			self.conexion.commit()
 			listado=cur.fetchall()
 			cur.close()

@@ -114,6 +114,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.tb_gestiones.itemDoubleClicked.connect(self.gestionselected)
 		self.btn_actualizargestion.clicked.connect(self.gestionupdate)
 		self.btn_nuevagestion.clicked.connect(self.listargestiones)
+		self.btn_buscar_gestiones_filtro.clicked.connect(self.filtrargestiones)
 		self.btn_ingresarnota.clicked.connect(self.notaupdate)
 		
 		
@@ -493,6 +494,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 	def listargestiones(self):
 		
+		nombre= "%"
 		if self.rb_gestiones_pendientes.isChecked():
 			estado="%-%"
 		else:
@@ -502,7 +504,35 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		q=bdquery()
 		
-		listarecuperada=q.traergestiones(estado)
+		listarecuperada=q.traergestiones(estado,nombre)
+		totalfilas=len(listarecuperada)
+		self.tb_gestiones.setRowCount(totalfilas)
+			
+			
+		fila =0
+		
+		for i in listarecuperada:
+			self.tb_gestiones.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
+			self.tb_gestiones.setItem(fila,1,QtGui.QTableWidgetItem(str(i[1])))
+			self.tb_gestiones.setItem(fila,2,QtGui.QTableWidgetItem(str(i[2])))
+			self.tb_gestiones.setItem(fila,3,QtGui.QTableWidgetItem(str(i[3])))
+			self.tb_gestiones.setItem(fila,4,QtGui.QTableWidgetItem(str(i[4])))
+			self.tb_gestiones.setItem(fila,5,QtGui.QTableWidgetItem(str(i[5])))
+									
+			fila=fila+1
+		self.signal_gestiones.setText(str(totalfilas))
+		
+	def filtrargestiones(self):
+		if str(self.combo_estados_gestiones_filtro.currentText()) =="-":
+			estado="%"
+		else:
+			estado=str(self.combo_estados_gestiones_filtro.currentText())
+			
+		asociado=str("%"+self.txt_asociados_gestiones_filtro.text()+"%")
+	
+		q=bdquery()
+		
+		listarecuperada=q.traergestiones(estado,asociado)
 		totalfilas=len(listarecuperada)
 		self.tb_gestiones.setRowCount(totalfilas)
 			

@@ -601,10 +601,10 @@ border-radius:15px;
          <widget class="QTableWidget" name="tb_gestiones">
           <property name="geometry">
            <rect>
-            <x>255</x>
-            <y>120</y>
+            <x>260</x>
+            <y>179</y>
             <width>491</width>
-            <height>431</height>
+            <height>381</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -668,7 +668,7 @@ border-radius:15px;
            <rect>
             <x>10</x>
             <y>90</y>
-            <width>231</width>
+            <width>221</width>
             <height>22</height>
            </rect>
           </property>
@@ -715,7 +715,7 @@ border-radius:15px;
            <rect>
             <x>10</x>
             <y>140</y>
-            <width>231</width>
+            <width>221</width>
             <height>22</height>
            </rect>
           </property>
@@ -743,8 +743,8 @@ border-radius:15px;
          <widget class="QPushButton" name="btn_buscar_gestiones">
           <property name="geometry">
            <rect>
-            <x>710</x>
-            <y>80</y>
+            <x>360</x>
+            <y>97</y>
             <width>31</width>
             <height>31</height>
            </rect>
@@ -766,8 +766,8 @@ border-radius:15px;
          <widget class="QRadioButton" name="rb_gestiones_pendientes">
           <property name="geometry">
            <rect>
-            <x>620</x>
-            <y>73</y>
+            <x>270</x>
+            <y>90</y>
             <width>82</width>
             <height>17</height>
            </rect>
@@ -782,8 +782,8 @@ border-radius:15px;
          <widget class="QRadioButton" name="rb_gestiones_finalizadas">
           <property name="geometry">
            <rect>
-            <x>620</x>
-            <y>95</y>
+            <x>270</x>
+            <y>112</y>
             <width>82</width>
             <height>17</height>
            </rect>
@@ -809,7 +809,7 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>460</y>
+            <y>470</y>
             <width>141</width>
             <height>16</height>
            </rect>
@@ -828,8 +828,8 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>480</y>
-            <width>231</width>
+            <y>490</y>
+            <width>221</width>
             <height>22</height>
            </rect>
           </property>
@@ -893,7 +893,7 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>40</x>
-            <y>520</y>
+            <y>530</y>
             <width>151</width>
             <height>31</height>
            </rect>
@@ -905,15 +905,17 @@ border-radius:15px;
          <widget class="QFrame" name="frame_27">
           <property name="geometry">
            <rect>
-            <x>10</x>
+            <x>8</x>
             <y>240</y>
             <width>231</width>
-            <height>211</height>
+            <height>221</height>
            </rect>
           </property>
           <property name="styleSheet">
-           <string notr="true">border-radius:15px;
-background-color:rgb(235, 235, 235);</string>
+           <string notr="true">QFrame{
+border-radius:15px;
+background-color:rgb(235, 235, 235);
+}</string>
           </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
@@ -993,7 +995,7 @@ background-color:rgb(235, 235, 235);</string>
             <rect>
              <x>10</x>
              <y>70</y>
-             <width>181</width>
+             <width>211</width>
              <height>16</height>
             </rect>
            </property>
@@ -1006,7 +1008,8 @@ background-color:rgb(235, 235, 235);</string>
             </font>
            </property>
            <property name="styleSheet">
-            <string notr="true">color:rgb(193, 0, 96);</string>
+            <string notr="true">color:rgb(193, 0, 96);
+background-color: rgb(198, 198, 198);</string>
            </property>
            <property name="text">
             <string>...</string>
@@ -1031,11 +1034,15 @@ background-color:rgb(235, 235, 235);</string>
              <x>40</x>
              <y>180</y>
              <width>151</width>
-             <height>20</height>
+             <height>31</height>
             </rect>
            </property>
            <property name="text">
-            <string>Insertar Nota</string>
+            <string>Anotar</string>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/note.png</normaloff>icons/note.png</iconset>
            </property>
           </widget>
           <widget class="QTextEdit" name="signal_gestion_observaciones">
@@ -1055,15 +1062,19 @@ background-color:rgb(235, 235, 235);</string>
             </font>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 127);</string>
+            <string notr="true">QFrame{
+background-color: rgb(250, 255, 185);
+}
+
+</string>
            </property>
           </widget>
          </widget>
          <widget class="QLabel" name="label_86">
           <property name="geometry">
            <rect>
-            <x>260</x>
-            <y>100</y>
+            <x>270</x>
+            <y>155</y>
             <width>141</width>
             <height>16</height>
            </rect>
@@ -1081,8 +1092,8 @@ background-color:rgb(235, 235, 235);</string>
          <widget class="QLabel" name="signal_gestiones">
           <property name="geometry">
            <rect>
-            <x>400</x>
-            <y>100</y>
+            <x>410</x>
+            <y>155</y>
             <width>141</width>
             <height>16</height>
            </rect>
@@ -1095,6 +1106,192 @@ background-color:rgb(235, 235, 235);</string>
           </property>
           <property name="text">
            <string>...</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_96">
+          <property name="geometry">
+           <rect>
+            <x>460</x>
+            <y>130</y>
+            <width>141</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <family>Calibri</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Estado</string>
+          </property>
+         </widget>
+         <widget class="QComboBox" name="combo_estados_gestiones_filtro">
+          <property name="geometry">
+           <rect>
+            <x>460</x>
+            <y>150</y>
+            <width>231</width>
+            <height>22</height>
+           </rect>
+          </property>
+          <item>
+           <property name="text">
+            <string>-</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>1-Esperando Transferencia (Rollos)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>2-Transferencia Enviada (Rollos)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>3-Esperando Evaluacion de Lotes</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>4-Esperando Nota por KG</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>5-En Impresion</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>6-Pendiente de DAV</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>7-Esperando documentacion</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>8-Documentacion + Nota Enviadas</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>9-DAV Gestionados</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Finalizado</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QLabel" name="label_97">
+          <property name="geometry">
+           <rect>
+            <x>460</x>
+            <y>87</y>
+            <width>141</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <family>Calibri</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Asociado:</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="txt_asociados_gestiones_filtro">
+          <property name="geometry">
+           <rect>
+            <x>460</x>
+            <y>107</y>
+            <width>231</width>
+            <height>21</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="btn_buscar_gestiones_filtro">
+          <property name="geometry">
+           <rect>
+            <x>710</x>
+            <y>95</y>
+            <width>31</width>
+            <height>81</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>icons/filter.png</normaloff>icons/filter.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>22</width>
+            <height>22</height>
+           </size>
+          </property>
+          <property name="shortcut">
+           <string>Return</string>
+          </property>
+         </widget>
+         <widget class="Line" name="line_20">
+          <property name="geometry">
+           <rect>
+            <x>239</x>
+            <y>60</y>
+            <width>20</width>
+            <height>511</height>
+           </rect>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_98">
+          <property name="geometry">
+           <rect>
+            <x>460</x>
+            <y>62</y>
+            <width>231</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <family>Calibri</family>
+            <pointsize>12</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Buscar por estado o por asociado:</string>
+          </property>
+         </widget>
+         <widget class="Line" name="line_21">
+          <property name="geometry">
+           <rect>
+            <x>430</x>
+            <y>60</y>
+            <width>20</width>
+            <height>111</height>
+           </rect>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
          </widget>
         </widget>
