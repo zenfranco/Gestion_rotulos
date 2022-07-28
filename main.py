@@ -74,6 +74,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.btn_definir_rango.clicked.connect(self.setearrango)
 		
 		#PROPIEDADES
+		self.txt_indice_rotulos.hide()
 		self.rb_porrncyfs.setChecked(True)
 		self.rb_todos.setChecked(True)
 		self.fechadesde_rendicion.setDate(date.today())
@@ -107,6 +108,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.cb_razonsocial_rotulos.activated.connect(self.traeregistrorotulos)
 		self.btn_listarimpresiones.clicked.connect(self.listarimpresiones)
 		self.btn_definir_rotulos.clicked.connect(self.cambiarestadorotulo)
+		self.tb_rotulos.itemDoubleClicked.connect(self.impresionselected)
 		
 		#PAGINA GESTIONES
 		self.btn_agregar_nueva.clicked.connect(self.nuevagestion)
@@ -1061,6 +1063,22 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		estado=str(self.txt_estado_rotulos.currentText())
 		q=bdquery()
 		q.definirestadorotulo(estado,indice)
+		
+		
+		
+	def impresionselected(self):
+		fila = self.tb_rotulos.currentRow()
+		indice=self.tb_rotulos.item(fila, 0).text() #SELECCIONO EL CONTENIDO DE LA FILA 5 DE LA COLUMNA SELECCIONADA
+		razon=self.tb_rotulos.item(fila, 4).text()
+		cantidad=self.tb_rotulos.item(fila, 3).text()
+		
+		
+		
+		
+		
+		self.signal_rotulos_razon.setText(str(razon))
+		self.signal_rotulos_cantidad.setText(str(cantidad))
+		self.txt_indice_rotulos.setText(str(indice))
 		
 			
 		
