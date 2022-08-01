@@ -257,9 +257,9 @@ class bdquery():
 			self.conexion.commit()
 			cur.close()
 			
-		def altagestion(self,reg,tipo,estado,fecha):
+		def altagestion(self,reg,tipo,estado,fecha,cantidad):
 			cur= self.conexion.cursor()
-			cur.execute(''' insert into gestiones (num_reg,tipo,estado,fecha_inicio) values (?,?,?,?)''',([reg,tipo,estado,fecha]))
+			cur.execute(''' insert into gestiones (num_reg,tipo,estado,fecha_inicio,cantidad) values (?,?,?,?,?)''',([reg,tipo,estado,fecha,cantidad]))
 			self.conexion.commit()
 			cur.close()
 			
@@ -343,6 +343,18 @@ class bdquery():
 			cur.execute("UPDATE Datos SET (inicial,final) = (?,?) WHERE indice = (?)",([inicio,fin,indice]))
 			self.conexion.commit()
 			cur.close()
+			
+		def busquedaxrotulo(self,rotulo):
+			cur=self.conexion.cursor()
+			cur.execute(''' select p.num_pedido,(p.cantidad)Cantidad_Original,p.inicio ||"-"|| p.fin,estado,IFNULL(s.cantidad,0),IFNULL(s.inicio|| "-" || s.fin,"SIN USAR"),
+			IFNULL((p.fin-s.fin),p.cantidad),IFNULL(kg,"N/D"),IFNULL(variedad,"N/D"),IFNULL(especie,"N/D"),IFNULL(categoria,"N/D"),IFNULL(camp,"N/D")
+			from pedidos p left join subpedidos s on p.num_pedido = s.num_pedido 
+			WHERE ? BETWEEN p.inicio AND p.fin''',([rotulo]))
+			self.conexion.commit()
+			pedido=cur.fetchall()
+			cur.close()
+			return pedido
+				
 			
 			
 			

@@ -83,7 +83,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.fecha_hasta_rotulos.setDate(date.today())
 		self.fecha_desde_listar.setDate(date.today())
 		self.fecha_hasta_listar.setDate(date.today())
-		#self.signal_gestion_indice.hide()
+		self.signal_gestion_indice.hide()
 		self.cbx_porfecha.stateChanged.connect(lambda:self.fecha_desde_listar.setEnabled(True))
 		self.cbx_porfecha.stateChanged.connect(lambda:self.fecha_hasta_listar.setEnabled(True))
 		
@@ -105,9 +105,9 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		#PAGINA DEPOSITO
 		self.btn_almacenar.clicked.connect(self.almacenar)
-		self.btn_listardeposito.clicked.connect(self.listarlockers)
 		self.tb_lockers.itemDoubleClicked.connect(self.lockerselected)
 		self.btn_despachar.clicked.connect(self.despachar)
+		self.btn_deposito.clicked.connect(self.listarlockers)
 		
 		#PAGINA ROTULOS
 		self.btn_ingresar_rotulos.clicked.connect(self.nuevaimpresion)
@@ -490,14 +490,17 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 	def nuevagestion(self):
 		registro =self.traeregistrogestiones()
 		tipo =str(self.combo_gestiones.currentText())
+		cantidad =int(self.txt_cantidad_gestiones.text())
 		estado="0-Iniciado"
 		
 		q=bdquery()
-		q.altagestion(registro,tipo,estado,date.today())
+		q.altagestion(registro,tipo,estado,date.today(),cantidad)
 		
 		self.combo_gestiones.setCurrentIndex(0)
 		self.combo_asociados_gestiones.setCurrentIndex(0)
+		self.txt_cantidad_gestiones.setText("")
 		self.listargestiones()
+		
 		
 		
 		
@@ -612,48 +615,57 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 	
 		
 	def listar(self):
+		q=bdquery()
 		
-		if self.rb_vigentes.isChecked():
-			radiobutton="VIGENTE"
-		elif self.rb_finalizados.isChecked():
-			radiobutton="FINALIZADO"
-		elif self.rb_todos.isChecked():
-			radiobutton="%"			
-		elif self.rb_sinusar.isChecked():
-			radiobutton="SIN USAR"
-			
-		desde=str(self.fecha_desde_listar.text())
-		hasta=str(self.fecha_hasta_listar.text())
-		
-		
-		
-			
-		if self.rb_porrncyfs.isChecked():
-			campolistar= str(self.txt_listar.text())
-			q=bdquery()
-			if self.cbx_porfecha.isChecked():
-				
-				tablarecuperada=q.listaxregistrofecha(campolistar,radiobutton,desde,hasta)
-			else:
-				tablarecuperada=q.listaxregistro(campolistar,radiobutton)
+		if self.cbx_porrotulo.isChecked():
+			rotulo=int(self.txt_porrotulo.text())
+			tablarecuperada = q.busquedaxrotulo(rotulo)
 			
 			
-			totalfilas=len(tablarecuperada)
-			self.tb_listar.setRowCount(totalfilas)
-			
-				
-		elif self.rb_pornumpedido.isChecked():
-			campolistar= int(self.txt_listar.text())
-			q=bdquery()
-			if self.cbx_porfecha.isChecked():
-				tablarecuperada=q.listaxpedidofecha(campolistar,radiobutton,desde,hasta)
-			else:
-				tablarecuperada=q.listaxpedido(campolistar,radiobutton)
-			totalfilas=len(tablarecuperada)
-			self.tb_listar.setRowCount(totalfilas)
+		else:
 			
 		
 				
+			if self.rb_vigentes.isChecked():
+				radiobutton="VIGENTE"
+			elif self.rb_finalizados.isChecked():
+				radiobutton="FINALIZADO"
+			elif self.rb_todos.isChecked():
+				radiobutton="%"			
+			elif self.rb_sinusar.isChecked():
+				radiobutton="SIN USAR"
+				
+			desde=str(self.fecha_desde_listar.text())
+			hasta=str(self.fecha_hasta_listar.text())
+		
+		
+		
+			
+			if self.rb_porrncyfs.isChecked():
+				campolistar= str(self.txt_listar.text())
+				
+				if self.cbx_porfecha.isChecked():
+					
+					tablarecuperada=q.listaxregistrofecha(campolistar,radiobutton,desde,hasta)
+				else:
+					tablarecuperada=q.listaxregistro(campolistar,radiobutton)
+				
+				
+				
+			
+				
+			elif self.rb_pornumpedido.isChecked():
+				campolistar= int(self.txt_listar.text())
+				q=bdquery()
+				if self.cbx_porfecha.isChecked():
+					tablarecuperada=q.listaxpedidofecha(campolistar,radiobutton,desde,hasta)
+				else:
+					tablarecuperada=q.listaxpedido(campolistar,radiobutton)
+				
+			
+		
+		totalfilas=len(tablarecuperada)
+		self.tb_listar.setRowCount(totalfilas)		
 			
 		fila=0
 		
@@ -959,6 +971,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		self.cbx_num_locker.clear()
 		self.lockerdisponibles()
+		self.listarlockers()
 		
 		
 	def lockerselected(self):
@@ -982,6 +995,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		self.cbx_num_locker.clear()
 		self.lockerdisponibles()
+		self.listarlockers()
 		
 		
 		
