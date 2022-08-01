@@ -290,7 +290,7 @@ class bdquery():
 			
 		def traergestiones(self,estado,nombre):
 			cur=self.conexion.cursor()
-			cur.execute('''select razon_social,fecha_inicio,(JulianDay(date()) - JulianDay(fecha_inicio)) demora,estado,tipo, indice from gestiones g
+			cur.execute('''select razon_social,estado,cantidad,(JulianDay(date()) - JulianDay(fecha_inicio)) demora,tipo,fecha_inicio, indice from gestiones g
 			inner join asociados a on a.num_reg = g.num_reg where estado LIKE ? and razon_social LIKE ? order by demora desc''',([estado, nombre]))
 			self.conexion.commit()
 			listado=cur.fetchall()
@@ -332,7 +332,7 @@ class bdquery():
 			
 		def traerangos(self,estado,serie):
 			cur=self.conexion.cursor()
-			cur.execute('''select inicio ||"-"|| fin,cantidad,serie from rangos_disponibles where estado LIKE ? and serie=?order by inicio''',([estado,serie]))
+			cur.execute('''select inicio ||"-"|| fin,cantidad,serie,estado from rangos_disponibles where estado LIKE ? and serie=?order by inicio''',([estado,serie]))
 			self.conexion.commit()
 			listado=cur.fetchall()
 			cur.close()

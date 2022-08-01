@@ -83,7 +83,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.fecha_hasta_rotulos.setDate(date.today())
 		self.fecha_desde_listar.setDate(date.today())
 		self.fecha_hasta_listar.setDate(date.today())
-		self.signal_gestion_indice.hide()
+		#self.signal_gestion_indice.hide()
 		self.cbx_porfecha.stateChanged.connect(lambda:self.fecha_desde_listar.setEnabled(True))
 		self.cbx_porfecha.stateChanged.connect(lambda:self.fecha_hasta_listar.setEnabled(True))
 		
@@ -96,6 +96,12 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		headertb_lockers = self.tb_lockers.horizontalHeader()
 		headertb_lockers.setResizeMode(QtGui.QHeaderView.ResizeToContents)
+		
+		headertb_rangos = self.tb_rangos.horizontalHeader()
+		headertb_rangos.setResizeMode(QtGui.QHeaderView.ResizeToContents)
+		
+		
+		
 		
 		#PAGINA DEPOSITO
 		self.btn_almacenar.clicked.connect(self.almacenar)
@@ -491,6 +497,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		self.combo_gestiones.setCurrentIndex(0)
 		self.combo_asociados_gestiones.setCurrentIndex(0)
+		self.listargestiones()
 		
 		
 		
@@ -520,6 +527,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			self.tb_gestiones.setItem(fila,3,QtGui.QTableWidgetItem(str(i[3])))
 			self.tb_gestiones.setItem(fila,4,QtGui.QTableWidgetItem(str(i[4])))
 			self.tb_gestiones.setItem(fila,5,QtGui.QTableWidgetItem(str(i[5])))
+			self.tb_gestiones.setItem(fila,6,QtGui.QTableWidgetItem(str(i[6])))
 									
 			fila=fila+1
 		self.signal_gestiones.setText(str(totalfilas))
@@ -548,16 +556,18 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			self.tb_gestiones.setItem(fila,3,QtGui.QTableWidgetItem(str(i[3])))
 			self.tb_gestiones.setItem(fila,4,QtGui.QTableWidgetItem(str(i[4])))
 			self.tb_gestiones.setItem(fila,5,QtGui.QTableWidgetItem(str(i[5])))
+			self.tb_gestiones.setItem(fila,6,QtGui.QTableWidgetItem(str(i[6])))
 									
 			fila=fila+1
 		self.signal_gestiones.setText(str(totalfilas))
+		
 			
 	def gestionselected(self):
 		fila = self.tb_gestiones.currentRow()
-		indice=self.tb_gestiones.item(fila, 5).text() #SELECCIONO EL CONTENIDO DE LA FILA 5 DE LA COLUMNA SELECCIONADA
+		indice=self.tb_gestiones.item(fila, 6).text() #SELECCIONO EL CONTENIDO DE LA FILA 5 DE LA COLUMNA SELECCIONADA
 		registro=self.tb_gestiones.item(fila, 0).text()
-		fecha=self.tb_gestiones.item(fila, 1).text()
-		estado=self.tb_gestiones.item(fila, 3).text()
+		fecha=self.tb_gestiones.item(fila, 5).text()
+		estado=self.tb_gestiones.item(fila, 1).text()
 		
 		q=bdquery()
 		obs=q.traenotas(int(indice))
@@ -575,12 +585,14 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		q.updategestion(indice,estado)
 		
 		self.combo_estados_gestiones.setCurrentIndex(0)
+		self.listargestiones()
 		
 	def notaupdate(self):
 		indice=int(self.signal_gestion_indice.text())
 		obs=str(self.signal_gestion_observaciones.toPlainText())
 		q=bdquery()
 		q.insertarnota(indice,obs)
+		self.listargestiones()
 		
 		
 		
@@ -1101,8 +1113,10 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		if self.rb_rangos_disponibles.isChecked():
 			estado="DISPONIBLE"
-		elif self.rb_rangos_usados.isChecked():
-			estado="USADOS"
+		elif self.rb_rangos_enuso.isChecked():
+			estado="EN USO"
+		elif self.rb_rangos_terminados.isChecked():
+			estado="TERMINADOS"
 		elif self.rb_rangos_todos.isChecked():
 			estado="%"
 		
@@ -1123,6 +1137,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			self.tb_rangos.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
 			self.tb_rangos.setItem(fila,1,QtGui.QTableWidgetItem(str(i[1])))
 			self.tb_rangos.setItem(fila,2,QtGui.QTableWidgetItem(str(i[2])))
+			self.tb_rangos.setItem(fila,3,QtGui.QTableWidgetItem(str(i[3])))
 							
 			fila=fila+1
 			acum=acum+int(i[1])
