@@ -108,8 +108,10 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.tb_lockers.itemDoubleClicked.connect(self.lockerselected)
 		self.btn_despachar.clicked.connect(self.despachar)
 		self.btn_deposito.clicked.connect(self.listarlockers)
+		self.btn_buscar_locker.clicked.connect(self.filtrarlockers)
 		
 		#PAGINA ROTULOS
+		self.btn_rotulos.clicked.connect(self.listarimpresiones)
 		self.btn_ingresar_rotulos.clicked.connect(self.nuevaimpresion)
 		self.cb_razonsocial_rotulos.activated.connect(self.traeregistrorotulos)
 		self.btn_listarimpresiones.clicked.connect(self.listarimpresiones)
@@ -453,10 +455,10 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 				book.save('nota_davs.xls',"a")'''
 				
 				msgBox=QtGui.QMessageBox(self.centralwidget)
-				msgBox.setDefaultButton(QtGui.QMessageBox.Ok)
+				msgBox.setIcon(1)
 				msgBox.setWindowTitle("SUBPEDIDO")
 				msgBox.setText("SUBPEDIDO CREADO")
-				msgBox.exec_();
+				msgBox.exec_()
 				
 				c.copy(str(spini)+"-"+str(spfin))
 				q=bdquery()
@@ -488,18 +490,27 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		
 	def nuevagestion(self):
-		registro =self.traeregistrogestiones()
-		tipo =str(self.combo_gestiones.currentText())
-		cantidad =int(self.txt_cantidad_gestiones.text())
-		estado="0-Iniciado"
 		
-		q=bdquery()
-		q.altagestion(registro,tipo,estado,date.today(),cantidad)
+		if self.txt_cantidad_gestiones.text():
 		
-		self.combo_gestiones.setCurrentIndex(0)
-		self.combo_asociados_gestiones.setCurrentIndex(0)
-		self.txt_cantidad_gestiones.setText("")
-		self.listargestiones()
+			registro =self.traeregistrogestiones()
+			tipo =str(self.combo_gestiones.currentText())
+			cantidad =int(self.txt_cantidad_gestiones.text())
+			estado="0-Iniciado"
+			
+			q=bdquery()
+			q.altagestion(registro,tipo,estado,date.today(),cantidad)
+			
+			self.combo_gestiones.setCurrentIndex(0)
+			self.combo_asociados_gestiones.setCurrentIndex(0)
+			self.txt_cantidad_gestiones.setText("")
+			self.listargestiones()
+		else:
+			msgBox=QtGui.QMessageBox(self.centralwidget)
+			msgBox.setIcon(3)
+			msgBox.setWindowTitle("ERROR")
+			msgBox.setText("INGRESE CANTIDAD")
+			msgBox.exec_()
 		
 		
 		
@@ -509,9 +520,10 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		nombre= "%"
 		if self.rb_gestiones_pendientes.isChecked():
 			estado="%-%"
-		else:
-			
+		elif self.rb_gestiones_finalizadas.isChecked():			
 			estado="Finalizado"
+		elif self.rb_gestiones_todas.isChecked():	
+			estado="%"
 		
 		
 		q=bdquery()
@@ -597,23 +609,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		q.insertarnota(indice,obs)
 		self.listargestiones()
 		
-		
-		
 			
-		
-		
-		
-		
-		
-			
-		
-	
-		
-		
-				
-			
-	
-		
 	def listar(self):
 		q=bdquery()
 		
@@ -731,13 +727,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			
 		book.save('subpedido.xls')
 			
-			
 		
-		
-		
-		
-	
-	
 	def rendir(self):
 		if self.rb_todo_rendicion.isChecked():
 			
@@ -934,12 +924,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			
 			book.save('rendicion_pedidos.xls')
 		
-	
-		
-		
-		
-			
-				
+					
 			
 		
 	def setearlockers(self):
@@ -998,11 +983,31 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.listarlockers()
 		
 		
-		
-		
+			
 	def listarlockers(self):
 		q=bdquery()
 		listarecuperada=q.verlockers()
+		totalfilas=len(listarecuperada)
+		self.tb_lockers.setRowCount(totalfilas)
+			
+			
+		fila =0
+		
+		for i in listarecuperada:
+			self.tb_lockers.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
+			self.tb_lockers.setItem(fila,1,QtGui.QTableWidgetItem(str(i[1])))
+			self.tb_lockers.setItem(fila,2,QtGui.QTableWidgetItem(str(i[2])))
+			self.tb_lockers.setItem(fila,3,QtGui.QTableWidgetItem(str(i[3])))
+			self.tb_lockers.setItem(fila,4,QtGui.QTableWidgetItem(str(i[4])))
+			self.tb_lockers.setItem(fila,5,QtGui.QTableWidgetItem(str(i[5])))
+			
+				
+			fila=fila+1
+			
+	def filtrarlockers(self):
+		q=bdquery()
+		locker=str("%"+self.txt_buscar_locker.text()+"%")
+		listarecuperada=q.verlockers_filtrado(locker)
 		totalfilas=len(listarecuperada)
 		self.tb_lockers.setRowCount(totalfilas)
 			
@@ -1089,6 +1094,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		estado=str(self.txt_estado_rotulos.currentText())
 		q=bdquery()
 		q.definirestadorotulo(estado,indice)
+		self.listarimpresiones()
 		
 		
 		

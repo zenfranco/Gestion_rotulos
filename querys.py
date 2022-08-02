@@ -250,6 +250,15 @@ class bdquery():
 			cur.close()
 			return listado
 			
+		def verlockers_filtrado(self,asociado):
+			cur=self.conexion.cursor()
+			cur.execute('''SELECT num_locker,l.num_pedido,disponibleinicio||" - "||disponiblefin,disponiblefin-disponibleinicio+1 cantidad,p.rncyfs,razon_social
+			from lockers l inner join pedidos p inner join asociados a on p.num_pedido=l.num_pedido and a.num_reg =p.rncyfs where razon_social LIKE ? order by num_locker''',([asociado]))
+			self.conexion.commit()
+			listado=cur.fetchall()
+			cur.close()
+			return listado
+			
 			
 		def altaasociado(self,reg,razonsocial):
 			cur= self.conexion.cursor()
