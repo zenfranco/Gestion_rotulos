@@ -218,89 +218,98 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		
 	def NuevoPedido(self):
-		global INICIAL
-		global FINAL
-		global Numpedido
-		global indice
+		
+		if self.txt_cantidad.text():
+			
+		
+			global INICIAL
+			global FINAL
+			global Numpedido
+			global indice
+					
+		
+			disponible = FINAL-INICIAL+1
+		
+			cantidad = int(self.txt_cantidad.text())
+			registro = str(self.txt_rncyfs.text())
+		
+			if cantidad <= disponible:
+
+				P = Pedido(cantidad,registro,Numpedido) #crea nuevo pedido
+				P.asignar(INICIAL) #envia como parametro el rango inicial
+
+			
+			
+				P.showrango()
+				pedidos.append(P)
+				Numpedido= Numpedido+1
+				q= bdquery()
+				estado="SIN USAR"
+				fechapedido=str(date.today())
+				if self.rb_seriea.isChecked():
+					serie="A"
+				else:
+					serie="B"
 				
-	
-		disponible = FINAL-INICIAL+1
-	
-		cantidad = int(self.txt_cantidad.text())
-		registro = str(self.txt_rncyfs.text())
-	
-		if cantidad <= disponible:
-
-			P = Pedido(cantidad,registro,Numpedido) #crea nuevo pedido
-			P.asignar(INICIAL) #envia como parametro el rango inicial
-
-		
-		
-			P.showrango()
-			pedidos.append(P)
-			Numpedido= Numpedido+1
-			q= bdquery()
-			estado="SIN USAR"
-			fechapedido=str(date.today())
-			if self.rb_seriea.isChecked():
-				serie="A"
+				
+				
+				q.cargapedido(Numpedido,registro,cantidad,INICIAL,INICIAL+cantidad-1,INICIAL,INICIAL+cantidad-1,estado,fechapedido,serie)
+				
+				
+				q.incrementanpedido(Numpedido)
+				self.signal_pedidoexitoso.setText("Pedido Creado")
+				
+				self.frame_detallepedido.show()			
+				self.signal_cantidad.setText(str(cantidad))
+				self.signal_rncyfs.setText(str(registro))
+				self.signal_inicio.setText(str(INICIAL))
+				self.signal_fin.setText(str(INICIAL+cantidad-1))
+				self.signal_numpedido.setText(str(Numpedido))
+				
+				#GUARDA DATOS PARA IMRIMIR
+				nombre=q.traenombre(registro)
+				
+				ticket= open("ticket.txt","w")
+				
+				ticket.write("DETALLE DE PEDIDO\n")
+				ticket.write("-----------------------------\n")
+				ticket.write("RAZON SOCIAL: "+str("".join(nombre))+"\n")
+				ticket.write("PEDIDO: "+str(Numpedido)+"\n")
+				ticket.write("-----------------------------\n")
+				ticket.write("RNCyFS: "+str(registro)+"\n")
+				ticket.write("Fecha: "+str(fechapedido)+"\n")			
+				ticket.write("Rango: ")
+				ticket.write(str(INICIAL)+" - "+str(INICIAL+cantidad-1)+"\n")
+				ticket.write("Serie: "+str(serie)+"\n")
+				ticket.write("Cantidad: "+str(cantidad)+"\n")
+				
+				
+				ticket.write("-----------------------------\n")
+				ticket.close()
+							
+				
+				
+				
+				INICIAL=INICIAL+cantidad
+				q.actualizarangoenbd(INICIAL,FINAL,indice)
+				self.combo_asociados.clear()
+				self.llenarcombo()
+				
+				
+				
+				
+				
+					
+			
 			else:
-				serie="B"
-			
-			
-			
-			q.cargapedido(Numpedido,registro,cantidad,INICIAL,INICIAL+cantidad-1,INICIAL,INICIAL+cantidad-1,estado,fechapedido,serie)
-			
-			
-			q.incrementanpedido(Numpedido)
-			self.signal_pedidoexitoso.setText("Pedido Creado")
-			
-			self.frame_detallepedido.show()			
-			self.signal_cantidad.setText(str(cantidad))
-			self.signal_rncyfs.setText(str(registro))
-			self.signal_inicio.setText(str(INICIAL))
-			self.signal_fin.setText(str(INICIAL+cantidad-1))
-			self.signal_numpedido.setText(str(Numpedido))
-			
-			#GUARDA DATOS PARA IMRIMIR
-			nombre=q.traenombre(registro)
-			
-			ticket= open("ticket.txt","w")
-			
-			ticket.write("DETALLE DE PEDIDO\n")
-			ticket.write("-----------------------------\n")
-			ticket.write("RAZON SOCIAL: "+str("".join(nombre))+"\n")
-			ticket.write("PEDIDO: "+str(Numpedido)+"\n")
-			ticket.write("-----------------------------\n")
-			ticket.write("RNCyFS: "+str(registro)+"\n")
-			ticket.write("Fecha: "+str(fechapedido)+"\n")			
-			ticket.write("Rango: ")
-			ticket.write(str(INICIAL)+" - "+str(INICIAL+cantidad-1)+"\n")
-			ticket.write("Serie: "+str(serie)+"\n")
-			ticket.write("Cantidad: "+str(cantidad)+"\n")
-			
-			
-			ticket.write("-----------------------------\n")
-			ticket.close()
-						
-			
-			
-			
-			INICIAL=INICIAL+cantidad
-			q.actualizarangoenbd(INICIAL,FINAL,indice)
-			self.combo_asociados.clear()
-			self.llenarcombo()
-			
-			
-			
-			
-			
 				
-		
+				self.signal_pedidoexitoso.setText("No hay suficiente stock")
 		else:
-			
-			self.signal_pedidoexitoso.setText("No hay suficiente stock")
-			
+			msgBox=QtGui.QMessageBox(self.centralwidget)
+			msgBox.setIcon(3)
+			msgBox.setWindowTitle("ERROR")
+			msgBox.setText("INGRESE CANTIDAD")
+			msgBox.exec_()
 			
 			
 	def limpiar(self):
@@ -948,15 +957,24 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			k=k+1
 		
 	def almacenar(self):
-		locker = str(self.cbx_num_locker.currentText())
-		pedido =int(self.txt_pedido_deposito.text())
-		fecha= date.today()
-		q=bdquery()
-		q.modificalocker(locker,pedido,fecha)
 		
-		self.cbx_num_locker.clear()
-		self.lockerdisponibles()
-		self.listarlockers()
+		if self.txt_pedido_deposito.text():
+			
+			locker = str(self.cbx_num_locker.currentText())
+			pedido =int(self.txt_pedido_deposito.text())
+			fecha= date.today()
+			q=bdquery()
+			q.modificalocker(locker,pedido,fecha)
+			
+			self.cbx_num_locker.clear()
+			self.lockerdisponibles()
+			self.listarlockers()
+		else:
+			msgBox=QtGui.QMessageBox(self.centralwidget)
+			msgBox.setIcon(3)
+			msgBox.setWindowTitle("ERROR")
+			msgBox.setText("INGRESE PEDIDO A ALMACENAR")
+			msgBox.exec_()
 		
 		
 	def lockerselected(self):
@@ -1027,22 +1045,30 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		
 	def nuevaimpresion(self):
-		registro=str(self.txt_rncyfs_rotulos.text())
-		cantidad=int(self.txt_cantidad_rotulos.text())
-		especie=str(self.cbx_especie_rotulos.currentText())
-		categoria=str(self.cbx_categoria_rotulos.currentText())
-		tipo=str(self.cbx_tipo_rotulos.currentText())
-		fecha=str(date.today())
-		estado="PENDIENTE"
 		
-		q=bdquery()
-		q.altarotulo(registro,especie,tipo,cantidad,estado,categoria,fecha)
-		
-		self.txt_rncyfs_rotulos.setText("")
-		self.txt_cantidad_rotulos.setText("")
-		self.cbx_especie_rotulos.setCurrentIndex(0)
-		self.cbx_categoria_rotulos.setCurrentIndex(0)
-		self.cbx_tipo_rotulos.setCurrentIndex(0)
+		if self.txt_cantidad_rotulos.text():
+			registro=str(self.txt_rncyfs_rotulos.text())
+			cantidad=int(self.txt_cantidad_rotulos.text())
+			especie=str(self.cbx_especie_rotulos.currentText())
+			categoria=str(self.cbx_categoria_rotulos.currentText())
+			tipo=str(self.cbx_tipo_rotulos.currentText())
+			fecha=str(date.today())
+			estado="PENDIENTE"
+			
+			q=bdquery()
+			q.altarotulo(registro,especie,tipo,cantidad,estado,categoria,fecha)
+			
+			self.txt_rncyfs_rotulos.setText("")
+			self.txt_cantidad_rotulos.setText("")
+			self.cbx_especie_rotulos.setCurrentIndex(0)
+			self.cbx_categoria_rotulos.setCurrentIndex(0)
+			self.cbx_tipo_rotulos.setCurrentIndex(0)
+		else:
+			msgBox=QtGui.QMessageBox(self.centralwidget)
+			msgBox.setIcon(3)
+			msgBox.setWindowTitle("ERROR")
+			msgBox.setText("INGRESE CANTIDAD")
+			msgBox.exec_()
 		
 		
 		
@@ -1180,17 +1206,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.txt_final_config.setText("")
 		
 		
-		
-		
-		
-		
-		
-			
-			
-			
-			
-			
-		
+
 		
 def salir():
 	exit()
@@ -1219,12 +1235,6 @@ class Pedido:
 			print "Rango asignado:",self.inicio," - ",self.fin		
 		
 		
-		
-
-'''def listar():
-	for i in pedidos:
-		print "pedido num: ",i.numpedido
-		print "RNCyFS: ",i.rncyfs,"Cantidad Otorgada: ",i.cantidad,"Rango: ",i.inicio," - ",i.fin'''
 		
 def listarsub():
 	for i in subpedidos:
@@ -1262,14 +1272,6 @@ def actualizarangogeneral(cantidad):
 	q=bdquery()
 					
 	
-			
-
-
-		
-	
-
-
-
 
 
 if __name__ == '__main__':
