@@ -202,12 +202,12 @@ border-radius:15px;
      </property>
      <property name="icon">
       <iconset>
-       <normaloff>icons/Nuevosub.png</normaloff>icons/Nuevosub.png</iconset>
+       <normaloff>icons/roll.png</normaloff>icons/roll.png</iconset>
      </property>
      <property name="iconSize">
       <size>
-       <width>32</width>
-       <height>32</height>
+       <width>40</width>
+       <height>40</height>
       </size>
      </property>
     </widget>
@@ -1627,14 +1627,14 @@ background-color: rgb(250, 255, 185);
             <rect>
              <x>0</x>
              <y>140</y>
-             <width>701</width>
+             <width>711</width>
              <height>41</height>
             </rect>
            </property>
            <property name="styleSheet">
             <string notr="true">QFrame{
 background:#F5E0DE;
-border-radius:15px;
+
 }
 
 QPushButton{
@@ -1805,6 +1805,29 @@ border-radius:15px;
               <normaloff>icons/refresh.png</normaloff>icons/refresh.png</iconset>
             </property>
            </widget>
+           <widget class="QPushButton" name="btn_copy_inicio">
+            <property name="geometry">
+             <rect>
+              <x>660</x>
+              <y>6</y>
+              <width>31</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icons/copy.png</normaloff>icons/copy.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </widget>
           </widget>
           <widget class="QComboBox" name="cbx_especie_sp">
            <property name="geometry">
@@ -1950,6 +1973,9 @@ background:white;</string>
            <property name="alternatingRowColors">
             <bool>true</bool>
            </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectRows</enum>
+           </property>
            <attribute name="verticalHeaderVisible">
             <bool>false</bool>
            </attribute>
@@ -2089,29 +2115,6 @@ background:white;</string>
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
           </widget>
-          <widget class="QPushButton" name="btn_copy_inicio">
-           <property name="geometry">
-            <rect>
-             <x>660</x>
-             <y>146</y>
-             <width>31</width>
-             <height>31</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>icons/copy.png</normaloff>icons/copy.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>20</width>
-             <height>20</height>
-            </size>
-           </property>
-          </widget>
          </widget>
          <widget class="QFrame" name="frame_4">
           <property name="geometry">
@@ -2171,7 +2174,7 @@ border-radius:15px;
           <property name="styleSheet">
            <string notr="true">QFrame{
 background:#F5E0DE;
-border-radius:15px;
+
 }
 
 QPushButton{
@@ -2595,10 +2598,10 @@ background:white;</string>
          <widget class="QFrame" name="frame_10">
           <property name="geometry">
            <rect>
-            <x>630</x>
-            <y>50</y>
-            <width>120</width>
-            <height>121</height>
+            <x>627</x>
+            <y>95</y>
+            <width>91</width>
+            <height>81</height>
            </rect>
           </property>
           <property name="frameShape">
@@ -2607,34 +2610,11 @@ background:white;</string>
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
-          <widget class="QPushButton" name="btn_restablecer">
-           <property name="geometry">
-            <rect>
-             <x>50</x>
-             <y>0</y>
-             <width>31</width>
-             <height>31</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>icons/borrar.png</normaloff>icons/borrar.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>24</width>
-             <height>24</height>
-            </size>
-           </property>
-          </widget>
           <widget class="QRadioButton" name="rb_finalizados">
            <property name="geometry">
             <rect>
-             <x>30</x>
-             <y>75</y>
+             <x>10</x>
+             <y>43</y>
              <width>70</width>
              <height>17</height>
             </rect>
@@ -2646,8 +2626,8 @@ background:white;</string>
           <widget class="QRadioButton" name="rb_vigentes">
            <property name="geometry">
             <rect>
-             <x>30</x>
-             <y>59</y>
+             <x>10</x>
+             <y>27</y>
              <width>70</width>
              <height>17</height>
             </rect>
@@ -2659,8 +2639,8 @@ background:white;</string>
           <widget class="QRadioButton" name="rb_todos">
            <property name="geometry">
             <rect>
-             <x>30</x>
-             <y>92</y>
+             <x>10</x>
+             <y>60</y>
              <width>70</width>
              <height>17</height>
             </rect>
@@ -2672,8 +2652,8 @@ background:white;</string>
           <widget class="QRadioButton" name="rb_sinusar">
            <property name="geometry">
             <rect>
-             <x>30</x>
-             <y>40</y>
+             <x>10</x>
+             <y>8</y>
              <width>70</width>
              <height>17</height>
             </rect>
@@ -2850,44 +2830,141 @@ border-radius:15px;</string>
            <string>Por Fecha</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="txt_porrotulo">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
+         <widget class="QPushButton" name="btn_restablecer">
           <property name="geometry">
            <rect>
-            <x>520</x>
-            <y>20</y>
-            <width>101</width>
-            <height>20</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QCheckBox" name="cbx_porrotulo">
-          <property name="geometry">
-           <rect>
-            <x>636</x>
-            <y>21</y>
-            <width>70</width>
-            <height>17</height>
+            <x>420</x>
+            <y>527</y>
+            <width>51</width>
+            <height>31</height>
            </rect>
           </property>
           <property name="text">
-           <string>Por Rótulo</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>icons/borrar.png</normaloff>icons/borrar.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
           </property>
          </widget>
-         <widget class="QLabel" name="label_39">
+         <widget class="QFrame" name="frame_30">
           <property name="geometry">
            <rect>
             <x>520</x>
-            <y>1</y>
-            <width>47</width>
-            <height>13</height>
+            <y>3</y>
+            <width>211</width>
+            <height>91</height>
            </rect>
           </property>
-          <property name="text">
-           <string>Rótulo</string>
+          <property name="styleSheet">
+           <string notr="true">QFrame{
+background-color: rgb(190, 190, 190);
+border-radius:15px;
+}</string>
           </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <widget class="QLabel" name="label_39">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>0</y>
+             <width>47</width>
+             <height>13</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Rótulo</string>
+           </property>
+          </widget>
+          <widget class="QCheckBox" name="cbx_porrotulo">
+           <property name="geometry">
+            <rect>
+             <x>126</x>
+             <y>20</y>
+             <width>70</width>
+             <height>17</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Por Rótulo</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="txt_porrotulo">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>19</y>
+             <width>101</width>
+             <height>20</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_40">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>43</y>
+             <width>47</width>
+             <height>13</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Asociado:</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_87">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>60</y>
+             <width>71</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>N° de Pedido:</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="signal_asociado_bxr">
+           <property name="geometry">
+            <rect>
+             <x>63</x>
+             <y>40</y>
+             <width>131</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>*</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="signal_pedido_bxr">
+           <property name="geometry">
+            <rect>
+             <x>80</x>
+             <y>60</y>
+             <width>131</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>*</string>
+           </property>
+          </widget>
          </widget>
         </widget>
        </widget>

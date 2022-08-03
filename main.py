@@ -341,9 +341,11 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			fila=fila+1
 		
 	def completanumpedido(self):
-		fila = self.tb_verpedidos.selectedItems()
-		pedido=str(fila[0].text())
+		
+		fila = self.tb_verpedidos.currentRow()
+		pedido=self.tb_verpedidos.item(fila, 0).text() #SELECCIONO EL CONTENIDO DE LA FILA 5 DE LA COLUMNA SELECCIONADA
 		self.txt_numpedido.setText(pedido)
+		self.validarpedido()
 		
 		
 	def refresh_pedidos(self):
@@ -374,112 +376,124 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 	def nuevosubpedido(self):
 		
 		
+		if self.txt_subvariedad.text() and self.txt_subcantidad.text() and self.txt_kg.text() and self.cbx_especie_sp.currentText() and self.cbx_categoria_sp.currentText(): 
 		
-		numeropedido=int(self.txt_numpedido.text())
-		q=bdquery()
-		tablapedidos=q.getpedido(numeropedido)
-		cantidad =int(self.txt_subcantidad.text())
-		
-		if len(tablapedidos) != 0:
-			disp=int(tablapedidos[7]-tablapedidos[6]+1)
+			numeropedido=int(self.txt_numpedido.text())
+			q=bdquery()
+			tablapedidos=q.getpedido(numeropedido)
+			cantidad =int(self.txt_subcantidad.text())
 			
-			if disp >= cantidad:
+			if len(tablapedidos) != 0:
+				disp=int(tablapedidos[7]-tablapedidos[6]+1)
 				
-				registro=str(tablapedidos[1])
-				
-				if self.cbx_manual.isChecked(): #OPCION PARA QUE EL USUARIO INGRESE SU RANGO DE INICIO
+				if disp >= cantidad:
 					
-					rangomanual=self.txt_manual.text()
+					registro=str(tablapedidos[1])
 					
-					if rangomanual in range(tablapedidos[6],tablapedidos[7]):
+					if self.cbx_manual.isChecked(): #OPCION PARA QUE EL USUARIO INGRESE SU RANGO DE INICIO
 						
-						spini=rangomanual
-						spfin=spini+cantidad-1
+						rangomanual=self.txt_manual.text()
 						
+						if rangomanual in range(tablapedidos[6],tablapedidos[7]):
+							
+							spini=rangomanual
+							spfin=spini+cantidad-1
+							
+								
+							
+						else:
+							print "rango incorrecto"
 							
 						
-					else:
-						print "rango incorrecto"
+						#VALIDAR QUE NO SUPERE EL RANGO FINAL
+						
+						
+						
 						
 					
-					#VALIDAR QUE NO SUPERE EL RANGO FINAL
+					
+					else:#CAMINO AUTOMATICO: EL SISTEMA ASIGNA SECUENCIALMENTE EL RANGO
+						
+						spini=int(tablapedidos[6]) #valor inicioremanente de pedido
+						spfin=spini+cantidad-1
+					
+					numpedido=int(self.txt_numpedido.text())
+					variedad=str(self.txt_subvariedad.text())
+					especie=str(self.cbx_especie_sp.currentText())
+					KG=int(self.txt_kg.text())
+					categoria=str(self.cbx_categoria_sp.currentText())
+					camp=self.txt_subcamp.text()
+					fechasubpedido=str(date.today())
 					
 					
 					
+					if variedad=="":
+						variedad="n/d"
+					if especie=="n/d":
+						especie="n/d"
+					
+					if categoria=="":
+						categoria="n/d"
+					if KG=="":
+						dav=0
+						
+					ticket= open("subpedido.txt","a")
+				
+					
+					ticket.write(str(cantidad)+" ")		
+					ticket.write(str(variedad)+" ")
+					ticket.write(str(spini)+" - "+str(spini+cantidad-1)+"\n")
+					
+				
+					
+					ticket.close()
+					
+					
+				
+					'''#EXPORTA A ARCHIVO EXCELL
+					book = Workbook()
+					sheet = book.active
+					
+					
+					sheet['I13']=str(spini)+" - "+str(spini+cantidad-1)
+				
 					
 				
 				
-				else:#CAMINO AUTOMATICO: EL SISTEMA ASIGNA SECUENCIALMENTE EL RANGO
+					book.save('nota_davs.xls',"a")'''
 					
-					spini=int(tablapedidos[6]) #valor inicioremanente de pedido
-					spfin=spini+cantidad-1
-				
-				numpedido=int(self.txt_numpedido.text())
-				variedad=str(self.txt_subvariedad.text())
-				especie=str(self.cbx_especie_sp.currentText())
-				KG=int(self.txt_kg.text())
-				categoria=str(self.cbx_categoria_sp.currentText())
-				camp=self.txt_subcamp.text()
-				fechasubpedido=str(date.today())
-				
-				
-				
-				if variedad=="":
-					variedad="n/d"
-				if especie=="n/d":
-					especie="n/d"
-				
-				if categoria=="":
-					categoria="n/d"
-				if KG=="":
-					dav=0
+					msgBox=QtGui.QMessageBox(self.centralwidget)
+					msgBox.setIcon(1)
+					msgBox.setWindowTitle("SUBPEDIDO")
+					msgBox.setText("SUBPEDIDO CREADO")
+					msgBox.exec_()
 					
-				ticket= open("subpedido.txt","a")
-			
-				
-				ticket.write(str(cantidad)+" ")		
-				ticket.write(str(variedad)+" ")
-				ticket.write(str(spini)+" - "+str(spini+cantidad-1)+"\n")
-				
-			
-				
-				ticket.close()
-				
-				
-			
-				'''#EXPORTA A ARCHIVO EXCELL
-				book = Workbook()
-				sheet = book.active
-				
-				
-				sheet['I13']=str(spini)+" - "+str(spini+cantidad-1)
-			
-				
-			
-			
-				book.save('nota_davs.xls',"a")'''
-				
-				msgBox=QtGui.QMessageBox(self.centralwidget)
-				msgBox.setIcon(1)
-				msgBox.setWindowTitle("SUBPEDIDO")
-				msgBox.setText("SUBPEDIDO CREADO")
-				msgBox.exec_()
-				
-				c.copy(str(spini)+"-"+str(spfin))
-				q=bdquery()
-				q.cargasubepedido(numpedido,spini,spfin,cantidad,variedad,especie,int(camp),int(KG),categoria,registro,fechasubpedido)
-				
-				inicioremanente=tablapedidos[6]+cantidad
-				disponible=tablapedidos[7]-inicioremanente+1
-				if disponible <=0:
-					estado="FINALIZADO"
+					c.copy(str(spini)+"-"+str(spfin))
+					q=bdquery()
+					q.cargasubepedido(numpedido,spini,spfin,cantidad,variedad,especie,int(camp),int(KG),categoria,registro,fechasubpedido)
+					
+					inicioremanente=tablapedidos[6]+cantidad
+					disponible=tablapedidos[7]-inicioremanente+1
+					if disponible <=0:
+						estado="FINALIZADO"
+					else:
+						estado="VIGENTE"
+						
+					q.actualizaremanente(numpedido,inicioremanente)				 #se actualiza el stock remanente del pedido en tabla pedidos
+					q.actualizaestado(numpedido,estado)
+					self.refresh_pedidos()
 				else:
-					estado="VIGENTE"
-					
-				q.actualizaremanente(numpedido,inicioremanente)				 #se actualiza el stock remanente del pedido en tabla pedidos
-				q.actualizaestado(numpedido,estado)
-				self.refresh_pedidos()
-				
+					msgBox=QtGui.QMessageBox(self.centralwidget)
+					msgBox.setIcon(3)
+					msgBox.setWindowTitle("ERROR DE STOCK")
+					msgBox.setText("NO HAY STOCK SUFICIENTE PARA ESTA SOLICITUD")
+					msgBox.exec_()
+		else:
+			msgBox=QtGui.QMessageBox(self.centralwidget)
+			msgBox.setIcon(3)
+			msgBox.setWindowTitle("ERROR")
+			msgBox.setText("HAY CAMPOS VACIOS")
+			msgBox.exec_()
 				
 				
 				
