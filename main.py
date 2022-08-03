@@ -294,12 +294,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 				q.actualizarangoenbd(INICIAL,FINAL,indice)
 				self.combo_asociados.clear()
 				self.llenarcombo()
-				
-				
-				
-				
-				
-					
+								
 			
 			else:
 				
@@ -377,6 +372,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		
 	def nuevosubpedido(self):
+		
 		
 		
 		numeropedido=int(self.txt_numpedido.text())
@@ -1063,6 +1059,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			self.cbx_especie_rotulos.setCurrentIndex(0)
 			self.cbx_categoria_rotulos.setCurrentIndex(0)
 			self.cbx_tipo_rotulos.setCurrentIndex(0)
+			self.listarimpresiones()
 		else:
 			msgBox=QtGui.QMessageBox(self.centralwidget)
 			msgBox.setIcon(3)

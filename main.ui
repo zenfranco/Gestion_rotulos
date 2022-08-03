@@ -874,12 +874,12 @@ border-radius:15px;
           </item>
           <item>
            <property name="text">
-            <string>3-Esperando Evaluacion de Lotes</string>
+            <string>3-Esperando Asignacion (Rollos)</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>4-Esperando Nota por KG</string>
+            <string>4-Esperando Nota por KG + documentacion</string>
            </property>
           </item>
           <item>
@@ -894,7 +894,7 @@ border-radius:15px;
           </item>
           <item>
            <property name="text">
-            <string>7-Esperando documentacion</string>
+            <string>7-Esperando documentacion del asociado</string>
            </property>
           </item>
           <item>
