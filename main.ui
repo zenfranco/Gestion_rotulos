@@ -1179,7 +1179,7 @@ background-color: rgb(250, 255, 185);
           </item>
           <item>
            <property name="text">
-            <string>3-Esperando Evaluacion de Lotes</string>
+            <string>3-Esperando Asignacion (Rollos)</string>
            </property>
           </item>
           <item>
@@ -5163,6 +5163,9 @@ border-radius:15px;</string>
           </property>
           <property name="alternatingRowColors">
            <bool>true</bool>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectRows</enum>
           </property>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>

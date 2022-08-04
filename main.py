@@ -100,6 +100,9 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		headertb_rangos = self.tb_rangos.horizontalHeader()
 		headertb_rangos.setResizeMode(QtGui.QHeaderView.ResizeToContents)
 		
+		headertb_rendicion = self.tb_rendicion.horizontalHeader()
+		headertb_rendicion.setResizeMode(QtGui.QHeaderView.ResizeToContents)
+		
 		
 		
 		
