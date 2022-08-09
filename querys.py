@@ -341,7 +341,7 @@ class bdquery():
 			
 		def traerangos(self,estado,serie):
 			cur=self.conexion.cursor()
-			cur.execute('''select inicio ||"-"|| fin,cantidad,serie,estado from rangos_disponibles where estado LIKE ? and serie=?order by inicio''',([estado,serie]))
+			cur.execute('''select inicio,fin,cantidad,serie,estado from rangos_disponibles where estado LIKE ? and serie=?order by inicio''',([estado,serie]))
 			self.conexion.commit()
 			listado=cur.fetchall()
 			cur.close()
@@ -364,7 +364,18 @@ class bdquery():
 			cur.close()
 			return pedido
 				
-			
+		def validarasociado(self,reg):
+			cur=self.conexion.cursor()
+			cur.execute('''select count(*) from asociados where num_reg =?''',[(reg)])
+			self.conexion.commit()
+			result=cur.fetchone()
+			return result
+		
+		def borrargestion(self,indice):
+			cur=self.conexion.cursor()
+			cur.execute(''' delete from gestiones where indice =?''',([indice]))
+			self.conexion.commit()
+			cur.close()
 			
 			
 

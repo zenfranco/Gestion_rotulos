@@ -1,11 +1,11 @@
 DETALLE DE PEDIDO
 -----------------------------
-RAZON SOCIAL: RIBOLDI S.A.
-PEDIDO: 20
+RAZON SOCIAL: COOP. VILLA CANAS
+PEDIDO: 29
 -----------------------------
-RNCyFS: CDEFG4592
-Fecha: 2022-07-25
-Rango: 9987001 - 9996000
+RNCyFS: CDEF245
+Fecha: 2022-08-09
+Rango: 10108001 - 10138000
 Serie: A
-Cantidad: 9000
+Cantidad: 30000
 -----------------------------

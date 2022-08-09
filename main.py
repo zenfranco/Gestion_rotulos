@@ -72,6 +72,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.btn_agregarrango.clicked.connect(self.agregarrango)
 		self.btn_ver_rangos.clicked.connect(self.verrangos)
 		self.btn_definir_rango.clicked.connect(self.setearrango)
+		self.tb_rangos.itemDoubleClicked.connect(self.rangoselected)
 		
 		#PROPIEDADES
 		self.txt_indice_rotulos.hide()
@@ -129,6 +130,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.btn_nuevagestion.clicked.connect(self.listargestiones)
 		self.btn_buscar_gestiones_filtro.clicked.connect(self.filtrargestiones)
 		self.btn_ingresarnota.clicked.connect(self.notaupdate)
+		self.btn_eliminar_gestion.clicked.connect(self.eliminargestion)
 		
 		
 
@@ -502,12 +504,23 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 				
 			
 	def altasocio(self):
+		q=bdquery()
 		registro =str(self.txt_altaasociado_reg.text())
 		nombre =str(self.txt_altaasociado_nombre.text())
-		q=bdquery()
-		q.altaasociado(registro,nombre)
-		self.txt_altaasociado_reg.setText("")
-		self.txt_altaasociado_nombre.setText("")
+		resultado=q.validarasociado(registro)
+		valor=int("".join(map(str,resultado)))
+		print valor
+		if valor ==1:
+			msgBox=QtGui.QMessageBox(self.centralwidget)
+			msgBox.setIcon(3)
+			msgBox.setWindowTitle("ERROR")
+			msgBox.setText("YA EXISTE ESE ASOCIADO")
+			msgBox.exec_()
+		else:
+					
+			q.altaasociado(registro,nombre)
+			self.txt_altaasociado_reg.setText("")
+			self.txt_altaasociado_nombre.setText("")
 		
 		
 		
@@ -630,7 +643,30 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		q=bdquery()
 		q.insertarnota(indice,obs)
 		self.listargestiones()
+	
+	def eliminargestion(self):
+		q=bdquery()
+		indice=int(self.signal_gestion_indice.text())
+		msgBox=QtGui.QMessageBox(self.centralwidget)
+		msgBox.setIcon(2)
+		msgBox.setStandardButtons(QtGui.QMessageBox.Yes | QtGui.QMessageBox.Cancel | QtGui.QMessageBox.No)
 		
+		msgBox.setWindowTitle(" * * ATENCION * * ")
+		msgBox.setText("DESEA ELIMINAR LA GESTION?")
+		r= msgBox.exec_()
+		self.gestionupdate()
+		
+		if r==16384:
+			q.borrargestion(indice)
+			msgBox=QtGui.QMessageBox(self.centralwidget)
+			msgBox.setWindowTitle(" * * ATENCION * * ")
+			msgBox.setText("REGISTRO ELIMINADO")
+			resp= msgBox.exec_()
+						
+		elif r==4194304:
+			print "Cancelado"
+		elif r==65536:
+			print "no!"
 			
 	def listar(self):
 		q=bdquery()
@@ -1198,6 +1234,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			self.tb_rangos.setItem(fila,1,QtGui.QTableWidgetItem(str(i[1])))
 			self.tb_rangos.setItem(fila,2,QtGui.QTableWidgetItem(str(i[2])))
 			self.tb_rangos.setItem(fila,3,QtGui.QTableWidgetItem(str(i[3])))
+			self.tb_rangos.setItem(fila,4,QtGui.QTableWidgetItem(str(i[4])))
 							
 			fila=fila+1
 			acum=acum+int(i[1])
@@ -1207,8 +1244,8 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		
 	def setearrango(self):
-		inicio=int(self.txt_inicioa_config.text())
-		final=int(self.txt_final_config.text())
+		inicio=int(self.signal_inicio_rg.text())
+		final=int(self.signal_fin_rg.text())
 		if self.rb_definir_seriea.isChecked():
 			indice=1
 		else:
@@ -1216,8 +1253,21 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		q=bdquery()
 		q.definirrango(inicio,final,indice)
 		
-		self.txt_inicioa_config.setText("")
-		self.txt_final_config.setText("")
+		self.signal_inicio_rg.setText("")
+		self.signal_fin_rg.setText("")
+		
+	def rangoselected(self):
+		fila = self.tb_rangos.currentRow()
+		inicio=self.tb_rangos.item(fila, 0).text() #SELECCIONO EL CONTENIDO DE LA FILA 5 DE LA COLUMNA SELECCIONADA
+		fin=self.tb_rangos.item(fila, 1).text()
+		
+		self.signal_inicio_rg.setText(str(inicio))
+		self.signal_fin_rg.setText(str(fin))
+		
+		
+		
+				
+		
 		
 		
 

@@ -879,7 +879,7 @@ border-radius:15px;
           </item>
           <item>
            <property name="text">
-            <string>4-Esperando Nota por KG + documentacion</string>
+            <string>4-Esperando Nota por KG</string>
            </property>
           </item>
           <item>
@@ -4576,7 +4576,12 @@ border-radius:15px;</string>
           </attribute>
           <column>
            <property name="text">
-            <string>Rango Disponible</string>
+            <string>Inicio</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Fin</string>
            </property>
           </column>
           <column>
@@ -4592,6 +4597,11 @@ border-radius:15px;</string>
           <column>
            <property name="text">
             <string>Estado</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>I</string>
            </property>
           </column>
          </widget>
@@ -4927,27 +4937,43 @@ border-radius:15px;</string>
             <string>Rango Seleccionado</string>
            </property>
           </widget>
-          <widget class="QLabel" name="label_44">
+          <widget class="QLabel" name="signal_fin_rg">
            <property name="geometry">
             <rect>
              <x>140</x>
              <y>40</y>
-             <width>47</width>
-             <height>13</height>
+             <width>91</width>
+             <height>16</height>
             </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>Calibri</family>
+             <pointsize>9</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
            </property>
            <property name="text">
             <string>Fin</string>
            </property>
           </widget>
-          <widget class="QLabel" name="label_60">
+          <widget class="QLabel" name="signal_inicio_rg">
            <property name="geometry">
             <rect>
-             <x>60</x>
+             <x>40</x>
              <y>40</y>
-             <width>47</width>
-             <height>13</height>
+             <width>81</width>
+             <height>16</height>
             </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>Calibri</family>
+             <pointsize>9</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
            </property>
            <property name="text">
             <string>Inicio</string>
@@ -6333,90 +6359,6 @@ border-radius:15px;</string>
            <enum>Qt::Vertical</enum>
           </property>
          </widget>
-         <widget class="QFrame" name="frame_26">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>60</y>
-            <width>231</width>
-            <height>51</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QFrame{
-background:#F5E0DE;
-border-radius:15px;
-}
-
-QPushButton{
-border-radius:15px;
-background:#DBC9D4;
-font-family: Calibri;
-font-size:14px;
-
-
-}
-
-QPushButton:hover{
-border-radius:15px;
-background:#DFB6B2;
-font-family: Calibri;
-font-size:14px;
-
-}
-
-QLabel{
-font-family: Calibri;
-color:black;
-}
-QLineEdit{
-border-radius:15px;
-}</string>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Raised</enum>
-          </property>
-          <widget class="QLabel" name="label_110">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>3</y>
-             <width>121</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Razon Social</string>
-           </property>
-          </widget>
-          <widget class="QComboBox" name="cb_razonsocial_rotulos">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>18</y>
-             <width>201</width>
-             <height>22</height>
-            </rect>
-           </property>
-           <property name="font">
-            <font>
-             <family>Calibri</family>
-             <pointsize>7</pointsize>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color:black;</string>
-           </property>
-           <item>
-            <property name="text">
-             <string>-</string>
-            </property>
-           </item>
-          </widget>
-         </widget>
          <widget class="QLabel" name="label_74">
           <property name="geometry">
            <rect>
@@ -6485,6 +6427,43 @@ border-radius:15px;
           <property name="icon">
            <iconset>
             <normaloff>icons/trash.png</normaloff>icons/trash.png</iconset>
+          </property>
+         </widget>
+         <widget class="QComboBox" name="cb_razonsocial_rotulos">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>77</y>
+            <width>221</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <family>Calibri</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:black;</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>-</string>
+           </property>
+          </item>
+         </widget>
+         <widget class="QLabel" name="label_110">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>60</y>
+            <width>121</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Razon Social</string>
           </property>
          </widget>
         </widget>
