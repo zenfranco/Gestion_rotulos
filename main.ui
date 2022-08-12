@@ -531,7 +531,7 @@ border-radius:15px;
            </rect>
           </property>
           <property name="text">
-           <string>Sistema de gestión CASEM - Version beta 1.180722</string>
+           <string>Sistema de gestión CASEM - Version testing</string>
           </property>
          </widget>
         </widget>
