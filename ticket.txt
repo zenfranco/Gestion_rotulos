@@ -1,11 +1,11 @@
 DETALLE DE PEDIDO
 -----------------------------
-RAZON SOCIAL: GUALEGUAY CEREALES S.A.
-PEDIDO: 37
+RAZON SOCIAL: COOP. AGRICOLA GANADERA
+PEDIDO: 40
 -----------------------------
-RNCyFS: D8285
-Fecha: 2022-08-12
-Rango: 10235001 - 10236000
+RNCyFS: DEFG269
+Fecha: 2022-08-16
+Rango: 10277001 - 10281000
 Serie: A
-Cantidad: 1000
+Cantidad: 4000
 -----------------------------
