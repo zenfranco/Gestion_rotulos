@@ -2343,6 +2343,11 @@ background:white;</string>
             <string>CAMPAÑA</string>
            </property>
           </column>
+          <column>
+           <property name="text">
+            <string>FECHA SUB-PEDIDO</string>
+           </property>
+          </column>
          </widget>
          <widget class="QLineEdit" name="txt_listar">
           <property name="geometry">
@@ -2943,13 +2948,23 @@ border-radius:15px;
            <property name="geometry">
             <rect>
              <x>63</x>
-             <y>40</y>
+             <y>43</y>
              <width>131</width>
              <height>16</height>
             </rect>
            </property>
+           <property name="font">
+            <font>
+             <family>Calibri</family>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(208, 0, 0);</string>
+           </property>
            <property name="text">
-            <string>*</string>
+            <string/>
            </property>
           </widget>
           <widget class="QLabel" name="signal_pedido_bxr">
@@ -2961,8 +2976,18 @@ border-radius:15px;
              <height>16</height>
             </rect>
            </property>
+           <property name="font">
+            <font>
+             <family>Calibri</family>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(208, 0, 0);</string>
+           </property>
            <property name="text">
-            <string>*</string>
+            <string/>
            </property>
           </widget>
          </widget>
@@ -5247,7 +5272,7 @@ border-radius:15px;</string>
            </rect>
           </property>
           <property name="text">
-           <string>Despachar</string>
+           <string>Liberar</string>
           </property>
          </widget>
          <widget class="QLabel" name="label_56">

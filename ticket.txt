@@ -1,11 +1,11 @@
 DETALLE DE PEDIDO
 -----------------------------
-RAZON SOCIAL: COOP. AGRICOLA GANADERA
-PEDIDO: 40
+RAZON SOCIAL: CEREALES DON VICTORIO
+PEDIDO: 43
 -----------------------------
-RNCyFS: DEFG269
-Fecha: 2022-08-16
-Rango: 10277001 - 10281000
+RNCyFS: DF906
+Fecha: 2022-08-18
+Rango: 10301001 - 10305000
 Serie: A
 Cantidad: 4000
 -----------------------------

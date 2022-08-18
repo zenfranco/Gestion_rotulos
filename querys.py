@@ -60,7 +60,7 @@ class bdquery():
 		def verpedido(self,rncyfs):
 			cur=self.conexion.cursor()
 			cur.execute('''select num_pedido,disponibleinicio || "-" || disponiblefin,(disponiblefin-disponibleinicio+1)Stock, serie from pedidos
-			where rncyfs =? order by disponibleinicio''',[rncyfs])
+			where rncyfs =? and Stock !=0 order by disponibleinicio''',[rncyfs])
 			listapedidos=cur.fetchall()
 			self.conexion.commit()
 			cur.close()
@@ -109,7 +109,7 @@ class bdquery():
 		def listaxregistro(self,campo,radiobutton):
 			cur=self.conexion.cursor()
 			cur.execute('''select p.num_pedido,(p.cantidad)Cantidad_Original,p.inicio ||"-"|| p.fin,estado,IFNULL(s.cantidad,0),IFNULL(s.inicio|| "-" || s.fin,"SIN USAR"),
-			IFNULL((p.fin-s.fin),p.cantidad),IFNULL(kg,"N/D"),IFNULL(variedad,"N/D"),IFNULL(especie,"N/D"),IFNULL(categoria,"N/D"),IFNULL(camp,"N/D")
+			IFNULL((p.fin-s.fin),p.cantidad),IFNULL(kg,"N/D"),IFNULL(variedad,"N/D"),IFNULL(especie,"N/D"),IFNULL(categoria,"N/D"),IFNULL(camp,"N/D"),IFNULL(fecha_subpedido,"N/D")
 			from pedidos p left join subpedidos s on p.num_pedido = s.num_pedido
 			WHERE rncyfs=? and estado LIKE ? order by s.inicio''',[campo,radiobutton])
 			listado=cur.fetchall()
@@ -120,7 +120,7 @@ class bdquery():
 		def listaxregistrofecha(self,campo,radiobutton,fecha_desde,fecha_hasta):
 			cur=self.conexion.cursor()
 			cur.execute('''select p.num_pedido,(p.cantidad)Cantidad_Original,p.inicio ||"-"|| p.fin,estado,IFNULL(s.cantidad,0),IFNULL(s.inicio|| "-" || s.fin,"SIN USAR"),
-			IFNULL((p.fin-s.fin),p.cantidad),IFNULL(kg,"N/D"),IFNULL(variedad,"N/D"),IFNULL(especie,"N/D"),IFNULL(categoria,"N/D"),IFNULL(camp,"N/D")
+			IFNULL((p.fin-s.fin),p.cantidad),IFNULL(kg,"N/D"),IFNULL(variedad,"N/D"),IFNULL(especie,"N/D"),IFNULL(categoria,"N/D"),IFNULL(camp,"N/D"),IFNULL(fecha_subpedido,"N/D")
 			from pedidos p left join subpedidos s on p.num_pedido = s.num_pedido
 			WHERE rncyfs=? and estado LIKE ? and fecha_subpedido >= ? and fecha_subpedido <= ? order by s.inicio''',[campo,radiobutton,fecha_desde,fecha_hasta])
 			listado=cur.fetchall()
@@ -131,7 +131,7 @@ class bdquery():
 		def listaxpedido(self,campo,radiobutton):
 			cur=self.conexion.cursor()
 			cur.execute('''select p.num_pedido,(p.cantidad)Cantidad_Original,p.inicio ||"-"|| p.fin,estado,IFNULL(s.cantidad,0),IFNULL(s.inicio|| "-" || s.fin,"SIN USAR"),
-			IFNULL((p.fin-s.fin),p.cantidad),IFNULL(kg,"N/D"),IFNULL(variedad,"N/D"),IFNULL(especie,"N/D"),IFNULL(categoria,"N/D"),IFNULL(camp,"N/D")
+			IFNULL((p.fin-s.fin),p.cantidad),IFNULL(kg,"N/D"),IFNULL(variedad,"N/D"),IFNULL(especie,"N/D"),IFNULL(categoria,"N/D"),IFNULL(camp,"N/D"),IFNULL(fecha_subpedido,"N/D")
 			from pedidos p left join subpedidos s on p.num_pedido = s.num_pedido
 			WHERE p.num_pedido=? and estado LIKE ? order by s.inicio''',[campo,radiobutton])
 			listado=cur.fetchall()
@@ -142,7 +142,7 @@ class bdquery():
 		def listaxpedidofecha(self,campo,radiobutton,fecha_desde,fecha_hasta):
 			cur=self.conexion.cursor()
 			cur.execute('''select p.num_pedido,(p.cantidad)Cantidad_Original,p.inicio ||"-"|| p.fin,estado,IFNULL(s.cantidad,0),IFNULL(s.inicio|| "-" || s.fin,"SIN USAR"),
-			IFNULL((p.fin-s.fin),p.cantidad),IFNULL(kg,"N/D"),IFNULL(variedad,"N/D"),IFNULL(especie,"N/D"),IFNULL(categoria,"N/D"),IFNULL(camp,"N/D")
+			IFNULL((p.fin-s.fin),p.cantidad),IFNULL(kg,"N/D"),IFNULL(variedad,"N/D"),IFNULL(especie,"N/D"),IFNULL(categoria,"N/D"),IFNULL(camp,"N/D"),IFNULL(fecha_subpedido,"N/D")
 			from pedidos p left join subpedidos s on p.num_pedido = s.num_pedido
 			WHERE p.num_pedido=? and estado LIKE ? and fecha_subpedido >= ? and fecha_subpedido <= ? order by s.inicio''',[campo,radiobutton,fecha_desde,fecha_hasta])
 			listado=cur.fetchall()
@@ -356,7 +356,7 @@ class bdquery():
 		def busquedaxrotulo(self,rotulo):
 			cur=self.conexion.cursor()
 			cur.execute(''' select p.num_pedido,(p.cantidad)Cantidad_Original,p.inicio ||"-"|| p.fin,estado,IFNULL(s.cantidad,0),IFNULL(s.inicio|| "-" || s.fin,"SIN USAR"),
-			IFNULL((p.fin-s.fin),p.cantidad),IFNULL(kg,"N/D"),IFNULL(variedad,"N/D"),IFNULL(especie,"N/D"),IFNULL(categoria,"N/D"),IFNULL(camp,"N/D")
+			IFNULL((p.fin-s.fin),p.cantidad),IFNULL(kg,"N/D"),IFNULL(variedad,"N/D"),IFNULL(especie,"N/D"),IFNULL(categoria,"N/D"),IFNULL(camp,"N/D"),IFNULL(fecha_subpedido,"N/D")
 			from pedidos p left join subpedidos s on p.num_pedido = s.num_pedido 
 			WHERE ? BETWEEN p.inicio AND p.fin''',([rotulo]))
 			self.conexion.commit()
@@ -369,6 +369,7 @@ class bdquery():
 			cur.execute('''select count(*) from asociados where num_reg =?''',[(reg)])
 			self.conexion.commit()
 			result=cur.fetchone()
+			cur.close()
 			return result
 		
 		def borrargestion(self,indice):
@@ -377,9 +378,23 @@ class bdquery():
 			self.conexion.commit()
 			cur.close()
 			
+		def borrarimpresion(self,indice):
+			cur=self.conexion.cursor()
+			cur.execute(''' delete from rotulos where indice =?''',([indice]))
+			self.conexion.commit()
+			cur.close()
 			
+		def traerazonsocial(self,numpedido):
+			cur=self.conexion.cursor()
+			cur.execute('''select razon_social from asociados a
+			inner join pedidos p on p.rncyfs = a.num_reg
+			where num_pedido = ?''',([numpedido]))
+			self.conexion.commit()
+			razon=cur.fetchone()
+			cur.close()
+			return razon
 
-			
+		
 
 
 

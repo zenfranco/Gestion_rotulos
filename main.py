@@ -6,6 +6,7 @@ from querys import *
 from PyQt4 import QtCore, QtGui, uic
 from datetime import date
 global rango, numpedido, pedidos, disponible,subpedidos,INICIAL,FINAL
+import os
 #Rango =[1,1000] #[valor inicial, valor final]
 pedidos=[]
 subpedidos=[]
@@ -40,6 +41,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.btn_ingresarpedido.clicked.connect(self.limpiar)
 		self.combo_asociados.activated.connect(self.traeregistro)
 		self.cbx_manual.stateChanged.connect(lambda:self.frm_manual.show())
+		self.btn_printdetalle.clicked.connect(self.imprimirticket)
 		
 		
 			
@@ -121,6 +123,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.btn_listarimpresiones.clicked.connect(self.listarimpresiones)
 		self.btn_definir_rotulos.clicked.connect(self.cambiarestadorotulo)
 		self.tb_rotulos.itemDoubleClicked.connect(self.impresionselected)
+		self.btn_eliminar_impresion.clicked.connect(self.eliminarimpresion)
 		
 		#PAGINA GESTIONES
 		self.btn_agregar_nueva.clicked.connect(self.nuevagestion)
@@ -310,6 +313,9 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			msgBox.setWindowTitle("ERROR")
 			msgBox.setText("INGRESE CANTIDAD")
 			msgBox.exec_()
+			
+	def imprimirticket(self):
+			os.startfile("ticket.txt", "print")
 			
 			
 	def limpiar(self):
@@ -654,7 +660,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		msgBox.setWindowTitle(" * * ATENCION * * ")
 		msgBox.setText("DESEA ELIMINAR LA GESTION?")
 		r= msgBox.exec_()
-		self.gestionupdate()
+		
 		
 		if r==16384:
 			q.borrargestion(indice)
@@ -662,11 +668,39 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			msgBox.setWindowTitle(" * * ATENCION * * ")
 			msgBox.setText("REGISTRO ELIMINADO")
 			resp= msgBox.exec_()
+			self.gestionupdate()
 						
 		elif r==4194304:
 			print "Cancelado"
 		elif r==65536:
 			print "no!"
+			
+			
+	def eliminarimpresion(self):
+		q=bdquery()
+		indice=int(self.txt_indice_rotulos.text())
+		msgBox=QtGui.QMessageBox(self.centralwidget)
+		msgBox.setIcon(2)
+		msgBox.setStandardButtons(QtGui.QMessageBox.Yes | QtGui.QMessageBox.Cancel | QtGui.QMessageBox.No)
+		
+		msgBox.setWindowTitle(" * * ATENCION * * ")
+		msgBox.setText("DESEA ELIMINAR ESA IMPRESION")
+		r= msgBox.exec_()
+		
+		
+		if r==16384:
+			q.borrarimpresion(indice)
+			msgBox=QtGui.QMessageBox(self.centralwidget)
+			msgBox.setWindowTitle(" * * ATENCION * * ")
+			msgBox.setText("REGISTRO ELIMINADO")
+			resp= msgBox.exec_()
+			self.listarimpresiones()
+						
+		elif r==4194304:
+			print "Cancelado"
+		elif r==65536:
+			print "no!"
+		
 			
 	def listar(self):
 		q=bdquery()
@@ -674,6 +708,15 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		if self.cbx_porrotulo.isChecked():
 			rotulo=int(self.txt_porrotulo.text())
 			tablarecuperada = q.busquedaxrotulo(rotulo)
+			
+			i=0
+			for i in tablarecuperada:
+				self.signal_pedido_bxr.setText(str(i[0]))
+				numpedido=int(i[0])
+				break
+			razon_social=q.traerazonsocial(numpedido)
+			
+			self.signal_asociado_bxr.setText("".join(razon_social))
 			
 			
 		else:
@@ -739,6 +782,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			self.tb_listar.setItem(fila,9,QtGui.QTableWidgetItem(str(i[9])))
 			self.tb_listar.setItem(fila,10,QtGui.QTableWidgetItem(str(i[10])))
 			self.tb_listar.setItem(fila,11,QtGui.QTableWidgetItem(str(i[11])))
+			self.tb_listar.setItem(fila,12,QtGui.QTableWidgetItem(str(i[12])))
 			
 		
 			acum=acum+int(i[4])
