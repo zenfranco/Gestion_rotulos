@@ -1,11 +1,11 @@
 DETALLE DE PEDIDO
 -----------------------------
-RAZON SOCIAL: CEREALES DON VICTORIO
-PEDIDO: 43
+RAZON SOCIAL: COOP. LOS MOLINOS
+PEDIDO: 49
 -----------------------------
-RNCyFS: DF906
-Fecha: 2022-08-18
-Rango: 10301001 - 10305000
-Serie: A
+RNCyFS: DFG1256
+Fecha: 2022-08-19
+Rango: 86618001 - 86622000
+Serie: B
 Cantidad: 4000
 -----------------------------
