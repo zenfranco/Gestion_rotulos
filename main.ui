@@ -3620,19 +3620,6 @@ border-radius:15px;</string>
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
           </widget>
-          <widget class="QLabel" name="signal_pedidoexitoso">
-           <property name="geometry">
-            <rect>
-             <x>100</x>
-             <y>296</y>
-             <width>131</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
           <widget class="QComboBox" name="combo_asociados">
            <property name="geometry">
             <rect>

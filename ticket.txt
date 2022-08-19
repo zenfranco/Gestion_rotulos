@@ -1,11 +1,11 @@
 DETALLE DE PEDIDO
 -----------------------------
-RAZON SOCIAL: COOP. LOS MOLINOS
-PEDIDO: 49
+RAZON SOCIAL: CAMARA ARGENTINA DE SEMILLEROS
+PEDIDO: 50
 -----------------------------
-RNCyFS: DFG1256
+RNCyFS: AB
 Fecha: 2022-08-19
-Rango: 86618001 - 86622000
-Serie: B
-Cantidad: 4000
+Rango: 10333001 - 10333500
+Serie: A
+Cantidad: 500
 -----------------------------

@@ -265,7 +265,12 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 				
 				
 				q.incrementanpedido(Numpedido)
-				self.signal_pedidoexitoso.setText("Pedido Creado")
+				
+				msgBox=QtGui.QMessageBox(self.centralwidget)
+				msgBox.setIcon(1)
+				msgBox.setWindowTitle("PEDIDO")
+				msgBox.setText("RANGO ASIGNADO CORRECTAMENTE")
+				msgBox.exec_()
 				
 				self.frame_detallepedido.show()			
 				self.signal_cantidad.setText(str(cantidad))
@@ -302,11 +307,16 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 				q.actualizarangoenbd(INICIAL,FINAL,indice)
 				self.combo_asociados.clear()
 				self.llenarcombo()
-								
+				self.iniciarpedido()
 			
 			else:
+				msgBox=QtGui.QMessageBox(self.centralwidget)
+				msgBox.setIcon(3)
+				msgBox.setWindowTitle("STOCK INSUFICIENTE")
+				msgBox.setText("NO HAY STOCK SUFICIENTE PARA ESE PEDIDO")
+				msgBox.exec_()
 				
-				self.signal_pedidoexitoso.setText("No hay suficiente stock")
+				
 		else:
 			msgBox=QtGui.QMessageBox(self.centralwidget)
 			msgBox.setIcon(3)
