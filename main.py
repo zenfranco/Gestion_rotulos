@@ -75,6 +75,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.btn_ver_rangos.clicked.connect(self.verrangos)
 		self.btn_definir_rango.clicked.connect(self.setearrango)
 		self.tb_rangos.itemDoubleClicked.connect(self.rangoselected)
+		self.btn_terminar_rango.clicked.connect(self.bajaderango)
 		
 		#PROPIEDADES
 		self.txt_indice_rotulos.hide()
@@ -1318,6 +1319,18 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.signal_inicio_rg.setText(str(inicio))
 		self.signal_fin_rg.setText(str(fin))
 		
+	def bajaderango(self):
+		inicio=int(self.signal_inicio_rg.text())
+		
+		if self.rb_definir_seriea.isChecked():
+			indice=1
+		else:
+			indice=2
+		q=bdquery()
+		q.cancelarrango(inicio)
+		
+		self.signal_inicio_rg.setText("")
+		self.signal_fin_rg.setText("")
 		
 		
 				

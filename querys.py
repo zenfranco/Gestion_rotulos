@@ -350,6 +350,13 @@ class bdquery():
 		def definirrango(self,inicio,fin,indice):
 			cur=self.conexion.cursor()
 			cur.execute("UPDATE Datos SET (inicial,final) = (?,?) WHERE indice = (?)",([inicio,fin,indice]))
+			cur.execute('''UPDATE rangos_disponibles SET (estado) = "EN USO" WHERE inicio = (?)''',([inicio]))
+			self.conexion.commit()
+			cur.close()
+		
+		def cancelarrango(self,inicio):
+			cur=self.conexion.cursor()
+			cur.execute('''UPDATE rangos_disponibles SET (estado) = "TERMINADO" WHERE inicio = (?)''',([inicio]))
 			self.conexion.commit()
 			cur.close()
 			

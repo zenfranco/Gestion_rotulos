@@ -1,11 +1,11 @@
 DETALLE DE PEDIDO
 -----------------------------
-RAZON SOCIAL: CAMARA ARGENTINA DE SEMILLEROS
-PEDIDO: 50
+RAZON SOCIAL: GRANERO SRL
+PEDIDO: 60
 -----------------------------
-RNCyFS: AB
-Fecha: 2022-08-19
-Rango: 10333001 - 10333500
+RNCyFS: 3079
+Fecha: 2022-08-30
+Rango: 10407001 - 10408000
 Serie: A
-Cantidad: 500
+Cantidad: 1000
 -----------------------------
