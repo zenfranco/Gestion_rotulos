@@ -1,11 +1,11 @@
 DETALLE DE PEDIDO
 -----------------------------
-RAZON SOCIAL: GRANERO SRL
-PEDIDO: 60
+RAZON SOCIAL: AFA HUMBOLDT
+PEDIDO: 61
 -----------------------------
-RNCyFS: 3079
-Fecha: 2022-08-30
-Rango: 10407001 - 10408000
+RNCyFS: 314H
+Fecha: 02-09-2022
+Rango: 10408001 - 10408001
 Serie: A
-Cantidad: 1000
+Cantidad: 1
 -----------------------------

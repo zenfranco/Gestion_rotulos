@@ -7,7 +7,7 @@ from PyQt4 import QtCore, QtGui, uic
 from datetime import date
 global rango, numpedido, pedidos, disponible,subpedidos,INICIAL,FINAL
 import os
-#Rango =[1,1000] #[valor inicial, valor final]
+
 pedidos=[]
 subpedidos=[]
 
@@ -254,7 +254,14 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 				Numpedido= Numpedido+1
 				q= bdquery()
 				estado="SIN USAR"
-				fechapedido=str(date.today())
+				
+				
+				
+				fecha=str(date.today())
+				
+				
+				fechapedido=formatearfecha(fecha)
+				
 				if self.rb_seriea.isChecked():
 					serie="A"
 				else:
@@ -445,9 +452,9 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 					KG=int(self.txt_kg.text())
 					categoria=str(self.cbx_categoria_sp.currentText())
 					camp=self.txt_subcamp.text()
-					fechasubpedido=str(date.today())
-					
-					
+					fecha=str(date.today())
+					fechasubpedido=formatearfecha(fecha)
+										
 					
 					if variedad=="":
 						variedad="n/d"
@@ -549,9 +556,13 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			tipo =str(self.combo_gestiones.currentText())
 			cantidad =int(self.txt_cantidad_gestiones.text())
 			estado="0-Iniciado"
+			fecha=str(date.today())
+			fechagestion=formatearfecha(fecha)
+			
+			
 			
 			q=bdquery()
-			q.altagestion(registro,tipo,estado,date.today(),cantidad)
+			q.altagestion(registro,tipo,estado,fechagestion,cantidad)
 			
 			self.combo_gestiones.setCurrentIndex(0)
 			self.combo_asociados_gestiones.setCurrentIndex(0)
@@ -1066,9 +1077,11 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			
 			locker = str(self.cbx_num_locker.currentText())
 			pedido =int(self.txt_pedido_deposito.text())
-			fecha= date.today()
+			
+			fecha= str(date.today())
+			fechaingreso=formatearfecha(fecha)
 			q=bdquery()
-			q.modificalocker(locker,pedido,fecha)
+			q.modificalocker(locker,pedido,fechaingreso)
 			
 			self.cbx_num_locker.clear()
 			self.lockerdisponibles()
@@ -1150,30 +1163,46 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 	def nuevaimpresion(self):
 		
-		if self.txt_cantidad_rotulos.text():
-			registro=str(self.txt_rncyfs_rotulos.text())
-			cantidad=int(self.txt_cantidad_rotulos.text())
-			especie=str(self.cbx_especie_rotulos.currentText())
-			categoria=str(self.cbx_categoria_rotulos.currentText())
-			tipo=str(self.cbx_tipo_rotulos.currentText())
-			fecha=str(date.today())
-			estado="PENDIENTE"
-			
-			q=bdquery()
-			q.altarotulo(registro,especie,tipo,cantidad,estado,categoria,fecha)
-			
-			self.txt_rncyfs_rotulos.setText("")
-			self.txt_cantidad_rotulos.setText("")
-			self.cbx_especie_rotulos.setCurrentIndex(0)
-			self.cbx_categoria_rotulos.setCurrentIndex(0)
-			self.cbx_tipo_rotulos.setCurrentIndex(0)
-			self.listarimpresiones()
-		else:
+		q=bdquery()
+		registro=str(self.txt_rncyfs_rotulos.text())
+		count=q.validarasociado(registro)
+		valor=int("".join(map(str,count)))
+		
+		if valor ==0:
 			msgBox=QtGui.QMessageBox(self.centralwidget)
 			msgBox.setIcon(3)
 			msgBox.setWindowTitle("ERROR")
-			msgBox.setText("INGRESE CANTIDAD")
+			msgBox.setText("NO EXISTE ESE ASOCIADO")
 			msgBox.exec_()
+		else:
+					
+			if self.txt_cantidad_rotulos.text():
+				
+				cantidad=int(self.txt_cantidad_rotulos.text())
+				especie=str(self.cbx_especie_rotulos.currentText())
+				categoria=str(self.cbx_categoria_rotulos.currentText())
+				tipo=str(self.cbx_tipo_rotulos.currentText())
+				
+				
+				fecha=str(date.today())
+				fechaimpresion=formatearfecha(fecha)
+				estado="PENDIENTE"
+				
+				
+				q.altarotulo(registro,especie,tipo,cantidad,estado,categoria,fechaimpresion)
+				
+				self.txt_rncyfs_rotulos.setText("")
+				self.txt_cantidad_rotulos.setText("")
+				self.cbx_especie_rotulos.setCurrentIndex(0)
+				self.cbx_categoria_rotulos.setCurrentIndex(0)
+				self.cbx_tipo_rotulos.setCurrentIndex(0)
+				self.listarimpresiones()
+			else:
+				msgBox=QtGui.QMessageBox(self.centralwidget)
+				msgBox.setIcon(3)
+				msgBox.setWindowTitle("ERROR")
+				msgBox.setText("INGRESE CANTIDAD")
+				msgBox.exec_()
 		
 		
 		
@@ -1387,6 +1416,17 @@ class Subpedido():
 		self.dav=dav
 		self.registro=registro
 
+def formatearfecha(fecha):
+	
+	fechaastring=str(fecha)
+
+	dia=str(fechaastring[8:10])
+	mes=str(fechaastring[5:7])
+	year=str(fechaastring[0:4])
+
+	fechacambiada=dia+"-"+mes+"-"+year
+	
+	return fechacambiada
 
 		
 

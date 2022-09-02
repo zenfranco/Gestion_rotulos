@@ -2383,6 +2383,9 @@ background:white;</string>
           <property name="text">
            <string>Listar</string>
           </property>
+          <property name="shortcut">
+           <string>Enter</string>
+          </property>
          </widget>
          <widget class="QRadioButton" name="rb_porrncyfs">
           <property name="geometry">
@@ -2796,7 +2799,7 @@ border-radius:15px;</string>
            </rect>
           </property>
           <property name="displayFormat">
-           <string>yyyy-MM-dd</string>
+           <string>dd-MM-yyyy</string>
           </property>
           <property name="calendarPopup">
            <bool>true</bool>
@@ -2828,7 +2831,7 @@ border-radius:15px;</string>
            </rect>
           </property>
           <property name="displayFormat">
-           <string>yyyy-MM-dd</string>
+           <string>dd-MM-yyyy</string>
           </property>
           <property name="calendarPopup">
            <bool>true</bool>
@@ -3111,7 +3114,7 @@ border-radius:15px;
            </rect>
           </property>
           <property name="displayFormat">
-           <string>yyyy-MM-dd</string>
+           <string>dd-MM-yyyy</string>
           </property>
           <property name="calendarPopup">
            <bool>true</bool>
@@ -3127,7 +3130,7 @@ border-radius:15px;
            </rect>
           </property>
           <property name="displayFormat">
-           <string>yyyy-MM-dd</string>
+           <string>dd-MM-yyyy</string>
           </property>
           <property name="calendarPopup">
            <bool>true</bool>
@@ -5751,6 +5754,9 @@ border-radius:15px;</string>
           <property name="text">
            <string>Ingresar</string>
           </property>
+          <property name="shortcut">
+           <string>Enter, Return</string>
+          </property>
          </widget>
          <widget class="QLabel" name="label_68">
           <property name="geometry">
@@ -6499,28 +6505,17 @@ border-radius:15px;</string>
   </widget>
  </widget>
  <tabstops>
-  <tabstop>btn_nuevopedido</tabstop>
-  <tabstop>btn_nuevosubpedido</tabstop>
-  <tabstop>btn_listar</tabstop>
+  <tabstop>cb_razonsocial_rotulos</tabstop>
+  <tabstop>txt_rncyfs_rotulos</tabstop>
   <tabstop>btn_deposito</tabstop>
-  <tabstop>btn_rotulos</tabstop>
-  <tabstop>btn_rendicion</tabstop>
-  <tabstop>btn_configuracion</tabstop>
-  <tabstop>btn_salir</tabstop>
-  <tabstop>rb_seriea</tabstop>
-  <tabstop>rb_serieb</tabstop>
-  <tabstop>btn_iniciarpedido</tabstop>
-  <tabstop>combo_asociados</tabstop>
-  <tabstop>txt_cantidad</tabstop>
-  <tabstop>txt_rncyfs</tabstop>
-  <tabstop>btn_ingresarpedido</tabstop>
-  <tabstop>btn_printdetalle</tabstop>
+  <tabstop>cbx_especie_rotulos</tabstop>
+  <tabstop>cbx_categoria_rotulos</tabstop>
+  <tabstop>cbx_tipo_rotulos</tabstop>
+  <tabstop>txt_cantidad_rotulos</tabstop>
+  <tabstop>btn_ingresar_rotulos</tabstop>
   <tabstop>combo_asociados_subpedidos</tabstop>
   <tabstop>txt_verpedido</tabstop>
   <tabstop>txt_numpedido</tabstop>
-  <tabstop>btn_verpedidos</tabstop>
-  <tabstop>btn_subvalidar</tabstop>
-  <tabstop>tb_verpedidos</tabstop>
   <tabstop>txt_subvariedad</tabstop>
   <tabstop>txt_subcantidad</tabstop>
   <tabstop>txt_kg</tabstop>
@@ -6528,6 +6523,17 @@ border-radius:15px;</string>
   <tabstop>cbx_categoria_sp</tabstop>
   <tabstop>txt_subcamp</tabstop>
   <tabstop>btn_subingresar</tabstop>
+  <tabstop>btn_iniciarpedido</tabstop>
+  <tabstop>btn_verpedidos</tabstop>
+  <tabstop>btn_subvalidar</tabstop>
+  <tabstop>tb_verpedidos</tabstop>
+  <tabstop>combo_asociados</tabstop>
+  <tabstop>txt_cantidad</tabstop>
+  <tabstop>txt_rncyfs</tabstop>
+  <tabstop>btn_ingresarpedido</tabstop>
+  <tabstop>btn_printdetalle</tabstop>
+  <tabstop>rb_seriea</tabstop>
+  <tabstop>rb_serieb</tabstop>
   <tabstop>btn_refresh</tabstop>
   <tabstop>btn_copy_inicio</tabstop>
   <tabstop>txt_manual</tabstop>
@@ -6552,16 +6558,16 @@ border-radius:15px;</string>
   <tabstop>btn_almacenar</tabstop>
   <tabstop>tb_lockers</tabstop>
   <tabstop>btn_despachar</tabstop>
-  <tabstop>cb_razonsocial_rotulos</tabstop>
-  <tabstop>txt_rncyfs_rotulos</tabstop>
-  <tabstop>cbx_especie_rotulos</tabstop>
-  <tabstop>cbx_categoria_rotulos</tabstop>
-  <tabstop>cbx_tipo_rotulos</tabstop>
-  <tabstop>btn_ingresar_rotulos</tabstop>
+  <tabstop>btn_nuevopedido</tabstop>
+  <tabstop>btn_nuevosubpedido</tabstop>
+  <tabstop>btn_listar</tabstop>
+  <tabstop>btn_rotulos</tabstop>
+  <tabstop>btn_rendicion</tabstop>
+  <tabstop>btn_salir</tabstop>
   <tabstop>txt_indice_rotulos</tabstop>
   <tabstop>txt_estado_rotulos</tabstop>
   <tabstop>btn_definir_rotulos</tabstop>
-  <tabstop>txt_cantidad_rotulos</tabstop>
+  <tabstop>btn_configuracion</tabstop>
   <tabstop>tb_rotulos</tabstop>
   <tabstop>fecha_desde_rotulos</tabstop>
   <tabstop>fecha_hasta_rotulos</tabstop>
@@ -6613,6 +6619,36 @@ border-radius:15px;</string>
   <tabstop>txt_definir_locker</tabstop>
   <tabstop>btn_definir_locker</tabstop>
   <tabstop>home</tabstop>
+  <tabstop>btn_nuevagestion</tabstop>
+  <tabstop>tb_gestiones</tabstop>
+  <tabstop>combo_asociados_gestiones</tabstop>
+  <tabstop>btn_agregar_nueva</tabstop>
+  <tabstop>combo_gestiones</tabstop>
+  <tabstop>btn_buscar_gestiones</tabstop>
+  <tabstop>rb_gestiones_pendientes</tabstop>
+  <tabstop>rb_gestiones_finalizadas</tabstop>
+  <tabstop>combo_estados_gestiones</tabstop>
+  <tabstop>btn_actualizargestion</tabstop>
+  <tabstop>btn_ingresarnota</tabstop>
+  <tabstop>signal_gestion_observaciones</tabstop>
+  <tabstop>combo_estados_gestiones_filtro</tabstop>
+  <tabstop>txt_asociados_gestiones_filtro</tabstop>
+  <tabstop>btn_buscar_gestiones_filtro</tabstop>
+  <tabstop>btn_eliminar_gestion</tabstop>
+  <tabstop>txt_cantidad_gestiones</tabstop>
+  <tabstop>rb_gestiones_todas</tabstop>
+  <tabstop>btn_informe_preimpresion</tabstop>
+  <tabstop>fecha_hasta_listar</tabstop>
+  <tabstop>fecha_desde_listar</tabstop>
+  <tabstop>cbx_porfecha</tabstop>
+  <tabstop>cbx_porrotulo</tabstop>
+  <tabstop>txt_porrotulo</tabstop>
+  <tabstop>btn_rendir</tabstop>
+  <tabstop>rb_rangos_terminados</tabstop>
+  <tabstop>btn_terminar_rango</tabstop>
+  <tabstop>txt_buscar_locker</tabstop>
+  <tabstop>btn_buscar_locker</tabstop>
+  <tabstop>btn_eliminar_impresion</tabstop>
  </tabstops>
  <resources/>
  <connections/>
