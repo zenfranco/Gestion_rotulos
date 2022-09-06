@@ -2799,7 +2799,7 @@ border-radius:15px;</string>
            </rect>
           </property>
           <property name="displayFormat">
-           <string>dd-MM-yyyy</string>
+           <string>yyyy-MM-dd</string>
           </property>
           <property name="calendarPopup">
            <bool>true</bool>
@@ -2831,7 +2831,7 @@ border-radius:15px;</string>
            </rect>
           </property>
           <property name="displayFormat">
-           <string>dd-MM-yyyy</string>
+           <string>yyyy-MM-dd</string>
           </property>
           <property name="calendarPopup">
            <bool>true</bool>
@@ -3114,7 +3114,7 @@ border-radius:15px;
            </rect>
           </property>
           <property name="displayFormat">
-           <string>dd-MM-yyyy</string>
+           <string>yyyy-MM-dd</string>
           </property>
           <property name="calendarPopup">
            <bool>true</bool>
@@ -3130,7 +3130,7 @@ border-radius:15px;
            </rect>
           </property>
           <property name="displayFormat">
-           <string>dd-MM-yyyy</string>
+           <string>yyyy-MM-dd</string>
           </property>
           <property name="calendarPopup">
            <bool>true</bool>
@@ -5847,7 +5847,7 @@ border-radius:15px;</string>
            </rect>
           </property>
           <property name="displayFormat">
-           <string>dd-MM-yyyy</string>
+           <string>yyyy-MM-dd</string>
           </property>
           <property name="calendarPopup">
            <bool>true</bool>
@@ -6137,7 +6137,7 @@ border-radius:15px;</string>
            </rect>
           </property>
           <property name="displayFormat">
-           <string>dd-MM-yyyy</string>
+           <string>yyyy-MM-dd</string>
           </property>
           <property name="calendarPopup">
            <bool>true</bool>

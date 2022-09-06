@@ -1,11 +1,11 @@
 DETALLE DE PEDIDO
 -----------------------------
-RAZON SOCIAL: AFA HUMBOLDT
-PEDIDO: 61
+RAZON SOCIAL: COOP. LA GANADERA GRAL. RAMIREZ
+PEDIDO: 63
 -----------------------------
-RNCyFS: 314H
-Fecha: 02-09-2022
-Rango: 10408001 - 10408001
+RNCyFS: 215
+Fecha: 2022-09-06
+Rango: 10458001 - 10463000
 Serie: A
-Cantidad: 1
+Cantidad: 5000
 -----------------------------

@@ -257,10 +257,10 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 				
 				
 				
-				fecha=str(date.today())
+				fechapedido=str(date.today())
 				
 				
-				fechapedido=formatearfecha(fecha)
+				#fechapedido=formatearfecha(fecha)
 				
 				if self.rb_seriea.isChecked():
 					serie="A"
@@ -452,8 +452,8 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 					KG=int(self.txt_kg.text())
 					categoria=str(self.cbx_categoria_sp.currentText())
 					camp=self.txt_subcamp.text()
-					fecha=str(date.today())
-					fechasubpedido=formatearfecha(fecha)
+					fechasubpedido=str(date.today())
+					#fechasubpedido=formatearfecha(fecha)
 										
 					
 					if variedad=="":
@@ -556,8 +556,8 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			tipo =str(self.combo_gestiones.currentText())
 			cantidad =int(self.txt_cantidad_gestiones.text())
 			estado="0-Iniciado"
-			fecha=str(date.today())
-			fechagestion=formatearfecha(fecha)
+			fechagestion=str(date.today())
+			#fechagestion=formatearfecha(fecha)
 			
 			
 			
@@ -1078,8 +1078,8 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			locker = str(self.cbx_num_locker.currentText())
 			pedido =int(self.txt_pedido_deposito.text())
 			
-			fecha= str(date.today())
-			fechaingreso=formatearfecha(fecha)
+			fechaingreso= str(date.today())
+			#fechaingreso=formatearfecha(fecha)
 			q=bdquery()
 			q.modificalocker(locker,pedido,fechaingreso)
 			
@@ -1184,8 +1184,8 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 				tipo=str(self.cbx_tipo_rotulos.currentText())
 				
 				
-				fecha=str(date.today())
-				fechaimpresion=formatearfecha(fecha)
+				fechaimpresion=str(date.today())
+				#fechaimpresion=formatearfecha(fecha)
 				estado="PENDIENTE"
 				
 				
@@ -1417,8 +1417,8 @@ class Subpedido():
 		self.registro=registro
 
 def formatearfecha(fecha):
-	
-	fechaastring=str(fecha)
+	pass
+	'''fechaastring=str(fecha)
 
 	dia=str(fechaastring[8:10])
 	mes=str(fechaastring[5:7])
@@ -1426,7 +1426,7 @@ def formatearfecha(fecha):
 
 	fechacambiada=dia+"-"+mes+"-"+year
 	
-	return fechacambiada
+	return fechacambiada'''
 
 		
 
