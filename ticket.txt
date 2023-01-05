@@ -1,11 +1,11 @@
 DETALLE DE PEDIDO
 -----------------------------
-RAZON SOCIAL: COOP. LA GANADERA GRAL. RAMIREZ
-PEDIDO: 63
+RAZON SOCIAL: COOP. LEON SOLA
+PEDIDO: 150
 -----------------------------
-RNCyFS: 215
-Fecha: 2022-09-06
-Rango: 10458001 - 10463000
+RNCyFS: 2185
+Fecha: 2022-12-22
+Rango: 10907001 - 10908000
 Serie: A
-Cantidad: 5000
+Cantidad: 1000
 -----------------------------

@@ -400,6 +400,14 @@ class bdquery():
 			razon=cur.fetchone()
 			cur.close()
 			return razon
+			
+		def getstock(self):
+			cur=self.conexion.cursor()
+			cur.execute('''select denominacion, cantidad from stock_rotulos''')
+			self.conexion.commit()
+			listado=cur.fetchall()
+			cur.close()
+			return listado
 
 		
 

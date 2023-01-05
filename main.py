@@ -119,6 +119,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		#PAGINA ROTULOS
 		self.btn_rotulos.clicked.connect(self.listarimpresiones)
+		self.btn_rotulos.clicked.connect(self.traerstock)
 		self.btn_ingresar_rotulos.clicked.connect(self.nuevaimpresion)
 		self.cb_razonsocial_rotulos.activated.connect(self.traeregistrorotulos)
 		self.btn_listarimpresiones.clicked.connect(self.listarimpresiones)
@@ -1360,6 +1361,22 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		self.signal_inicio_rg.setText("")
 		self.signal_fin_rg.setText("")
+		
+		
+	def traerstock(self):
+		q=bdquery()
+		listado= q.getstock()
+		
+		totalfilas=len(listado)
+		self.tb_stock_rotulos.setRowCount(totalfilas)
+		fila=0
+		for i in listado:
+			self.tb_stock_rotulos.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
+			self.tb_stock_rotulos.setItem(fila,1,QtGui.QTableWidgetItem(str(i[1])))
+			fila = fila+1
+			
+		
+		
 		
 		
 				
