@@ -16,8 +16,10 @@ subpedidos=[]
 # Cargar archivo .ui
 form_class = uic.loadUiType("main.ui")[0]
 
+
 class VentanaPrincipal(QtGui.QMainWindow, form_class):
 	def __init__ (self,parent=None):
+		
 		QtGui.QMainWindow.__init__(self, parent)
 		self.setupUi(self)
 		
@@ -33,6 +35,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.btn_deposito.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.p_deposito)) #cambia de pagina
 		self.btn_rotulos.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.p_rotulos)) #cambia de pagina
 		self.btn_nuevagestion.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.p_gestion)) #cambia de pagina
+		self.btn_envios.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.p_envios))
 		
 		#FUNCION DE LOS BOTONES
 		#PAGINA PEDIDOS
@@ -107,6 +110,9 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		headertb_rendicion = self.tb_rendicion.horizontalHeader()
 		headertb_rendicion.setResizeMode(QtGui.QHeaderView.ResizeToContents)
 		
+		headertb_asociados_envios = self.tb_asociados_envios.horizontalHeader()
+		headertb_asociados_envios.setResizeMode(QtGui.QHeaderView.ResizeToContents)
+		
 		
 		
 		
@@ -137,12 +143,15 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.btn_ingresarnota.clicked.connect(self.notaupdate)
 		self.btn_eliminar_gestion.clicked.connect(self.eliminargestion)
 		
+		#PAGINA ENVIOS
+		self.tb_asociados_envios.itemDoubleClicked.connect(self.asociado_selected)
 		
-
+		
+	
 	
 		
 	def llenarcombo(self):
-		q=bdquery()
+		
 		asociados = q.traerasociados() #la consulta devuelve una tupla, por lo tanto hay que convertirla a str para llenar el combobox, se usa el metodo "".join()
 		
 		k=0
@@ -161,13 +170,15 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		global FINAL
 		global Numpedido
 		global indice
-		q = bdquery()
+		
 		dato= q.traeultimopedido()
 		
 		if self.rb_seriea.isChecked():
 			indice=1
-		else:
+		elif self.rb_serieb.isChecked():
 			indice=2
+		elif self.rb_general.isChecked():
+			indice=3
 				
 		rangogeneral = q.recuperarango(indice)
 		
@@ -186,7 +197,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 	def traeregistro(self):
 		nombre = str(self.combo_asociados.currentText())
 		
-		q=bdquery()
+		
 		recuperado=q.getrncyfs(nombre)
 		
 			
@@ -194,7 +205,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 	def traeregistrosp(self):
 		nombre = str(self.combo_asociados_subpedidos.currentText())
 		
-		q=bdquery()
+		
 		recuperado=q.getrncyfs(nombre)
 		
 			
@@ -202,7 +213,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 	def traeregistrolistar(self):
 		nombre = str(self.combo_asociados_listar.currentText())
 		
-		q=bdquery()
+		
 		recuperado=q.getrncyfs(nombre)
 		
 			
@@ -211,7 +222,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 	def traeregistrorotulos(self):
 		nombre = str(self.cb_razonsocial_rotulos.currentText())
 		
-		q=bdquery()
+		
 		recuperado=q.getrncyfs(nombre)
 		
 			
@@ -220,118 +231,140 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 	def traeregistrogestiones(self):
 		nombre = str(self.combo_asociados_gestiones.currentText())
 		
-		q=bdquery()
+		
 		recuperado=q.getrncyfs(nombre)
+		
+		
 		
 			
 		return ("".join(recuperado))
 		
 		
 	def NuevoPedido(self):
+		global INICIAL
+		global FINAL
+		global Numpedido
+		global indice
 		
-		if self.txt_cantidad.text():
+		
+		
+		if self.rb_general.isChecked(): #EN ESTE CASO EL PEDIDO SERA TOMADO DEL RANGO GENERAL
+			pass
 			
-		
-			global INICIAL
-			global FINAL
-			global Numpedido
-			global indice
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		else:
+			if self.txt_cantidad.text(): #EN ESTE CASO EL PEDIDO SERA TOMADO DEL RANGO A O B
+				
+			
+				
+						
+			
+				disponible = FINAL-INICIAL+1
+			
+				cantidad = int(self.txt_cantidad.text())
+				registro = str(self.txt_rncyfs.text())
+			
+				if cantidad <= disponible:
+
+					P = Pedido(cantidad,registro,Numpedido) #crea nuevo pedido
+					P.asignar(INICIAL) #envia como parametro el rango inicial
+
+				
+				
+					P.showrango()
+					pedidos.append(P)
+					Numpedido= Numpedido+1
 					
-		
-			disponible = FINAL-INICIAL+1
-		
-			cantidad = int(self.txt_cantidad.text())
-			registro = str(self.txt_rncyfs.text())
-		
-			if cantidad <= disponible:
-
-				P = Pedido(cantidad,registro,Numpedido) #crea nuevo pedido
-				P.asignar(INICIAL) #envia como parametro el rango inicial
-
-			
-			
-				P.showrango()
-				pedidos.append(P)
-				Numpedido= Numpedido+1
-				q= bdquery()
-				estado="SIN USAR"
+					estado="SIN USAR"
+					
+					
+					
+					fechapedido=str(date.today())
+					
+					
+					#fechapedido=formatearfecha(fecha)
+					
+					if self.rb_seriea.isChecked():
+						serie="A"
+					else:
+						serie="B"
+					
+					
+					
+					q.cargapedido(Numpedido,registro,cantidad,INICIAL,INICIAL+cantidad-1,INICIAL,INICIAL+cantidad-1,estado,fechapedido,serie)
+					
+					
+					q.incrementanpedido(Numpedido)
+					
+					msgBox=QtGui.QMessageBox(self.centralwidget)
+					msgBox.setIcon(1)
+					msgBox.setWindowTitle("PEDIDO")
+					msgBox.setText("RANGO ASIGNADO CORRECTAMENTE")
+					msgBox.exec_()
+					
+					self.frame_detallepedido.show()			
+					self.signal_cantidad.setText(str(cantidad))
+					self.signal_rncyfs.setText(str(registro))
+					self.signal_inicio.setText(str(INICIAL))
+					self.signal_fin.setText(str(INICIAL+cantidad-1))
+					self.signal_numpedido.setText(str(Numpedido))
+					
+					#GUARDA DATOS PARA IMRIMIR
+					nombre=q.traenombre(registro)
+					
+					ticket= open("ticket.txt","w")
+					
+					ticket.write("DETALLE DE PEDIDO\n")
+					ticket.write("-----------------------------\n")
+					ticket.write("RAZON SOCIAL: "+str("".join(nombre))+"\n")
+					ticket.write("PEDIDO: "+str(Numpedido)+"\n")
+					ticket.write("-----------------------------\n")
+					ticket.write("RNCyFS: "+str(registro)+"\n")
+					ticket.write("Fecha: "+str(fechapedido)+"\n")			
+					ticket.write("Rango: ")
+					ticket.write(str(INICIAL)+" - "+str(INICIAL+cantidad-1)+"\n")
+					ticket.write("Serie: "+str(serie)+"\n")
+					ticket.write("Cantidad: "+str(cantidad)+"\n")
+					
+					
+					ticket.write("-----------------------------\n")
+					ticket.close()
+								
+					
+					
+					
+					INICIAL=INICIAL+cantidad
+					q.actualizarangoenbd(INICIAL,FINAL,indice)
+					self.combo_asociados.clear()
+					self.llenarcombo()
+					self.iniciarpedido()
 				
-				
-				
-				fechapedido=str(date.today())
-				
-				
-				#fechapedido=formatearfecha(fecha)
-				
-				if self.rb_seriea.isChecked():
-					serie="A"
 				else:
-					serie="B"
-				
-				
-				
-				q.cargapedido(Numpedido,registro,cantidad,INICIAL,INICIAL+cantidad-1,INICIAL,INICIAL+cantidad-1,estado,fechapedido,serie)
-				
-				
-				q.incrementanpedido(Numpedido)
-				
-				msgBox=QtGui.QMessageBox(self.centralwidget)
-				msgBox.setIcon(1)
-				msgBox.setWindowTitle("PEDIDO")
-				msgBox.setText("RANGO ASIGNADO CORRECTAMENTE")
-				msgBox.exec_()
-				
-				self.frame_detallepedido.show()			
-				self.signal_cantidad.setText(str(cantidad))
-				self.signal_rncyfs.setText(str(registro))
-				self.signal_inicio.setText(str(INICIAL))
-				self.signal_fin.setText(str(INICIAL+cantidad-1))
-				self.signal_numpedido.setText(str(Numpedido))
-				
-				#GUARDA DATOS PARA IMRIMIR
-				nombre=q.traenombre(registro)
-				
-				ticket= open("ticket.txt","w")
-				
-				ticket.write("DETALLE DE PEDIDO\n")
-				ticket.write("-----------------------------\n")
-				ticket.write("RAZON SOCIAL: "+str("".join(nombre))+"\n")
-				ticket.write("PEDIDO: "+str(Numpedido)+"\n")
-				ticket.write("-----------------------------\n")
-				ticket.write("RNCyFS: "+str(registro)+"\n")
-				ticket.write("Fecha: "+str(fechapedido)+"\n")			
-				ticket.write("Rango: ")
-				ticket.write(str(INICIAL)+" - "+str(INICIAL+cantidad-1)+"\n")
-				ticket.write("Serie: "+str(serie)+"\n")
-				ticket.write("Cantidad: "+str(cantidad)+"\n")
-				
-				
-				ticket.write("-----------------------------\n")
-				ticket.close()
-							
-				
-				
-				
-				INICIAL=INICIAL+cantidad
-				q.actualizarangoenbd(INICIAL,FINAL,indice)
-				self.combo_asociados.clear()
-				self.llenarcombo()
-				self.iniciarpedido()
-			
+					msgBox=QtGui.QMessageBox(self.centralwidget)
+					msgBox.setIcon(3)
+					msgBox.setWindowTitle("STOCK INSUFICIENTE")
+					msgBox.setText("NO HAY STOCK SUFICIENTE PARA ESE PEDIDO")
+					msgBox.exec_()
+					
+					
 			else:
 				msgBox=QtGui.QMessageBox(self.centralwidget)
 				msgBox.setIcon(3)
-				msgBox.setWindowTitle("STOCK INSUFICIENTE")
-				msgBox.setText("NO HAY STOCK SUFICIENTE PARA ESE PEDIDO")
+				msgBox.setWindowTitle("ERROR")
+				msgBox.setText("INGRESE CANTIDAD")
 				msgBox.exec_()
-				
-				
-		else:
-			msgBox=QtGui.QMessageBox(self.centralwidget)
-			msgBox.setIcon(3)
-			msgBox.setWindowTitle("ERROR")
-			msgBox.setText("INGRESE CANTIDAD")
-			msgBox.exec_()
 			
 	def imprimirticket(self):
 			os.startfile("ticket.txt", "print")
@@ -351,7 +384,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 	def verpedidos(self):
 		
 		campo= str(self.txt_verpedido.text())
-		q=bdquery()
+		
 		tablapedidos=q.verpedido(campo)
 		totalfilas=len(tablapedidos)
 		self.tb_verpedidos.setRowCount(totalfilas)
@@ -384,7 +417,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 				
 	def validarpedido(self):
 		numeropedido=int(self.txt_numpedido.text())
-		q=bdquery()
+		
 		tablapedidos=q.getpedido(numeropedido)
 		
 		if len(tablapedidos) != 0:
@@ -409,7 +442,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		if self.txt_subvariedad.text() and self.txt_subcantidad.text() and self.txt_kg.text() and self.cbx_especie_sp.currentText() and self.cbx_categoria_sp.currentText(): 
 		
 			numeropedido=int(self.txt_numpedido.text())
-			q=bdquery()
+			
 			tablapedidos=q.getpedido(numeropedido)
 			cantidad =int(self.txt_subcantidad.text())
 			
@@ -499,7 +532,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 					msgBox.exec_()
 					
 					c.copy(str(spini)+"-"+str(spfin))
-					q=bdquery()
+					
 					q.cargasubepedido(numpedido,spini,spfin,cantidad,variedad,especie,int(camp),int(KG),categoria,registro,fechasubpedido)
 					
 					inicioremanente=tablapedidos[6]+cantidad
@@ -529,7 +562,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 				
 			
 	def altasocio(self):
-		q=bdquery()
+		
 		registro =str(self.txt_altaasociado_reg.text())
 		nombre =str(self.txt_altaasociado_nombre.text())
 		resultado=q.validarasociado(registro)
@@ -551,25 +584,62 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 	def nuevagestion(self):
 		
-		if self.txt_cantidad_gestiones.text():
 		
-			registro =self.traeregistrogestiones()
+		if self.txt_cantidad_gestiones.text():
+			
+			if self.txt_rncyfs_gestiones.text():
+				registro=str(self.txt_rncyfs_gestiones.text())
+				
+			else:
+				registro =self.traeregistrogestiones()
+			
 			tipo =str(self.combo_gestiones.currentText())
 			cantidad =int(self.txt_cantidad_gestiones.text())
-			estado="0-Iniciado"
+			
 			fechagestion=str(date.today())
 			#fechagestion=formatearfecha(fecha)
 			
 			
+			if tipo == "Envio Inspecciones" or tipo== "Alta DT" or tipo =="Otra Gestion":
+				estado="8-Documentacion + Nota Enviadas"
+				
+			elif tipo =="Subpedido":
+				estado="5-En Impresion"
+			else:
+				estado="0-Iniciado"
+				
 			
-			q=bdquery()
-			q.altagestion(registro,tipo,estado,fechagestion,cantidad)
+			count=q.validarasociado(registro)
+			valor=int("".join(map(str,count)))
+			if valor ==0:
+				msgBox=QtGui.QMessageBox(self.centralwidget)
+				msgBox.setIcon(3)
+				msgBox.setWindowTitle("ERROR")
+				msgBox.setText("NO EXISTE ESE ASOCIADO")
+				msgBox.exec_()
+			else:	
 			
-			self.combo_gestiones.setCurrentIndex(0)
-			self.combo_asociados_gestiones.setCurrentIndex(0)
-			self.txt_cantidad_gestiones.setText("")
-			self.listargestiones()
+				
+				
+				q.altagestion(registro,tipo,estado,fechagestion,cantidad)
+				
+				self.combo_gestiones.setCurrentIndex(0)
+				self.combo_asociados_gestiones.setCurrentIndex(0)
+				self.txt_cantidad_gestiones.setText("")
+				self.txt_rncyfs_gestiones.setText("")
+				self.listargestiones()
+				
+				msgBox=QtGui.QMessageBox(self.centralwidget)
+				msgBox.setIcon(1)
+				msgBox.setWindowTitle("INGRESO")
+				msgBox.setText("G")
+				msgBox.exec_()
+			
 		else:
+			
+				
+				
+				
 			msgBox=QtGui.QMessageBox(self.centralwidget)
 			msgBox.setIcon(3)
 			msgBox.setWindowTitle("ERROR")
@@ -590,7 +660,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			estado="%"
 		
 		
-		q=bdquery()
+		
 		
 		listarecuperada=q.traergestiones(estado,nombre)
 		totalfilas=len(listarecuperada)
@@ -619,7 +689,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			
 		asociado=str("%"+self.txt_asociados_gestiones_filtro.text()+"%")
 	
-		q=bdquery()
+		
 		
 		listarecuperada=q.traergestiones(estado,asociado)
 		totalfilas=len(listarecuperada)
@@ -648,7 +718,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		fecha=self.tb_gestiones.item(fila, 5).text()
 		estado=self.tb_gestiones.item(fila, 1).text()
 		
-		q=bdquery()
+		
 		obs=q.traenotas(int(indice))
 		
 		self.signal_gestion_asociado.setText(str(registro))
@@ -660,7 +730,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 	def gestionupdate(self):
 		indice=int(self.signal_gestion_indice.text())
 		estado=str(self.combo_estados_gestiones.currentText())
-		q=bdquery()
+		
 		q.updategestion(indice,estado)
 		
 		self.combo_estados_gestiones.setCurrentIndex(0)
@@ -669,12 +739,17 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 	def notaupdate(self):
 		indice=int(self.signal_gestion_indice.text())
 		obs=str(self.signal_gestion_observaciones.toPlainText())
-		q=bdquery()
+		
 		q.insertarnota(indice,obs)
 		self.listargestiones()
+		msgBox=QtGui.QMessageBox(self.centralwidget)
+		msgBox.setIcon(1)
+		msgBox.setWindowTitle("NOTA")
+		msgBox.setText("NOTA AGREGADA")
+		msgBox.exec_()
 	
 	def eliminargestion(self):
-		q=bdquery()
+		
 		indice=int(self.signal_gestion_indice.text())
 		msgBox=QtGui.QMessageBox(self.centralwidget)
 		msgBox.setIcon(2)
@@ -700,7 +775,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			
 			
 	def eliminarimpresion(self):
-		q=bdquery()
+		
 		indice=int(self.txt_indice_rotulos.text())
 		msgBox=QtGui.QMessageBox(self.centralwidget)
 		msgBox.setIcon(2)
@@ -726,7 +801,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 			
 	def listar(self):
-		q=bdquery()
+		
 		
 		if self.cbx_porrotulo.isChecked():
 			rotulo=int(self.txt_porrotulo.text())
@@ -776,7 +851,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 				
 			elif self.rb_pornumpedido.isChecked():
 				campolistar= int(self.txt_listar.text())
-				q=bdquery()
+				
 				if self.cbx_porfecha.isChecked():
 					tablarecuperada=q.listaxpedidofecha(campolistar,radiobutton,desde,hasta)
 				else:
@@ -820,7 +895,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		sheet = book.active
 		
 		
-		q=bdquery()
+		
 		
 		
 		if self.rb_pornumpedido.isChecked():
@@ -884,7 +959,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			
 			
 				
-			q=bdquery()
+			
 			listarecuperada =q.listarrendicion(desde,hasta,registro,especie,cultivar,categoria,camp)
 			totalfilas=len(listarecuperada)
 			self.tb_rendicion.setRowCount(totalfilas)
@@ -919,7 +994,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 				registro="%"
 			
 			
-			q=bdquery()
+			
 			listarecuperada =q.listarrendicionsolopedidos(desde,hasta,registro)
 			totalfilas=len(listarecuperada)
 			self.tb_rendicion.setRowCount(totalfilas)
@@ -980,7 +1055,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 				camp="%"
 			
 				
-			q=bdquery()
+			
 			tablarecuperada =q.listarrendicion(desde,hasta,registro,especie,cultivar,categoria,camp)
 			book = Workbook()
 			sheet = book.active
@@ -1022,7 +1097,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 				registro="%"
 			
 			
-			q=bdquery()
+			
 			tablarecuperada =q.listarrendicionsolopedidos(desde,hasta,registro)
 			book = Workbook()
 			sheet = book.active
@@ -1054,14 +1129,14 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 	def setearlockers(self):
 		cantidad=self.txt_definir_locker.text()
-		q=bdquery()
+		
 			
 		for i in range(1,int(cantidad)):
 			estado ="Disponible"
 			q.definircantidadlockers(i,estado)
 			
 	def lockerdisponibles(self):
-		q=bdquery()
+		
 		lockers=q.recuperalockers()
 		
 		#la consulta devuelve una tupla, por lo tanto hay que convertirla a str para llenar el combobox, se usa el metodo "".join()
@@ -1081,7 +1156,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			
 			fechaingreso= str(date.today())
 			#fechaingreso=formatearfecha(fecha)
-			q=bdquery()
+			
 			q.modificalocker(locker,pedido,fechaingreso)
 			
 			self.cbx_num_locker.clear()
@@ -1111,7 +1186,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		locker = int(self.signal_locker_locker.text())
 		
 		
-		q=bdquery()
+		
 		q.liberalocker(locker)
 		
 		self.cbx_num_locker.clear()
@@ -1121,7 +1196,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 			
 	def listarlockers(self):
-		q=bdquery()
+		
 		listarecuperada=q.verlockers()
 		totalfilas=len(listarecuperada)
 		self.tb_lockers.setRowCount(totalfilas)
@@ -1141,7 +1216,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			fila=fila+1
 			
 	def filtrarlockers(self):
-		q=bdquery()
+		
 		locker=str("%"+self.txt_buscar_locker.text()+"%")
 		listarecuperada=q.verlockers_filtrado(locker)
 		totalfilas=len(listarecuperada)
@@ -1164,7 +1239,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 	def nuevaimpresion(self):
 		
-		q=bdquery()
+		
 		registro=str(self.txt_rncyfs_rotulos.text())
 		count=q.validarasociado(registro)
 		valor=int("".join(map(str,count)))
@@ -1189,15 +1264,58 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 				#fechaimpresion=formatearfecha(fecha)
 				estado="PENDIENTE"
 				
+				indice=0
+				if tipo == "Tyveck 40KG.":
+					if categoria =="Primera":
+						indice=1
+						
+					elif categoria =="Original":
+						indice=4
+					elif categoria == "Segunda":
+						indice=3
+					elif categoria =="Identificada":
+						indice =5
+						
+				elif tipo == "Tyveck BB":
+					if categoria =="Primera":
+						indice=2
+					elif categoria =="Identificada":
+						indice=6
 				
-				q.altarotulo(registro,especie,tipo,cantidad,estado,categoria,fechaimpresion)
+			
+				print indice
+				print tipo	
+				if indice !=0:
+					
+					stock=q.recuperastock(indice)
+					stock_actualizado = int(stock[0])-cantidad
+					if stock_actualizado <0:
+						msgBox=QtGui.QMessageBox(self.centralwidget)
+						msgBox.setIcon(3)
+						msgBox.setWindowTitle("ERROR DE STOCK")
+						msgBox.setText("NO HAY STOCK SUFICIENTE DE ESE TIPO DE ROTULO")
+						msgBox.exec_()
+					else:
+						q.actualizar_stock(stock_actualizado,indice)
+						q.altarotulo(registro,especie,tipo,cantidad,estado,categoria,fechaimpresion)
+						self.traerstock()
+					
+					
+					
 				
+				else:
+					q.altarotulo(registro,especie,tipo,cantidad,estado,categoria,fechaimpresion)
+				
+				
+					
+					
 				self.txt_rncyfs_rotulos.setText("")
 				self.txt_cantidad_rotulos.setText("")
 				self.cbx_especie_rotulos.setCurrentIndex(0)
 				self.cbx_categoria_rotulos.setCurrentIndex(0)
 				self.cbx_tipo_rotulos.setCurrentIndex(0)
 				self.listarimpresiones()
+				
 			else:
 				msgBox=QtGui.QMessageBox(self.centralwidget)
 				msgBox.setIcon(3)
@@ -1222,11 +1340,17 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		else:
 			
 			tipo=str(self.cb_tipo.currentText())
+			
+		if self.cb_especie.currentText()=="-":
+			especie="%"
+		else:
+			especie=str(self.cb_especie.currentText())
+
 		
 		
-		q=bdquery()
 		
-		listarecuperada=q.traerotulos(estado,tipo)
+		
+		listarecuperada=q.traerotulos(estado,tipo,especie)
 		totalfilas=len(listarecuperada)
 		self.tb_rotulos.setRowCount(totalfilas)
 			
@@ -1234,14 +1358,14 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		fila =0
 		acum=0
 		for i in listarecuperada:
-			self.tb_rotulos.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
-			self.tb_rotulos.setItem(fila,1,QtGui.QTableWidgetItem(str(i[1])))
-			self.tb_rotulos.setItem(fila,2,QtGui.QTableWidgetItem(str(i[2])))
-			self.tb_rotulos.setItem(fila,3,QtGui.QTableWidgetItem(str(i[3])))
-			self.tb_rotulos.setItem(fila,4,QtGui.QTableWidgetItem(str(i[4])))
-			self.tb_rotulos.setItem(fila,5,QtGui.QTableWidgetItem(str(i[5])))
-			self.tb_rotulos.setItem(fila,6,QtGui.QTableWidgetItem(str(i[6])))
-			self.tb_rotulos.setItem(fila,7,QtGui.QTableWidgetItem(str(i[7])))
+			self.tb_rotulos.setItem(fila,7,QtGui.QTableWidgetItem(str(i[0]))) #TIPO DE ROTULO
+			self.tb_rotulos.setItem(fila,1,QtGui.QTableWidgetItem(str(i[1]))) #FECHA
+			self.tb_rotulos.setItem(fila,2,QtGui.QTableWidgetItem(str(i[2]))) #ESTADO
+			self.tb_rotulos.setItem(fila,3,QtGui.QTableWidgetItem(str(i[3]))) #CANTIDAD
+			self.tb_rotulos.setItem(fila,4,QtGui.QTableWidgetItem(str(i[4]))) #RAZON SOCIAL
+			self.tb_rotulos.setItem(fila,5,QtGui.QTableWidgetItem(str(i[5]))) #ESPECIE
+			self.tb_rotulos.setItem(fila,6,QtGui.QTableWidgetItem(str(i[6]))) #CATEGORIA
+			self.tb_rotulos.setItem(fila,0,QtGui.QTableWidgetItem(str(i[7]))) #INDICE
 			
 			acum=acum+int(i[3])
 				
@@ -1253,7 +1377,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 	def cambiarestadorotulo(self):
 		indice=int(self.txt_indice_rotulos.text())
 		estado=str(self.txt_estado_rotulos.currentText())
-		q=bdquery()
+		
 		q.definirestadorotulo(estado,indice)
 		self.listarimpresiones()
 		
@@ -1261,7 +1385,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 	def impresionselected(self):
 		fila = self.tb_rotulos.currentRow()
-		indice=self.tb_rotulos.item(fila, 0).text() #SELECCIONO EL CONTENIDO DE LA FILA 5 DE LA COLUMNA SELECCIONADA
+		indice=self.tb_rotulos.item(fila, 7).text() #SELECCIONO EL CONTENIDO DE LA FILA 5 DE LA COLUMNA SELECCIONADA
 		razon=self.tb_rotulos.item(fila, 4).text()
 		cantidad=self.tb_rotulos.item(fila, 3).text()
 		
@@ -1283,7 +1407,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			elif self.rb_serieb_add.isChecked():
 				serie="B"
 			fin=inicio+cantidad-1
-			q=bdquery()
+			
 			q.nuevorango(inicio,fin,cantidad,serie)
 			
 			self.txt_inicio_nuevorango.setText("")
@@ -1306,7 +1430,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		else:
 			serie="B"
 		
-		q=bdquery()
+		
 		listarecuperada=q.traerangos(estado,serie)
 		totalfilas=len(listarecuperada)
 		self.tb_rangos.setRowCount(totalfilas)
@@ -1335,7 +1459,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			indice=1
 		else:
 			indice=2
-		q=bdquery()
+		
 		q.definirrango(inicio,final,indice)
 		
 		self.signal_inicio_rg.setText("")
@@ -1356,7 +1480,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			indice=1
 		else:
 			indice=2
-		q=bdquery()
+		
 		q.cancelarrango(inicio)
 		
 		self.signal_inicio_rg.setText("")
@@ -1364,7 +1488,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		
 	def traerstock(self):
-		q=bdquery()
+		
 		listado= q.getstock()
 		
 		totalfilas=len(listado)
@@ -1375,11 +1499,67 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			self.tb_stock_rotulos.setItem(fila,1,QtGui.QTableWidgetItem(str(i[1])))
 			fila = fila+1
 			
+	
+	def listarasociados(self):
 		
 		
 		
+		
+		listarecuperada=q.traerasociados()
+		totalfilas=len(listarecuperada)
+		self.tb_asociados_envios.setRowCount(totalfilas)
+			
+			
+		fila =0
+		
+		for i in listarecuperada:
+			self.tb_asociados_envios.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
+			
+		
+									
+			fila=fila+1
+		
+		
+	def asociado_selected(self):
+		
+		fila = self.tb_asociados_envios.currentRow()
+		asociado=self.tb_asociados_envios.item(fila, 0).text() #SELECCIONO EL CONTENIDO DE LA FILA DE LA COLUMNA 0 SELECCIONADA
+		self.signal_asociado_envios.setText(str(asociado))
+		self.traerpedidos_agrupados(asociado)
+		
+			
+		
+		
+		'''q=bdquery()
+		obs=q.traenotas(int(indice))
+		
+		self.signal_gestion_asociado.setText(str(registro))
+		self.signal_gestion_fecha.setText(str(fecha))
+		self.signal_gestion_estado.setText(str(estado))
+		self.signal_gestion_indice.setText(str(indice))
+		self.signal_gestion_observaciones.setText(str("".join(obs)))'''
 		
 				
+		
+	def traerpedidos_agrupados(self,asociado):
+		
+		registro=q.traerregistro(str(asociado))
+		
+		
+		tablarecuperada=q.subpedidosporfecha(registro)
+	
+		totalfilas=len(tablarecuperada)
+		self.tb_subpedidos_envios.setRowCount(totalfilas)
+		fila=0
+		for i in tablarecuperada:
+			self.tb_subpedidos_envios.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
+			self.tb_subpedidos_envios.setItem(fila,1,QtGui.QTableWidgetItem(str(i[1])))
+			self.tb_subpedidos_envios.setItem(fila,2,QtGui.QTableWidgetItem(str(i[2])))
+			
+			fila = fila+1
+		
+		
+		
 		
 		
 		
@@ -1457,16 +1637,18 @@ def actualizarangogeneral(cantidad):
 	pass
 	#Rango[0]=Rango[0]+cantidad
 	INICIAL= INICIAL+cantidad
-	q=bdquery()
+	
 					
 	
 
 
 if __name__ == '__main__':
+	q=bdquery()
 	app = QtGui.QApplication(sys.argv)
 	MyWindow = VentanaPrincipal(None)
 	MyWindow.llenarcombo()
 	MyWindow.lockerdisponibles()
+	MyWindow.listarasociados()
 	MyWindow.show()
 	app.exec_()
 	

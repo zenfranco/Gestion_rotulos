@@ -1,11 +1,11 @@
 DETALLE DE PEDIDO
 -----------------------------
-RAZON SOCIAL: COOP. LEON SOLA
-PEDIDO: 150
+RAZON SOCIAL: COOP. AGROP. DE LA VIOLETA
+PEDIDO: 153
 -----------------------------
-RNCyFS: 2185
-Fecha: 2022-12-22
-Rango: 10907001 - 10908000
+RNCyFS: 1425
+Fecha: 2023-02-09
+Rango: 10917001 - 10918000
 Serie: A
 Cantidad: 1000
 -----------------------------

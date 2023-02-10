@@ -279,10 +279,10 @@ class bdquery():
 			self.conexion.commit()
 			cur.close()
 			
-		def traerotulos(self,estado,tipo):
+		def traerotulos(self,estado,tipo,especie):
 			cur=self.conexion.cursor()
 			cur.execute('''select indice, fecha_impresion,estado,cantidad,a.razon_social,especie,categoria,tipo from rotulos r
-			inner join asociados a on a.num_reg=r.num_reg where estado LIKE ? and tipo LIKE ?''',([estado,tipo]))
+			inner join asociados a on a.num_reg=r.num_reg where estado LIKE ? and tipo LIKE ? and especie like ? order by indice DESC''',([estado,tipo,especie]))
 			self.conexion.commit()
 			listado=cur.fetchall()
 			cur.close()
@@ -296,11 +296,19 @@ class bdquery():
 			cur.close()
 			return asociado
 			
+		def traerncyfs(self,nombre):
+			cur=self.conexion.cursor()
+			cur.execute('''select num_reg from asociados where razon_social=?''',([nombre]))
+			self.conexion.commit()
+			asociado=cur.fetchone()
+			cur.close()
+			return asociado
+			
 			
 		def traergestiones(self,estado,nombre):
 			cur=self.conexion.cursor()
 			cur.execute('''select razon_social,estado,cantidad,(JulianDay(date()) - JulianDay(fecha_inicio)) demora,tipo,fecha_inicio, indice from gestiones g
-			inner join asociados a on a.num_reg = g.num_reg where estado LIKE ? and razon_social LIKE ? order by demora desc''',([estado, nombre]))
+			inner join asociados a on a.num_reg = g.num_reg where estado LIKE ? and razon_social LIKE ? order by demora ASC''',([estado, nombre]))
 			self.conexion.commit()
 			listado=cur.fetchall()
 			cur.close()
@@ -408,6 +416,38 @@ class bdquery():
 			listado=cur.fetchall()
 			cur.close()
 			return listado
+			
+			
+		def subpedidosporfecha(self,reg):
+			cur=self.conexion.cursor()
+			cur.execute('''select sum(cantidad),especie,fecha_subpedido from subpedidos where num_reg = ? group by fecha_subpedido''',reg)
+			self.conexion.commit()
+			listado=cur.fetchall()
+			cur.close()
+			return listado
+			
+		def recuperastock(self,indice):
+			cur=self.conexion.cursor()
+			cur.execute('''select cantidad from stock_rotulos where indice=?''',([indice]))
+			self.conexion.commit()
+			cantidad=cur.fetchone()
+			cur.close()
+			return cantidad
+			
+		def actualizar_stock(self,cantidad,indice):
+			cur=self.conexion.cursor()
+			cur.execute('''UPDATE stock_rotulos SET (cantidad)= (?) WHERE (indice) =(?)''',([cantidad,indice]))
+			self.conexion.commit()
+			cur.close()
+			
+		def traerregistro(self,asociado):
+			cur=self.conexion.cursor()
+			cur.execute('''select num_reg from asociados where razon_social =?''',([asociado]))
+			self.conexion.commit()
+			registro=cur.fetchone()
+			cur.close()
+			return registro
+			
 
 		
 
