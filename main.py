@@ -36,6 +36,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.btn_rotulos.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.p_rotulos)) #cambia de pagina
 		self.btn_nuevagestion.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.p_gestion)) #cambia de pagina
 		self.btn_envios.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.p_envios))
+		self.btn_estampillas.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.p_estampillas))
 		
 		#FUNCION DE LOS BOTONES
 		#PAGINA PEDIDOS
@@ -113,6 +114,9 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		headertb_asociados_envios = self.tb_asociados_envios.horizontalHeader()
 		headertb_asociados_envios.setResizeMode(QtGui.QHeaderView.ResizeToContents)
 		
+		headertb_asociados_estampillas = self.tb_asociados_estampillas.horizontalHeader()
+		headertb_asociados_estampillas.setResizeMode(QtGui.QHeaderView.ResizeToContents)
+		
 		
 		
 		
@@ -132,6 +136,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.btn_definir_rotulos.clicked.connect(self.cambiarestadorotulo)
 		self.tb_rotulos.itemDoubleClicked.connect(self.impresionselected)
 		self.btn_eliminar_impresion.clicked.connect(self.eliminarimpresion)
+		self.btn_ingresar_stock.clicked.connect(self.cargaStock)
 		
 		#PAGINA GESTIONES
 		self.btn_agregar_nueva.clicked.connect(self.nuevagestion)
@@ -145,6 +150,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		#PAGINA ENVIOS
 		self.tb_asociados_envios.itemDoubleClicked.connect(self.asociado_selected)
+		self.tb_asociados_estampillas.itemDoubleClicked.connect(self.asociado_selected)
 		
 		
 	
@@ -160,6 +166,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			self.combo_asociados_subpedidos.addItem("".join(asociados[k]))
 			self.combo_asociados_listar.addItem("".join(asociados[k]))
 			self.cb_razonsocial_rotulos.addItem("".join(asociados[k]))
+			self.cb_razonsocial.addItem("".join(asociados[k]))
 			self.combo_asociados_gestiones.addItem("".join(asociados[k]))
 			k=k+1
 		
@@ -247,67 +254,59 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		global indice
 		
 		
-		
-		if self.rb_general.isChecked(): #EN ESTE CASO EL PEDIDO SERA TOMADO DEL RANGO GENERAL
-			pass
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-		else:
-			if self.txt_cantidad.text(): #EN ESTE CASO EL PEDIDO SERA TOMADO DEL RANGO A O B
+		if self.txt_cantidad.text(): 
 				
 			
 				
 						
 			
-				disponible = FINAL-INICIAL+1
+			disponible = FINAL-INICIAL+1
 			
-				cantidad = int(self.txt_cantidad.text())
-				registro = str(self.txt_rncyfs.text())
+			cantidad = int(self.txt_cantidad.text())
+			registro = str(self.txt_rncyfs.text())
 			
-				if cantidad <= disponible:
+			if cantidad <= disponible:
 
-					P = Pedido(cantidad,registro,Numpedido) #crea nuevo pedido
-					P.asignar(INICIAL) #envia como parametro el rango inicial
+				P = Pedido(cantidad,registro,Numpedido) #crea nuevo pedido
+				P.asignar(INICIAL) #envia como parametro el rango inicial
 
 				
 				
-					P.showrango()
-					pedidos.append(P)
-					Numpedido= Numpedido+1
+				P.showrango()
+				pedidos.append(P)
+				Numpedido= Numpedido+1
 					
-					estado="SIN USAR"
+				estado="SIN USAR"
 					
 					
 					
-					fechapedido=str(date.today())
+				fechapedido=str(date.today())
 					
 					
 					#fechapedido=formatearfecha(fecha)
+				flag =False	
+				if self.rb_seriea.isChecked():
+					serie="A"
 					
-					if self.rb_seriea.isChecked():
-						serie="A"
-					else:
-						serie="B"
+				elif self.rb_serieb.isChecked():
+					serie="B"
+					
+				elif self.rb_general.isChecked():
+					serie="Grl."
+					flag=True
 					
 					
+				if flag is True:
+					pass
 					
+					
+				else:
+						
 					q.cargapedido(Numpedido,registro,cantidad,INICIAL,INICIAL+cantidad-1,INICIAL,INICIAL+cantidad-1,estado,fechapedido,serie)
-					
-					
+						
+						
 					q.incrementanpedido(Numpedido)
-					
+						
 					msgBox=QtGui.QMessageBox(self.centralwidget)
 					msgBox.setIcon(1)
 					msgBox.setWindowTitle("PEDIDO")
@@ -323,9 +322,9 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 					
 					#GUARDA DATOS PARA IMRIMIR
 					nombre=q.traenombre(registro)
-					
+						
 					ticket= open("ticket.txt","w")
-					
+						
 					ticket.write("DETALLE DE PEDIDO\n")
 					ticket.write("-----------------------------\n")
 					ticket.write("RAZON SOCIAL: "+str("".join(nombre))+"\n")
@@ -337,34 +336,34 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 					ticket.write(str(INICIAL)+" - "+str(INICIAL+cantidad-1)+"\n")
 					ticket.write("Serie: "+str(serie)+"\n")
 					ticket.write("Cantidad: "+str(cantidad)+"\n")
-					
-					
+						
+						
 					ticket.write("-----------------------------\n")
 					ticket.close()
 								
 					
 					
 					
-					INICIAL=INICIAL+cantidad
-					q.actualizarangoenbd(INICIAL,FINAL,indice)
-					self.combo_asociados.clear()
-					self.llenarcombo()
-					self.iniciarpedido()
+				INICIAL=INICIAL+cantidad
+				q.actualizarangoenbd(INICIAL,FINAL,indice)
+				self.combo_asociados.clear()
+				self.llenarcombo()
+				self.iniciarpedido()
 				
-				else:
-					msgBox=QtGui.QMessageBox(self.centralwidget)
-					msgBox.setIcon(3)
-					msgBox.setWindowTitle("STOCK INSUFICIENTE")
-					msgBox.setText("NO HAY STOCK SUFICIENTE PARA ESE PEDIDO")
-					msgBox.exec_()
-					
-					
 			else:
 				msgBox=QtGui.QMessageBox(self.centralwidget)
 				msgBox.setIcon(3)
-				msgBox.setWindowTitle("ERROR")
-				msgBox.setText("INGRESE CANTIDAD")
+				msgBox.setWindowTitle("STOCK INSUFICIENTE")
+				msgBox.setText("NO HAY STOCK SUFICIENTE PARA ESE PEDIDO")
 				msgBox.exec_()
+					
+					
+		else:
+			msgBox=QtGui.QMessageBox(self.centralwidget)
+			msgBox.setIcon(3)
+			msgBox.setWindowTitle("ERROR")
+			msgBox.setText("INGRESE CANTIDAD")
+			msgBox.exec_()
 			
 	def imprimirticket(self):
 			os.startfile("ticket.txt", "print")
@@ -1283,8 +1282,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 						indice=6
 				
 			
-				print indice
-				print tipo	
+					
 				if indice !=0:
 					
 					stock=q.recuperastock(indice)
@@ -1323,6 +1321,51 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 				msgBox.setText("INGRESE CANTIDAD")
 				msgBox.exec_()
 		
+	def cargaStock(self):
+		
+		if self.txt_cantidad_rotulos_stock.text():
+			
+			tipo=str(self.cbx_tipo_rotulos_ingresar.currentText())
+			cantidad =int(self.txt_cantidad_rotulos_stock.text())
+			categoria =str(self.cbx_categoria_rotulos_stock.currentText())
+			
+			if tipo == "Tyveck 40KG.":
+						if categoria =="Primera":
+							indice=1
+							
+						elif categoria =="Original":
+							indice=4
+						elif categoria == "Segunda":
+							indice=3
+						elif categoria =="Identificada":
+							indice =5
+							
+			elif tipo == "Tyveck BB":
+						if categoria =="Primera":
+							indice=2
+						elif categoria =="Identificada":
+							indice=6
+			
+			stock_recuperado=q.recuperastock(indice)	
+			stock =int(stock_recuperado[0])
+			stock_final=stock+cantidad
+			q.actualizar_stock(stock_final,indice)
+			msgBox=QtGui.QMessageBox(self.centralwidget)
+			msgBox.setIcon(1)
+			msgBox.setWindowTitle("STOCK")
+			msgBox.setText("STOCK ACTUALIZADO")
+			msgBox.exec_()
+			self.traerstock()
+			
+			self.txt_cantidad_rotulos_stock.setText("")
+		else:
+			msgBox=QtGui.QMessageBox(self.centralwidget)
+			msgBox.setIcon(3)
+			msgBox.setWindowTitle("ERROR")
+			msgBox.setText("INGRESE UNA CANTIDAD")
+			msgBox.exec_()
+			
+		
 		
 		
 	def listarimpresiones(self):
@@ -1333,24 +1376,37 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			estado="FACTURADO"
 		elif self.rb_rotulos_todos.isChecked():
 			estado="%"
-		
-		
+		elif self.rb_rotulos_completos.isChecked():
+			estado="COMPLETO"
+			
+			
 		if self.cb_tipo.currentText() == "-":
 			tipo="%"
 		else:
-			
+				
 			tipo=str(self.cb_tipo.currentText())
-			
+				
 		if self.cb_especie.currentText()=="-":
 			especie="%"
 		else:
 			especie=str(self.cb_especie.currentText())
-
+			
+		if self.cb_razonsocial.currentText()=="-":
+			razon="%"
+		else:
+			razon=str(self.cb_razonsocial.currentText())
 		
 		
+		if self.cb_alldate.isChecked():
+			
+			listarecuperada=q.traerotulos(estado,tipo,especie,razon)
+		else:
+			inicio=str(self.fecha_desde_rotulos.text())
+			fin=str(self.fecha_hasta_rotulos.text())
+			listarecuperada=q.traerotulosFecha(estado,tipo,especie,inicio,fin)
+			
 		
 		
-		listarecuperada=q.traerotulos(estado,tipo,especie)
 		totalfilas=len(listarecuperada)
 		self.tb_rotulos.setRowCount(totalfilas)
 			
@@ -1361,10 +1417,38 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			self.tb_rotulos.setItem(fila,7,QtGui.QTableWidgetItem(str(i[0]))) #TIPO DE ROTULO
 			self.tb_rotulos.setItem(fila,1,QtGui.QTableWidgetItem(str(i[1]))) #FECHA
 			self.tb_rotulos.setItem(fila,2,QtGui.QTableWidgetItem(str(i[2]))) #ESTADO
+			if i[2] =="FACTURADO":
+						
+					self.tb_rotulos.setItem(fila, 2, QtGui.QTableWidgetItem("FACTURADO"))
+					self.tb_rotulos.item(fila,2).setBackground(QtGui.QColor(205,221,193))
+			elif i[2] =="PENDIENTE":
+					self.tb_rotulos.setItem(fila, 2, QtGui.QTableWidgetItem("PENDIENTE"))
+					self.tb_rotulos.item(fila,2).setBackground(QtGui.QColor(254,247,105))
+			elif i[2] =="COMPLETO":
+					self.tb_rotulos.setItem(fila, 2, QtGui.QTableWidgetItem("COMPLETO"))
+					self.tb_rotulos.item(fila,2).setBackground(QtGui.QColor(148,178,214))
+					
 			self.tb_rotulos.setItem(fila,3,QtGui.QTableWidgetItem(str(i[3]))) #CANTIDAD
 			self.tb_rotulos.setItem(fila,4,QtGui.QTableWidgetItem(str(i[4]))) #RAZON SOCIAL
 			self.tb_rotulos.setItem(fila,5,QtGui.QTableWidgetItem(str(i[5]))) #ESPECIE
 			self.tb_rotulos.setItem(fila,6,QtGui.QTableWidgetItem(str(i[6]))) #CATEGORIA
+			if i[6] =="Primera":
+						
+					self.tb_rotulos.setItem(fila, 6, QtGui.QTableWidgetItem("Primera"))
+					self.tb_rotulos.item(fila,6).setBackground(QtGui.QColor(255,162,154))
+			elif i[6] =="Segunda":
+					self.tb_rotulos.setItem(fila, 6, QtGui.QTableWidgetItem("Segunda"))
+					self.tb_rotulos.item(fila,6).setBackground(QtGui.QColor(167,217,251))
+			elif i[6] =="Identificada":
+					self.tb_rotulos.setItem(fila, 6, QtGui.QTableWidgetItem("Identificada"))
+					self.tb_rotulos.item(fila,6).setBackground(QtGui.QColor(245,242,170))
+			elif i[6] =="Original":
+					self.tb_rotulos.setItem(fila, 6, QtGui.QTableWidgetItem("Original"))
+					self.tb_rotulos.item(fila,6).setBackground(QtGui.QColor(255,255,255))
+			
+			
+			
+			
 			self.tb_rotulos.setItem(fila,0,QtGui.QTableWidgetItem(str(i[7]))) #INDICE
 			
 			acum=acum+int(i[3])
@@ -1508,12 +1592,14 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		listarecuperada=q.traerasociados()
 		totalfilas=len(listarecuperada)
 		self.tb_asociados_envios.setRowCount(totalfilas)
+		self.tb_asociados_estampillas.setRowCount(totalfilas)
 			
 			
 		fila =0
 		
 		for i in listarecuperada:
 			self.tb_asociados_envios.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
+			self.tb_asociados_estampillas.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
 			
 		
 									
@@ -1522,22 +1608,25 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 	def asociado_selected(self):
 		
-		fila = self.tb_asociados_envios.currentRow()
-		asociado=self.tb_asociados_envios.item(fila, 0).text() #SELECCIONO EL CONTENIDO DE LA FILA DE LA COLUMNA 0 SELECCIONADA
-		self.signal_asociado_envios.setText(str(asociado))
-		self.traerpedidos_agrupados(asociado)
+		
+			
+		
+			fila = self.tb_asociados_envios.currentRow()
+			asociado=self.tb_asociados_envios.item(fila, 0).text() #SELECCIONO EL CONTENIDO DE LA FILA DE LA COLUMNA 0 SELECCIONADA
+			self.signal_asociado_envios.setText(str(asociado))
+			self.traerpedidos_agrupados(asociado)
+			
+		
+			
+			fila = self.tb_asociados_estampillas.currentRow()
+			asociado=self.tb_asociados_estampillas.item(fila, 0).text() #SELECCIONO EL CONTENIDO DE LA FILA DE LA COLUMNA 0 SELECCIONADA
+			self.signal_asociado_estampillas.setText(str(asociado))
+			#self.traerpedidos_agrupados(asociado)
 		
 			
 		
 		
-		'''q=bdquery()
-		obs=q.traenotas(int(indice))
 		
-		self.signal_gestion_asociado.setText(str(registro))
-		self.signal_gestion_fecha.setText(str(fecha))
-		self.signal_gestion_estado.setText(str(estado))
-		self.signal_gestion_indice.setText(str(indice))
-		self.signal_gestion_observaciones.setText(str("".join(obs)))'''
 		
 				
 		

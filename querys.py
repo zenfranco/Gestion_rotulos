@@ -279,10 +279,19 @@ class bdquery():
 			self.conexion.commit()
 			cur.close()
 			
-		def traerotulos(self,estado,tipo,especie):
+		def traerotulos(self,estado,tipo,especie,razon):
 			cur=self.conexion.cursor()
 			cur.execute('''select indice, fecha_impresion,estado,cantidad,a.razon_social,especie,categoria,tipo from rotulos r
-			inner join asociados a on a.num_reg=r.num_reg where estado LIKE ? and tipo LIKE ? and especie like ? order by indice DESC''',([estado,tipo,especie]))
+			inner join asociados a on a.num_reg=r.num_reg where estado LIKE ? and tipo LIKE ? and especie like ? and a.razon_social LIKE ? order by indice DESC''',([estado,tipo,especie,razon]))
+			self.conexion.commit()
+			listado=cur.fetchall()
+			cur.close()
+			return listado
+			
+		def traerotulosFecha(self,estado,tipo,especie,inicio,fin):
+			cur=self.conexion.cursor()
+			cur.execute('''select indice, fecha_impresion,estado,cantidad,a.razon_social,especie,categoria,tipo from rotulos r
+			inner join asociados a on a.num_reg=r.num_reg where estado LIKE ? and tipo LIKE ? and especie like ? and fecha_impresion >= ? and fecha_impresion <=? order by indice DESC''',([estado,tipo,especie,inicio,fin]))
 			self.conexion.commit()
 			listado=cur.fetchall()
 			cur.close()
