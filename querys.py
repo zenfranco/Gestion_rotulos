@@ -96,6 +96,14 @@ class bdquery():
 			cur.close
 			return listado
 			
+		def traerasociadosFILTRO(self,nombre):
+			cur=self.conexion.cursor()
+			cur.execute(''' select razon_social from asociados where razon_social LIKE ? order by razon_social''',([nombre]))
+			listado=cur.fetchall()
+			self.conexion.commit()
+			cur.close
+			return listado
+			
 		def getrncyfs(self,nombre):
 			cur=self.conexion.cursor()
 			cur.execute('''select num_reg from asociados where razon_social = (?)''',[nombre])

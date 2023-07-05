@@ -150,7 +150,9 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		#PAGINA ENVIOS
 		self.tb_asociados_envios.itemDoubleClicked.connect(self.asociado_selected)
-		self.tb_asociados_estampillas.itemDoubleClicked.connect(self.asociado_selected)
+		self.tb_asociados_estampillas.itemDoubleClicked.connect(self.asociado_selected_estampillas)
+		self.tb_subpedidos_envios.itemDoubleClicked.connect(self.pedido_envios_selected)
+		self.btn_buscar_asociados.clicked.connect(self.filtrar_asociados)
 		
 		
 	
@@ -631,7 +633,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 				msgBox=QtGui.QMessageBox(self.centralwidget)
 				msgBox.setIcon(1)
 				msgBox.setWindowTitle("INGRESO")
-				msgBox.setText("G")
+				msgBox.setText("GESTION AGREGADA")
 				msgBox.exec_()
 			
 		else:
@@ -1610,18 +1612,43 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		
 			
-		
+			#ENVIOS
+			
 			fila = self.tb_asociados_envios.currentRow()
 			asociado=self.tb_asociados_envios.item(fila, 0).text() #SELECCIONO EL CONTENIDO DE LA FILA DE LA COLUMNA 0 SELECCIONADA
 			self.signal_asociado_envios.setText(str(asociado))
 			self.traerpedidos_agrupados(asociado)
 			
-		
-			
+	def asociado_selected_estampillas(self):
+			#ESTAMPILLAS
 			fila = self.tb_asociados_estampillas.currentRow()
 			asociado=self.tb_asociados_estampillas.item(fila, 0).text() #SELECCIONO EL CONTENIDO DE LA FILA DE LA COLUMNA 0 SELECCIONADA
 			self.signal_asociado_estampillas.setText(str(asociado))
-			#self.traerpedidos_agrupados(asociado)
+			
+	def pedido_envios_selected(self):
+		fila = self.tb_subpedidos_envios.currentRow()
+		cantidad=self.tb_subpedidos_envios.item(fila, 0).text()
+		especie=self.tb_subpedidos_envios.item(fila, 1).text() #SELECCIONO EL CONTENIDO DE LA FILA DE LA COLUMNA 0 SELECCIONADA
+		self.txt_cantidad_envios.setText(str(cantidad))
+		self.txt_especie_envios.setText(str(especie))
+			
+	def filtrar_asociados(self):
+		if self.txt_asociados_envios:
+			asociado= str("%"+self.txt_asociados_envios.text()+"%").upper()
+		else:
+			asociado="%"
+		
+		listarecuperada=q.traerasociadosFILTRO(asociado)
+		totalfilas=len(listarecuperada)
+		self.tb_asociados_envios.setRowCount(totalfilas)
+			
+		
+		fila =0
+		
+		for i in listarecuperada:
+			self.tb_asociados_envios.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
+												
+			fila=fila+1
 		
 			
 		

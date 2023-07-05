@@ -1,11 +1,11 @@
 DETALLE DE PEDIDO
 -----------------------------
-RAZON SOCIAL: AFA RUEDA
-PEDIDO: 158
+RAZON SOCIAL: COOP. AGR.GAN. BOUQUET
+PEDIDO: 160
 -----------------------------
-RNCyFS: 314R
-Fecha: 2023-03-31
-Rango: 10924001 - 10925000
+RNCyFS: 508
+Fecha: 2023-06-29
+Rango: 10932001 - 10940000
 Serie: A
-Cantidad: 1000
+Cantidad: 8000
 -----------------------------

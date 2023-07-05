@@ -5640,7 +5640,7 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>160</x>
-            <y>132</y>
+            <y>112</y>
             <width>51</width>
             <height>20</height>
            </rect>
@@ -5650,7 +5650,7 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>20</x>
-            <y>180</y>
+            <y>160</y>
             <width>111</width>
             <height>22</height>
            </rect>
@@ -5700,7 +5700,7 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>20</x>
-            <y>160</y>
+            <y>140</y>
             <width>121</width>
             <height>16</height>
            </rect>
@@ -5713,7 +5713,7 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>20</x>
-            <y>210</y>
+            <y>190</y>
             <width>121</width>
             <height>16</height>
            </rect>
@@ -5726,7 +5726,7 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>20</x>
-            <y>230</y>
+            <y>210</y>
             <width>111</width>
             <height>22</height>
            </rect>
@@ -5771,7 +5771,7 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>20</x>
-            <y>260</y>
+            <y>240</y>
             <width>121</width>
             <height>16</height>
            </rect>
@@ -5784,7 +5784,7 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>20</x>
-            <y>280</y>
+            <y>260</y>
             <width>111</width>
             <height>22</height>
            </rect>
@@ -5897,7 +5897,7 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>20</x>
-            <y>320</y>
+            <y>300</y>
             <width>111</width>
             <height>31</height>
            </rect>
@@ -5913,7 +5913,7 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>20</x>
-            <y>111</y>
+            <y>91</y>
             <width>121</width>
             <height>16</height>
            </rect>
@@ -5926,7 +5926,7 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>20</x>
-            <y>132</y>
+            <y>112</y>
             <width>111</width>
             <height>20</height>
            </rect>
@@ -5936,7 +5936,7 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>20</x>
-            <y>360</y>
+            <y>334</y>
             <width>118</width>
             <height>31</height>
            </rect>
@@ -5949,7 +5949,7 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>20</x>
-            <y>424</y>
+            <y>440</y>
             <width>121</width>
             <height>16</height>
            </rect>
@@ -5962,7 +5962,7 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>20</x>
-            <y>440</y>
+            <y>456</y>
             <width>111</width>
             <height>22</height>
            </rect>
@@ -6029,7 +6029,7 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>20</x>
-            <y>470</y>
+            <y>490</y>
             <width>111</width>
             <height>31</height>
            </rect>
@@ -6041,7 +6041,7 @@ border-radius:15px;
          <widget class="QLineEdit" name="txt_indice_rotulos">
           <property name="geometry">
            <rect>
-            <x>10</x>
+            <x>720</x>
             <y>530</y>
             <width>21</width>
             <height>20</height>
@@ -6383,7 +6383,7 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>160</x>
-            <y>110</y>
+            <y>90</y>
             <width>51</width>
             <height>16</height>
            </rect>
@@ -6392,53 +6392,13 @@ border-radius:15px;
            <string>Cantidad</string>
           </property>
          </widget>
-         <widget class="QLabel" name="signal_rotulos_razon">
-          <property name="geometry">
-           <rect>
-            <x>20</x>
-            <y>380</y>
-            <width>111</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>...</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="signal_rotulos_cantidad">
-          <property name="geometry">
-           <rect>
-            <x>20</x>
-            <y>395</y>
-            <width>101</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>...</string>
-          </property>
-         </widget>
          <widget class="QPushButton" name="btn_eliminar_impresion">
           <property name="geometry">
            <rect>
-            <x>100</x>
-            <y>520</y>
-            <width>31</width>
-            <height>31</height>
+            <x>20</x>
+            <y>531</y>
+            <width>111</width>
+            <height>20</height>
            </rect>
           </property>
           <property name="text">
@@ -6753,6 +6713,118 @@ border-radius:15px;
             <string>-</string>
            </property>
           </item>
+         </widget>
+         <widget class="QFrame" name="frame_26">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>357</y>
+            <width>131</width>
+            <height>80</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QFrame{
+border-radius:15px;
+background-color:rgb(235, 235, 235);
+}</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <widget class="QLabel" name="signal_rotulos_cantidad">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>50</y>
+             <width>101</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>Calibri</family>
+             <pointsize>9</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 0, 0);</string>
+           </property>
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="signal_rotulos_razon">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>17</y>
+             <width>111</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>Calibri</family>
+             <pointsize>9</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 0, 0);</string>
+           </property>
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="signal_rotulos_razon_3">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>34</y>
+             <width>121</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>Calibri</family>
+             <pointsize>9</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Cantidad de rótulos:</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="signal_rotulos_razon_2">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>4</y>
+             <width>121</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>Calibri</family>
+             <pointsize>9</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Asociado Seleccionado:</string>
+           </property>
+          </widget>
          </widget>
         </widget>
        </widget>
