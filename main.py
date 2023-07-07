@@ -43,7 +43,6 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.btn_iniciarpedido.clicked.connect(self.iniciarpedido)
 		self.btn_ingresarpedido.clicked.connect(self.NuevoPedido)
 		self.btn_ingresarpedido.clicked.connect(self.limpiar)
-		self.combo_asociados.activated.connect(self.traeregistro)
 		self.cbx_manual.stateChanged.connect(lambda:self.frm_manual.show())
 		self.btn_printdetalle.clicked.connect(self.imprimirticket)
 		
@@ -117,6 +116,9 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		headertb_asociados_estampillas = self.tb_asociados_estampillas.horizontalHeader()
 		headertb_asociados_estampillas.setResizeMode(QtGui.QHeaderView.ResizeToContents)
 		
+		headertb_asociados_pedidos2 = self.tb_asociados_pedidos2.horizontalHeader()
+		headertb_asociados_pedidos2.setResizeMode(QtGui.QHeaderView.ResizeToContents)
+		
 		
 		
 		
@@ -154,6 +156,9 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.tb_subpedidos_envios.itemDoubleClicked.connect(self.pedido_envios_selected)
 		self.btn_buscar_asociados.clicked.connect(self.filtrar_asociados)
 		
+		self.tb_asociados_pedidos2.itemDoubleClicked.connect(self.asociado_selected_pedidos)
+		self.btn_buscarasociado_pedidos.clicked.connect(self.filtrar_asociados_pedidos)
+		
 		
 	
 	
@@ -164,7 +169,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		k=0
 		for i in asociados:
-			self.combo_asociados.addItem("".join(asociados[k]))
+			
 			self.combo_asociados_subpedidos.addItem("".join(asociados[k]))
 			self.combo_asociados_listar.addItem("".join(asociados[k]))
 			self.cb_razonsocial_rotulos.addItem("".join(asociados[k]))
@@ -1595,6 +1600,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		totalfilas=len(listarecuperada)
 		self.tb_asociados_envios.setRowCount(totalfilas)
 		self.tb_asociados_estampillas.setRowCount(totalfilas)
+		self.tb_asociados_pedidos2.setRowCount(totalfilas)
 			
 			
 		fila =0
@@ -1602,6 +1608,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		for i in listarecuperada:
 			self.tb_asociados_envios.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
 			self.tb_asociados_estampillas.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
+			self.tb_asociados_pedidos2.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
 			
 		
 									
@@ -1625,6 +1632,15 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			asociado=self.tb_asociados_estampillas.item(fila, 0).text() #SELECCIONO EL CONTENIDO DE LA FILA DE LA COLUMNA 0 SELECCIONADA
 			self.signal_asociado_estampillas.setText(str(asociado))
 			
+	def asociado_selected_pedidos(self):
+			#ESTAMPILLAS
+			fila = self.tb_asociados_pedidos2.currentRow()
+			asociado=self.tb_asociados_pedidos2.item(fila, 0).text() #SELECCIONO EL CONTENIDO DE LA FILA DE LA COLUMNA 0 SELECCIONADA
+			registro=q.getrncyfs(str(asociado))[0]
+			
+			self.txt_rncyfs.setText(str(registro))
+			
+			
 	def pedido_envios_selected(self):
 		fila = self.tb_subpedidos_envios.currentRow()
 		cantidad=self.tb_subpedidos_envios.item(fila, 0).text()
@@ -1647,6 +1663,24 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		for i in listarecuperada:
 			self.tb_asociados_envios.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
+												
+			fila=fila+1
+	
+	def filtrar_asociados_pedidos(self):
+		if self.txt_buscar_asociados_pedidos:
+			asociado= str("%"+self.txt_buscar_asociados_pedidos.text()+"%").upper()
+		else:
+			asociado="%"
+		
+		listarecuperada=q.traerasociadosFILTRO(asociado)
+		totalfilas=len(listarecuperada)
+		self.tb_asociados_pedidos2.setRowCount(totalfilas)
+			
+		
+		fila =0
+		
+		for i in listarecuperada:
+			self.tb_asociados_pedidos2.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
 												
 			fila=fila+1
 		
