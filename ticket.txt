@@ -1,11 +1,11 @@
 DETALLE DE PEDIDO
 -----------------------------
-RAZON SOCIAL: COOP. AGR.GAN. BOUQUET
-PEDIDO: 160
+RAZON SOCIAL: COOP. AGROP. DE LOPEZ LTDA
+PEDIDO: 161
 -----------------------------
-RNCyFS: 508
-Fecha: 2023-06-29
-Rango: 10932001 - 10940000
+RNCyFS: 346
+Fecha: 2023-07-10
+Rango: 10940001 - 10942000
 Serie: A
-Cantidad: 8000
+Cantidad: 2000
 -----------------------------

@@ -595,7 +595,7 @@ border-radius:15px;
         <string notr="true"/>
        </property>
        <property name="currentIndex">
-        <number>5</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="p_inicio">
         <widget class="QFrame" name="frame_7">
@@ -3893,7 +3893,7 @@ border-radius:15px;</string>
            <property name="iconSize">
             <size>
              <width>12</width>
-             <height>16</height>
+             <height>12</height>
             </size>
            </property>
            <property name="shortcut">
@@ -3941,10 +3941,10 @@ border-radius:15px;
          <widget class="QFrame" name="frame_11">
           <property name="geometry">
            <rect>
-            <x>40</x>
+            <x>230</x>
             <y>40</y>
-            <width>91</width>
-            <height>101</height>
+            <width>241</width>
+            <height>41</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -3983,8 +3983,8 @@ background:#CDC9C9;</string>
           <widget class="QRadioButton" name="rb_serieb">
            <property name="geometry">
             <rect>
-             <x>10</x>
-             <y>40</y>
+             <x>90</x>
+             <y>13</y>
              <width>82</width>
              <height>17</height>
             </rect>
@@ -4003,8 +4003,8 @@ background:#CDC9C9;</string>
           <widget class="QRadioButton" name="rb_general">
            <property name="geometry">
             <rect>
-             <x>10</x>
-             <y>67</y>
+             <x>170</x>
+             <y>13</y>
              <width>82</width>
              <height>17</height>
             </rect>
@@ -4024,8 +4024,8 @@ background:#CDC9C9;</string>
          <widget class="QPushButton" name="btn_iniciarpedido">
           <property name="geometry">
            <rect>
-            <x>250</x>
-            <y>70</y>
+            <x>240</x>
+            <y>90</y>
             <width>221</width>
             <height>31</height>
            </rect>
@@ -4049,7 +4049,7 @@ background:#CDC9C9;</string>
            <rect>
             <x>10</x>
             <y>150</y>
-            <width>711</width>
+            <width>731</width>
             <height>41</height>
            </rect>
           </property>
@@ -4182,9 +4182,9 @@ border-radius:15px;</string>
           <property name="geometry">
            <rect>
             <x>370</x>
-            <y>230</y>
-            <width>321</width>
-            <height>321</height>
+            <y>200</y>
+            <width>351</width>
+            <height>351</height>
            </rect>
           </property>
           <property name="frameShape">
@@ -7040,9 +7040,9 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>90</y>
+            <y>63</y>
             <width>221</width>
-            <height>461</height>
+            <height>491</height>
            </rect>
           </property>
           <property name="editTriggers">
@@ -7054,6 +7054,9 @@ border-radius:15px;
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectItems</enum>
           </property>
+          <attribute name="horizontalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
           </attribute>
@@ -7067,32 +7070,45 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>49</y>
-            <width>131</width>
-            <height>31</height>
+            <y>42</y>
+            <width>201</width>
+            <height>21</height>
            </rect>
           </property>
          </widget>
          <widget class="QPushButton" name="btn_buscar_asociados">
           <property name="geometry">
            <rect>
-            <x>150</x>
-            <y>49</y>
-            <width>81</width>
-            <height>31</height>
+            <x>210</x>
+            <y>42</y>
+            <width>21</width>
+            <height>21</height>
            </rect>
           </property>
           <property name="text">
-           <string>Buscar</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>icons/search.png</normaloff>icons/search.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>12</width>
+            <height>12</height>
+           </size>
+          </property>
+          <property name="shortcut">
+           <string>Return</string>
           </property>
          </widget>
          <widget class="QTableWidget" name="tb_subpedidos_envios">
           <property name="geometry">
            <rect>
-            <x>270</x>
-            <y>50</y>
-            <width>461</width>
-            <height>121</height>
+            <x>260</x>
+            <y>40</y>
+            <width>481</width>
+            <height>131</height>
            </rect>
           </property>
           <property name="editTriggers">
@@ -7273,7 +7289,7 @@ border-radius:15px;
          <widget class="QPushButton" name="btn_crearenvio">
           <property name="geometry">
            <rect>
-            <x>301</x>
+            <x>340</x>
             <y>295</y>
             <width>101</width>
             <height>31</height>
@@ -7300,7 +7316,7 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>260</x>
-            <y>390</y>
+            <y>394</y>
             <width>481</width>
             <height>161</height>
            </rect>
@@ -7346,23 +7362,10 @@ border-radius:15px;
            </property>
           </column>
          </widget>
-         <widget class="QLabel" name="label_103">
-          <property name="geometry">
-           <rect>
-            <x>260</x>
-            <y>369</y>
-            <width>91</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Tabla de Envios</string>
-          </property>
-         </widget>
          <widget class="QRadioButton" name="rb_xasociado_envios">
           <property name="geometry">
            <rect>
-            <x>470</x>
+            <x>260</x>
             <y>360</y>
             <width>82</width>
             <height>17</height>
@@ -7378,7 +7381,7 @@ border-radius:15px;
          <widget class="QRadioButton" name="t">
           <property name="geometry">
            <rect>
-            <x>560</x>
+            <x>350</x>
             <y>360</y>
             <width>111</width>
             <height>17</height>
@@ -7392,46 +7395,13 @@ border-radius:15px;
           <property name="geometry">
            <rect>
             <x>260</x>
-            <y>340</y>
+            <y>330</y>
             <width>481</width>
             <height>16</height>
            </rect>
           </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_104">
-          <property name="geometry">
-           <rect>
-            <x>270</x>
-            <y>29</y>
-            <width>111</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Asociado Seleccionado:</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="signal_asociado_envios">
-          <property name="geometry">
-           <rect>
-            <x>390</x>
-            <y>29</y>
-            <width>181</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>...</string>
           </property>
          </widget>
          <widget class="QLineEdit" name="txt_cantidad_envios">
@@ -7496,8 +7466,8 @@ border-radius:15px;
          <widget class="QPushButton" name="btn_refresh_envios">
           <property name="geometry">
            <rect>
-            <x>710</x>
-            <y>354</y>
+            <x>700</x>
+            <y>347</y>
             <width>31</width>
             <height>31</height>
            </rect>
@@ -7526,11 +7496,171 @@ border-radius:15px;
             <x>450</x>
             <y>180</y>
             <width>20</width>
-            <height>161</height>
+            <height>151</height>
            </rect>
           </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+         <widget class="QFrame" name="frame_40">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>25</y>
+            <width>221</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background:grey;
+border-radius:15px;
+</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <widget class="QLabel" name="label_123">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>-1</y>
+             <width>101</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color:rgb(255, 255, 255);</string>
+           </property>
+           <property name="text">
+            <string>Seleccionar Asociado</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QFrame" name="frame_41">
+          <property name="geometry">
+           <rect>
+            <x>260</x>
+            <y>380</y>
+            <width>481</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background:grey;
+border-radius:15px;
+</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <widget class="QLabel" name="label_124">
+           <property name="geometry">
+            <rect>
+             <x>200</x>
+             <y>-1</y>
+             <width>101</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color:rgb(255, 255, 255);</string>
+           </property>
+           <property name="text">
+            <string>Tabla de envios</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="Line" name="line_17">
+          <property name="geometry">
+           <rect>
+            <x>236</x>
+            <y>30</y>
+            <width>20</width>
+            <height>521</height>
+           </rect>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+         <widget class="QFrame" name="frame_42">
+          <property name="geometry">
+           <rect>
+            <x>260</x>
+            <y>24</y>
+            <width>481</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background:grey;
+border-radius:15px;
+</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <widget class="QLabel" name="label_125">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>-1</y>
+             <width>151</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color:rgb(255, 255, 255);</string>
+           </property>
+           <property name="text">
+            <string>Ultimos pedidos del asociado:</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="signal_asociado_envios">
+           <property name="geometry">
+            <rect>
+             <x>160</x>
+             <y>0</y>
+             <width>181</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>Calibri</family>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QLabel" name="signal_emision">
+          <property name="geometry">
+           <rect>
+            <x>271</x>
+            <y>293</y>
+            <width>47</width>
+            <height>13</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
           </property>
          </widget>
         </widget>

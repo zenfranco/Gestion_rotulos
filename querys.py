@@ -3,7 +3,7 @@ import sqlite3
 class bdquery():
 
 		def __init__(self):
-			self.conexion = sqlite3.connect('bd.db')
+			self.conexion = sqlite3.connect('D:/Dropbox/bd.db')
 			
 			
 			
@@ -437,7 +437,7 @@ class bdquery():
 			
 		def subpedidosporfecha(self,reg):
 			cur=self.conexion.cursor()
-			cur.execute('''select sum(cantidad),especie,fecha_subpedido from subpedidos where num_reg = ? group by fecha_subpedido''',reg)
+			cur.execute('''select sum(cantidad),especie,fecha_subpedido from subpedidos where num_reg = ? group by fecha_subpedido ORDER BY fecha_subpedido DESC''',reg)
 			self.conexion.commit()
 			listado=cur.fetchall()
 			cur.close()
@@ -464,6 +464,12 @@ class bdquery():
 			registro=cur.fetchone()
 			cur.close()
 			return registro
+			
+		def insertarEnvio(self,fecha_envio,registro,cantidad,tipo,rotulos,fecha_emision,bultos,estado,especie):
+			cur= self.conexion.cursor()
+			cur.execute(''' insert into envios (fecha_envio,num_reg,cantidad,tipo,r,subpedido_fecha,bultos,estado,especie) values (?,?,?,?,?,?,?,?,?)''',([fecha_envio,registro,cantidad,tipo,rotulos,fecha_emision,bultos,estado,especie]))
+			self.conexion.commit()
+			cur.close()
 			
 
 		

@@ -7,6 +7,7 @@ from PyQt4 import QtCore, QtGui, uic
 from datetime import date
 global rango, numpedido, pedidos, disponible,subpedidos,INICIAL,FINAL
 import os
+from mensaje import *
 
 pedidos=[]
 subpedidos=[]
@@ -158,6 +159,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		self.tb_asociados_pedidos2.itemDoubleClicked.connect(self.asociado_selected_pedidos)
 		self.btn_buscarasociado_pedidos.clicked.connect(self.filtrar_asociados_pedidos)
+		self.btn_crearenvio.clicked.connect(self.nuevoEnvio)
 		
 		
 	
@@ -314,11 +316,8 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 						
 					q.incrementanpedido(Numpedido)
 						
-					msgBox=QtGui.QMessageBox(self.centralwidget)
-					msgBox.setIcon(1)
-					msgBox.setWindowTitle("PEDIDO")
-					msgBox.setText("RANGO ASIGNADO CORRECTAMENTE")
-					msgBox.exec_()
+				
+					c.cartel("AVISO","RANGO ASIGNADO CORRECTAMENTE",1)
 					
 					self.frame_detallepedido.show()			
 					self.signal_cantidad.setText(str(cantidad))
@@ -353,24 +352,17 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 					
 				INICIAL=INICIAL+cantidad
 				q.actualizarangoenbd(INICIAL,FINAL,indice)
-				self.combo_asociados.clear()
-				self.llenarcombo()
+				
 				self.iniciarpedido()
 				
 			else:
-				msgBox=QtGui.QMessageBox(self.centralwidget)
-				msgBox.setIcon(3)
-				msgBox.setWindowTitle("STOCK INSUFICIENTE")
-				msgBox.setText("NO HAY STOCK SUFICIENTE PARA ESE PEDIDO")
-				msgBox.exec_()
+				
+				c.cartel("ERROR","NO HAY STOCK SUFICIENTE",3)
 					
 					
 		else:
-			msgBox=QtGui.QMessageBox(self.centralwidget)
-			msgBox.setIcon(3)
-			msgBox.setWindowTitle("ERROR")
-			msgBox.setText("INGRESE CANTIDAD")
-			msgBox.exec_()
+			
+			c.cartel("ERROR","INGRESE CANTIDAD",3)
 			
 	def imprimirticket(self):
 			os.startfile("ticket.txt", "print")
@@ -531,11 +523,8 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 				
 					book.save('nota_davs.xls',"a")'''
 					
-					msgBox=QtGui.QMessageBox(self.centralwidget)
-					msgBox.setIcon(1)
-					msgBox.setWindowTitle("SUBPEDIDO")
-					msgBox.setText("SUBPEDIDO CREADO")
-					msgBox.exec_()
+					
+					c.cartel("AVISO","SUBPEDIDO CREADO",1)
 					
 					c.copy(str(spini)+"-"+str(spfin))
 					
@@ -552,17 +541,11 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 					q.actualizaestado(numpedido,estado)
 					self.refresh_pedidos()
 				else:
-					msgBox=QtGui.QMessageBox(self.centralwidget)
-					msgBox.setIcon(3)
-					msgBox.setWindowTitle("ERROR DE STOCK")
-					msgBox.setText("NO HAY STOCK SUFICIENTE PARA ESTA SOLICITUD")
-					msgBox.exec_()
+				
+					c.cartel("ERROR DE STOCK","NO HAY STOCK SUFICIENTE PARA ESTA SOLICITUD",3)
 		else:
-			msgBox=QtGui.QMessageBox(self.centralwidget)
-			msgBox.setIcon(3)
-			msgBox.setWindowTitle("ERROR")
-			msgBox.setText("HAY CAMPOS VACIOS")
-			msgBox.exec_()
+		
+			c.cartel("ERROR","CAMPOS VACIOS",3)
 				
 				
 				
@@ -575,11 +558,8 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		valor=int("".join(map(str,resultado)))
 		print valor
 		if valor ==1:
-			msgBox=QtGui.QMessageBox(self.centralwidget)
-			msgBox.setIcon(3)
-			msgBox.setWindowTitle("ERROR")
-			msgBox.setText("YA EXISTE ESE ASOCIADO")
-			msgBox.exec_()
+			
+			c.cartel("ATENCION","YA EXISTE ESE ASOCIADO",3)
 		else:
 					
 			q.altaasociado(registro,nombre)
@@ -618,11 +598,8 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			count=q.validarasociado(registro)
 			valor=int("".join(map(str,count)))
 			if valor ==0:
-				msgBox=QtGui.QMessageBox(self.centralwidget)
-				msgBox.setIcon(3)
-				msgBox.setWindowTitle("ERROR")
-				msgBox.setText("NO EXISTE ESE ASOCIADO")
-				msgBox.exec_()
+				
+				c.cartel("ERROR","NO EXISTE ESE ASOCIADO",3)
 			else:	
 			
 				
@@ -635,22 +612,16 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 				self.txt_rncyfs_gestiones.setText("")
 				self.listargestiones()
 				
-				msgBox=QtGui.QMessageBox(self.centralwidget)
-				msgBox.setIcon(1)
-				msgBox.setWindowTitle("INGRESO")
-				msgBox.setText("GESTION AGREGADA")
-				msgBox.exec_()
+			
+				c.cartel("AVISO","GESTION AGREGADA",1)
 			
 		else:
 			
 				
 				
 				
-			msgBox=QtGui.QMessageBox(self.centralwidget)
-			msgBox.setIcon(3)
-			msgBox.setWindowTitle("ERROR")
-			msgBox.setText("INGRESE CANTIDAD")
-			msgBox.exec_()
+			
+			c.cartel("ERROR","INGRESE CANTIDAD",3)
 		
 		
 		
@@ -748,11 +719,8 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		q.insertarnota(indice,obs)
 		self.listargestiones()
-		msgBox=QtGui.QMessageBox(self.centralwidget)
-		msgBox.setIcon(1)
-		msgBox.setWindowTitle("NOTA")
-		msgBox.setText("NOTA AGREGADA")
-		msgBox.exec_()
+		
+		c.cartel("NOTA","NOTA AGREGADA",1)
 	
 	def eliminargestion(self):
 		
@@ -768,10 +736,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		if r==16384:
 			q.borrargestion(indice)
-			msgBox=QtGui.QMessageBox(self.centralwidget)
-			msgBox.setWindowTitle(" * * ATENCION * * ")
-			msgBox.setText("REGISTRO ELIMINADO")
-			resp= msgBox.exec_()
+			c.cartel("ATENCION","REGISTRO ELIMINADO",1)
 			self.gestionupdate()
 						
 		elif r==4194304:
@@ -794,16 +759,41 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		if r==16384:
 			q.borrarimpresion(indice)
-			msgBox=QtGui.QMessageBox(self.centralwidget)
-			msgBox.setWindowTitle(" * * ATENCION * * ")
-			msgBox.setText("REGISTRO ELIMINADO")
-			resp= msgBox.exec_()
+			
+			c.cartel("ATENCION","REGISTRO ELIMINADO",1)
 			self.listarimpresiones()
 						
 		elif r==4194304:
-			print "Cancelado"
+			pass
 		elif r==65536:
-			print "no!"
+			pass
+			
+			
+	def nuevoEnvio(self):
+		fecha_envio=date.today()
+		registro=str(q.getrncyfs(str(self.signal_asociado_envios.text()))[0])
+		cantidad=int(self.txt_cantidad_envios.text())
+		especie=str(self.txt_especie_envios.text())
+		bultos =str(self.txt_bultos_envios.text())
+		
+		if self.cbx_incluye.isChecked():
+			rotulos='SI'
+		else:
+			rotulos='NO'
+		fecha_emision= str(self.signal_emision.text())
+		estado='PREPARADO'
+		tipo=str(self.cb_servicio_envios.currentText())
+		
+		q.insertarEnvio(fecha_envio,registro,cantidad,tipo,rotulos,fecha_emision,bultos,estado,especie)
+		
+	
+		c.cartel("AVISO","ENVIO CREADO",1)
+		
+		
+		
+		
+		
+		
 		
 			
 	def listar(self):
@@ -1169,11 +1159,8 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			self.lockerdisponibles()
 			self.listarlockers()
 		else:
-			msgBox=QtGui.QMessageBox(self.centralwidget)
-			msgBox.setIcon(3)
-			msgBox.setWindowTitle("ERROR")
-			msgBox.setText("INGRESE PEDIDO A ALMACENAR")
-			msgBox.exec_()
+			
+			c.cartel("ERROR","INGRESE PEDIDO A ALMACENAR",3)
 		
 		
 	def lockerselected(self):
@@ -1251,11 +1238,8 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		valor=int("".join(map(str,count)))
 		
 		if valor ==0:
-			msgBox=QtGui.QMessageBox(self.centralwidget)
-			msgBox.setIcon(3)
-			msgBox.setWindowTitle("ERROR")
-			msgBox.setText("NO EXISTE ESE ASOCIADO")
-			msgBox.exec_()
+			
+			c.cartel("ERROR","NO EXISTE ESE ASOCIADO",3)
 		else:
 					
 			if self.txt_cantidad_rotulos.text():
@@ -1295,11 +1279,8 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 					stock=q.recuperastock(indice)
 					stock_actualizado = int(stock[0])-cantidad
 					if stock_actualizado <0:
-						msgBox=QtGui.QMessageBox(self.centralwidget)
-						msgBox.setIcon(3)
-						msgBox.setWindowTitle("ERROR DE STOCK")
-						msgBox.setText("NO HAY STOCK SUFICIENTE DE ESE TIPO DE ROTULO")
-						msgBox.exec_()
+						
+						c.cartel("ERROR","NO HAY STOCK SUFICIENTE DE ESE TIPO DE ROTULO",3)
 					else:
 						q.actualizar_stock(stock_actualizado,indice)
 						q.altarotulo(registro,especie,tipo,cantidad,estado,categoria,fechaimpresion)
@@ -1322,11 +1303,8 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 				self.listarimpresiones()
 				
 			else:
-				msgBox=QtGui.QMessageBox(self.centralwidget)
-				msgBox.setIcon(3)
-				msgBox.setWindowTitle("ERROR")
-				msgBox.setText("INGRESE CANTIDAD")
-				msgBox.exec_()
+				
+				c.cartel("ERROR","INGRESE CANTIDAD",3)
 		
 	def cargaStock(self):
 		
@@ -1357,20 +1335,16 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			stock =int(stock_recuperado[0])
 			stock_final=stock+cantidad
 			q.actualizar_stock(stock_final,indice)
-			msgBox=QtGui.QMessageBox(self.centralwidget)
-			msgBox.setIcon(1)
-			msgBox.setWindowTitle("STOCK")
-			msgBox.setText("STOCK ACTUALIZADO")
-			msgBox.exec_()
+			
+			c.cartel("AVISO","STOCK ACTUALIZADO",1)
+			
+	
 			self.traerstock()
 			
 			self.txt_cantidad_rotulos_stock.setText("")
 		else:
-			msgBox=QtGui.QMessageBox(self.centralwidget)
-			msgBox.setIcon(3)
-			msgBox.setWindowTitle("ERROR")
-			msgBox.setText("INGRESE UNA CANTIDAD")
-			msgBox.exec_()
+		
+			c.cartel("ERROR","INGRESE CANTIDAD",3)
 			
 		
 		
@@ -1643,10 +1617,16 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			
 	def pedido_envios_selected(self):
 		fila = self.tb_subpedidos_envios.currentRow()
+		
 		cantidad=self.tb_subpedidos_envios.item(fila, 0).text()
 		especie=self.tb_subpedidos_envios.item(fila, 1).text() #SELECCIONO EL CONTENIDO DE LA FILA DE LA COLUMNA 0 SELECCIONADA
+		fecha_emision=self.tb_subpedidos_envios.item(fila, 2).text()
+		
 		self.txt_cantidad_envios.setText(str(cantidad))
 		self.txt_especie_envios.setText(str(especie))
+		self.signal_emision.setText(str(fecha_emision))
+		
+		
 			
 	def filtrar_asociados(self):
 		if self.txt_asociados_envios:
@@ -1794,6 +1774,7 @@ def actualizarangogeneral(cantidad):
 
 if __name__ == '__main__':
 	q=bdquery()
+	c=Mensaje()
 	app = QtGui.QApplication(sys.argv)
 	MyWindow = VentanaPrincipal(None)
 	MyWindow.llenarcombo()
