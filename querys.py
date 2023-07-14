@@ -465,11 +465,26 @@ class bdquery():
 			cur.close()
 			return registro
 			
-		def insertarEnvio(self,fecha_envio,registro,cantidad,tipo,rotulos,fecha_emision,bultos,estado,especie):
+		def insertarEnvio(self,fecha_envio,registro,cantidad,tipo,rotulos,fecha_emision,bultos,estado,especie,detalle,obs):
 			cur= self.conexion.cursor()
-			cur.execute(''' insert into envios (fecha_envio,num_reg,cantidad,tipo,r,subpedido_fecha,bultos,estado,especie) values (?,?,?,?,?,?,?,?,?)''',([fecha_envio,registro,cantidad,tipo,rotulos,fecha_emision,bultos,estado,especie]))
+			cur.execute(''' insert into envios (fecha_envio,num_reg,cantidad,tipo,r,subpedido_fecha,bultos,estado,especie,detalle,obs) values (?,?,?,?,?,?,?,?,?,?,?)''',([fecha_envio,registro,cantidad,tipo,rotulos,fecha_emision,bultos,estado,especie,detalle,obs]))
 			self.conexion.commit()
 			cur.close()
+			
+		def getEnvios(self,registro):
+			cur=self.conexion.cursor()
+			cur.execute('''select num_reg,fecha_envio,estado,cantidad,bultos,r,subpedido_fecha,id,tipo,detalle,obs from envios where num_reg = ? order by fecha_envio DESC''',registro)
+			self.conexion.commit()
+			listado=cur.fetchall()
+			cur.close()
+			return listado
+		def getEnvios_ALL(self):
+			cur=self.conexion.cursor()
+			cur.execute('''select num_reg,fecha_envio,estado,cantidad,bultos,r,subpedido_fecha,id,tipo,detalle,obs from envios order by fecha_envio DESC''')
+			self.conexion.commit()
+			listado=cur.fetchall()
+			cur.close()
+			return listado
 			
 
 		

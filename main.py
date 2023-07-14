@@ -123,6 +123,8 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		
 		
+		
+		
 		#PAGINA DEPOSITO
 		self.btn_almacenar.clicked.connect(self.almacenar)
 		self.tb_lockers.itemDoubleClicked.connect(self.lockerselected)
@@ -160,6 +162,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.tb_asociados_pedidos2.itemDoubleClicked.connect(self.asociado_selected_pedidos)
 		self.btn_buscarasociado_pedidos.clicked.connect(self.filtrar_asociados_pedidos)
 		self.btn_crearenvio.clicked.connect(self.nuevoEnvio)
+		self.btn_refresh_envios.clicked.connect(self.traerenvios)
 		
 		
 	
@@ -775,16 +778,20 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		cantidad=int(self.txt_cantidad_envios.text())
 		especie=str(self.txt_especie_envios.text())
 		bultos =str(self.txt_bultos_envios.text())
+		detalle=str(self.cb_detalle_envios.currentText())
+		obs=str(self.txt_obs_envios.text())
+		fecha_emision= str(self.signal_emision.text())
+		estado='PREPARADO'
+		tipo=str(self.cb_servicio_envios.currentText())
+		
 		
 		if self.cbx_incluye.isChecked():
 			rotulos='SI'
 		else:
 			rotulos='NO'
-		fecha_emision= str(self.signal_emision.text())
-		estado='PREPARADO'
-		tipo=str(self.cb_servicio_envios.currentText())
 		
-		q.insertarEnvio(fecha_envio,registro,cantidad,tipo,rotulos,fecha_emision,bultos,estado,especie)
+		
+		q.insertarEnvio(fecha_envio,registro,cantidad,tipo,rotulos,fecha_emision,bultos,estado,especie,detalle,obs)
 		
 	
 		c.cartel("AVISO","ENVIO CREADO",1)
@@ -1575,6 +1582,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.tb_asociados_envios.setRowCount(totalfilas)
 		self.tb_asociados_estampillas.setRowCount(totalfilas)
 		self.tb_asociados_pedidos2.setRowCount(totalfilas)
+		
 			
 			
 		fila =0
@@ -1584,21 +1592,22 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			self.tb_asociados_estampillas.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
 			self.tb_asociados_pedidos2.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
 			
+			
 		
 									
 			fila=fila+1
 		
 		
 	def asociado_selected(self):
-		
-		
-			
+					
 			#ENVIOS
 			
 			fila = self.tb_asociados_envios.currentRow()
-			asociado=self.tb_asociados_envios.item(fila, 0).text() #SELECCIONO EL CONTENIDO DE LA FILA DE LA COLUMNA 0 SELECCIONADA
+			asociado=str(self.tb_asociados_envios.item(fila, 0).text()) #SELECCIONO EL CONTENIDO DE LA FILA DE LA COLUMNA 0 SELECCIONADA
 			self.signal_asociado_envios.setText(str(asociado))
 			self.traerpedidos_agrupados(asociado)
+			
+			self.traerenvios()
 			
 	def asociado_selected_estampillas(self):
 			#ESTAMPILLAS
@@ -1688,7 +1697,41 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			
 			fila = fila+1
 		
+	def traerenvios(self):
+		fila = self.tb_asociados_envios.currentRow()		
+		asociado=str(self.tb_asociados_envios.item(fila, 0).text())
+		if self.rb_xasociado_envios.isChecked():
+			registro=q.traerregistro(str(asociado))
+			tablarecuperada=q.getEnvios(registro)
+		else:
+			
+			tablarecuperada=q.getEnvios_ALL()
+			
+			
+		totalfilas=len(tablarecuperada)
+		self.tb_envioscreados.setRowCount(totalfilas)
+		fila=0
+		for i in tablarecuperada:
+			self.tb_envioscreados.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
+			self.tb_envioscreados.setItem(fila,1,QtGui.QTableWidgetItem(str(i[1])))
+			self.tb_envioscreados.setItem(fila,2,QtGui.QTableWidgetItem(str(i[2])))
+			self.tb_envioscreados.setItem(fila,3,QtGui.QTableWidgetItem(str(i[3])))
+			self.tb_envioscreados.setItem(fila,4,QtGui.QTableWidgetItem(str(i[4])))
+			self.tb_envioscreados.setItem(fila,5,QtGui.QTableWidgetItem(str(i[5])))
+			self.tb_envioscreados.setItem(fila,6,QtGui.QTableWidgetItem(str(i[6])))
+			self.tb_envioscreados.setItem(fila,7,QtGui.QTableWidgetItem(str(i[7])))
+			self.tb_envioscreados.setItem(fila,8,QtGui.QTableWidgetItem(str(i[8])))
+			self.tb_envioscreados.setItem(fila,9,QtGui.QTableWidgetItem(str(i[9])))
+			self.tb_envioscreados.setItem(fila,10,QtGui.QTableWidgetItem(str(i[10])))
+			
+			
+			fila = fila+1
+			
+	
 		
+		
+		
+			
 		
 		
 		
