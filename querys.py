@@ -74,6 +74,14 @@ class bdquery():
 			self.conexion.commit()
 			cur.close()
 			return listapedidos
+		
+		def getpedidos(self):
+			cur=self.conexion.cursor()
+			cur.execute('''SELECT a.razon_social,cantidad,inicio ||"-" || fin,serie,num_pedido,fecha_pedido FROM pedidos p INNER JOIN asociados a on a.num_reg = p.rncyfs ORDER BY fecha_pedido DESC LIMIT 5''')
+			listapedidos=cur.fetchall()
+			self.conexion.commit()
+			cur.close()
+			return listapedidos
 			
 		def actualizaremanente(self,numpedido,inicioremanente):
 			cur=self.conexion.cursor()

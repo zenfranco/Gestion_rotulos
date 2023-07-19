@@ -3691,9 +3691,9 @@ border-radius:15px;</string>
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>200</y>
+            <y>70</y>
             <width>331</width>
-            <height>351</height>
+            <height>481</height>
            </rect>
           </property>
           <property name="frameShape">
@@ -3705,8 +3705,8 @@ border-radius:15px;</string>
           <widget class="QPushButton" name="btn_ingresarpedido">
            <property name="geometry">
             <rect>
-             <x>220</x>
-             <y>210</y>
+             <x>213</x>
+             <y>280</y>
              <width>91</width>
              <height>31</height>
             </rect>
@@ -3721,8 +3721,8 @@ border-radius:15px;</string>
           <widget class="QLabel" name="label_3">
            <property name="geometry">
             <rect>
-             <x>220</x>
-             <y>110</y>
+             <x>213</x>
+             <y>170</y>
              <width>91</width>
              <height>21</height>
             </rect>
@@ -3740,8 +3740,8 @@ border-radius:15px;</string>
           <widget class="QLabel" name="label_2">
            <property name="geometry">
             <rect>
-             <x>220</x>
-             <y>160</y>
+             <x>213</x>
+             <y>220</y>
              <width>101</width>
              <height>16</height>
             </rect>
@@ -3759,8 +3759,8 @@ border-radius:15px;</string>
           <widget class="QLineEdit" name="txt_cantidad">
            <property name="geometry">
             <rect>
-             <x>220</x>
-             <y>180</y>
+             <x>213</x>
+             <y>240</y>
              <width>101</width>
              <height>21</height>
             </rect>
@@ -3772,8 +3772,8 @@ border-radius:15px;</string>
           <widget class="QLineEdit" name="txt_rncyfs">
            <property name="geometry">
             <rect>
-             <x>220</x>
-             <y>130</y>
+             <x>213</x>
+             <y>190</y>
              <width>101</width>
              <height>21</height>
             </rect>
@@ -3788,7 +3788,7 @@ border-radius:15px;</string>
              <x>0</x>
              <y>40</y>
              <width>201</width>
-             <height>311</height>
+             <height>441</height>
             </rect>
            </property>
            <property name="editTriggers">
@@ -3816,7 +3816,7 @@ border-radius:15px;</string>
            <property name="geometry">
             <rect>
              <x>0</x>
-             <y>18</y>
+             <y>20</y>
              <width>171</width>
              <height>21</height>
             </rect>
@@ -3829,7 +3829,7 @@ border-radius:15px;</string>
            <property name="geometry">
             <rect>
              <x>170</x>
-             <y>18</y>
+             <y>20</y>
              <width>31</width>
              <height>21</height>
             </rect>
@@ -3858,7 +3858,7 @@ border-radius:15px;</string>
            <property name="geometry">
             <rect>
              <x>0</x>
-             <y>2</y>
+             <y>4</y>
              <width>201</width>
              <height>16</height>
             </rect>
@@ -3895,10 +3895,10 @@ border-radius:15px;
          <widget class="QFrame" name="frame_11">
           <property name="geometry">
            <rect>
-            <x>230</x>
-            <y>40</y>
-            <width>241</width>
-            <height>41</height>
+            <x>223</x>
+            <y>90</y>
+            <width>101</width>
+            <height>101</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -3911,105 +3911,66 @@ background:#CDC9C9;</string>
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
-          <widget class="QRadioButton" name="rb_seriea">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>13</y>
-             <width>82</width>
-             <height>17</height>
-            </rect>
-           </property>
-           <property name="font">
-            <font>
-             <family>Calibri</family>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Serie A</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-          <widget class="QRadioButton" name="rb_serieb">
-           <property name="geometry">
-            <rect>
-             <x>90</x>
-             <y>13</y>
-             <width>82</width>
-             <height>17</height>
-            </rect>
-           </property>
-           <property name="font">
-            <font>
-             <family>Calibri</family>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Serie B</string>
-           </property>
-          </widget>
-          <widget class="QRadioButton" name="rb_general">
-           <property name="geometry">
-            <rect>
-             <x>170</x>
-             <y>13</y>
-             <width>82</width>
-             <height>17</height>
-            </rect>
-           </property>
-           <property name="font">
-            <font>
-             <family>Calibri</family>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>General</string>
-           </property>
-          </widget>
-         </widget>
-         <widget class="QPushButton" name="btn_iniciarpedido">
-          <property name="geometry">
-           <rect>
-            <x>240</x>
-            <y>90</y>
-            <width>221</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>COMENZAR</string>
-          </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>icons/inicio.png</normaloff>icons/inicio.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QRadioButton" name="rb_seriea">
+             <property name="font">
+              <font>
+               <family>Calibri</family>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Serie A</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="rb_serieb">
+             <property name="font">
+              <font>
+               <family>Calibri</family>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Serie B</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="rb_general">
+             <property name="font">
+              <font>
+               <family>Calibri</family>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>General</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
          <widget class="QFrame" name="frame_8">
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>150</y>
+            <y>30</y>
             <width>731</width>
             <height>41</height>
            </rect>
           </property>
           <property name="styleSheet">
            <string notr="true">background:#F5E0DE;
-border-radius:15px;</string>
+</string>
           </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
@@ -4136,9 +4097,9 @@ border-radius:15px;</string>
           <property name="geometry">
            <rect>
             <x>370</x>
-            <y>200</y>
+            <y>290</y>
             <width>351</width>
-            <height>351</height>
+            <height>261</height>
            </rect>
           </property>
           <property name="frameShape">
@@ -4408,10 +4369,10 @@ border-radius:15px;</string>
          <widget class="Line" name="line_4">
           <property name="geometry">
            <rect>
-            <x>340</x>
-            <y>200</y>
+            <x>330</x>
+            <y>80</y>
             <width>20</width>
-            <height>341</height>
+            <height>461</height>
            </rect>
           </property>
           <property name="orientation">
@@ -4461,6 +4422,95 @@ border-radius:15px;
            </property>
            <property name="text">
             <string>NUEVO PEDIDO</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QTableWidget" name="tb_pedidos_nuevopedido">
+          <property name="geometry">
+           <rect>
+            <x>350</x>
+            <y>90</y>
+            <width>391</width>
+            <height>192</height>
+           </rect>
+          </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectRows</enum>
+          </property>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <column>
+           <property name="text">
+            <string>Asociado</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Cantidad</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Rango</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Serie</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>N° Pedido</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Fecha</string>
+           </property>
+          </column>
+         </widget>
+         <widget class="QFrame" name="frame_45">
+          <property name="geometry">
+           <rect>
+            <x>350</x>
+            <y>74</y>
+            <width>391</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background:grey;
+border-radius:15px;
+</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <widget class="QLabel" name="label_130">
+           <property name="geometry">
+            <rect>
+             <x>123</x>
+             <y>-1</y>
+             <width>151</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color:rgb(255, 255, 255);</string>
+           </property>
+           <property name="text">
+            <string>Ultimos 5 pedidos asignados</string>
            </property>
           </widget>
          </widget>
@@ -5292,76 +5342,6 @@ border-radius:15px;
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <widget class="QLineEdit" name="txt_pedido_deposito">
-          <property name="geometry">
-           <rect>
-            <x>20</x>
-            <y>80</y>
-            <width>113</width>
-            <height>31</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_53">
-          <property name="geometry">
-           <rect>
-            <x>20</x>
-            <y>60</y>
-            <width>81</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>N° de Pedido</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_54">
-          <property name="geometry">
-           <rect>
-            <x>160</x>
-            <y>60</y>
-            <width>131</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>N° de Locker disponible</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="btn_almacenar">
-          <property name="geometry">
-           <rect>
-            <x>110</x>
-            <y>130</y>
-            <width>75</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Almacenar</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_55">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>20</y>
-            <width>281</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>INGRESAR PEDIDO EN LOCKER</string>
-          </property>
-         </widget>
          <widget class="Line" name="line_11">
           <property name="geometry">
            <rect>
@@ -5381,7 +5361,7 @@ border-radius:15px;
             <x>320</x>
             <y>30</y>
             <width>20</width>
-            <height>141</height>
+            <height>171</height>
            </rect>
           </property>
           <property name="orientation">
@@ -5451,62 +5431,26 @@ border-radius:15px;
            </property>
           </column>
          </widget>
-         <widget class="QComboBox" name="cbx_num_locker">
-          <property name="geometry">
-           <rect>
-            <x>190</x>
-            <y>80</y>
-            <width>41</width>
-            <height>31</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="btn_despachar">
-          <property name="geometry">
-           <rect>
-            <x>650</x>
-            <y>129</y>
-            <width>75</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Liberar</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_56">
-          <property name="geometry">
-           <rect>
-            <x>370</x>
-            <y>78</y>
-            <width>281</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="font">
-           <font>
-            <family>Calibri</family>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>LIBERAR LOCKER</string>
-          </property>
-         </widget>
          <widget class="QFrame" name="frame_17">
           <property name="geometry">
            <rect>
-            <x>360</x>
-            <y>109</y>
-            <width>261</width>
+            <x>340</x>
+            <y>130</y>
+            <width>401</width>
             <height>71</height>
            </rect>
           </property>
           <property name="styleSheet">
-           <string notr="true">border-radius:15px;
-background-color:rgb(235, 235, 235);</string>
+           <string notr="true">QFrame
+{
+background-color: rgb(207, 207, 207);
+}
+QPushButton{
+border-radius:15px;
+background:#DBC9D4;
+font-family: Calibri;
+font-size:14px;
+}</string>
           </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
@@ -5571,7 +5515,7 @@ background-color:rgb(235, 235, 235);</string>
             </rect>
            </property>
            <property name="text">
-            <string>*</string>
+            <string/>
            </property>
           </widget>
           <widget class="QLabel" name="signal_locker_locker">
@@ -5592,7 +5536,7 @@ background-color:rgb(235, 235, 235);</string>
             </font>
            </property>
            <property name="text">
-            <string>*</string>
+            <string/>
            </property>
           </widget>
           <widget class="QLabel" name="signal_razon_locker">
@@ -5605,35 +5549,22 @@ background-color:rgb(235, 235, 235);</string>
             </rect>
            </property>
            <property name="text">
-            <string>*</string>
+            <string/>
            </property>
           </widget>
-         </widget>
-         <widget class="QLineEdit" name="txt_buscar_locker">
-          <property name="geometry">
-           <rect>
-            <x>360</x>
-            <y>41</y>
-            <width>261</width>
-            <height>31</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="btn_buscar_locker">
-          <property name="geometry">
-           <rect>
-            <x>650</x>
-            <y>40</y>
-            <width>75</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Buscar</string>
-          </property>
-          <property name="shortcut">
-           <string>Return</string>
-          </property>
+          <widget class="QPushButton" name="btn_despachar">
+           <property name="geometry">
+            <rect>
+             <x>300</x>
+             <y>20</y>
+             <width>75</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Liberar</string>
+           </property>
+          </widget>
          </widget>
          <widget class="QFrame" name="frame_34">
           <property name="geometry">
@@ -5715,6 +5646,284 @@ border-radius:15px;
            </property>
            <property name="text">
             <string>Tabla de Lockers</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QFrame" name="frame_46">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>49</y>
+            <width>311</width>
+            <height>151</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QFrame
+{
+background-color: rgb(207, 207, 207);
+}
+QPushButton{
+border-radius:15px;
+background:#DBC9D4;
+font-family: Calibri;
+font-size:14px;
+}</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <widget class="QPushButton" name="btn_almacenar">
+           <property name="geometry">
+            <rect>
+             <x>21</x>
+             <y>80</y>
+             <width>111</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Almacenar</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_53">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>20</y>
+             <width>81</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>N° de Pedido</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="txt_pedido_deposito">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>40</y>
+             <width>113</width>
+             <height>31</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_54">
+           <property name="geometry">
+            <rect>
+             <x>174</x>
+             <y>19</y>
+             <width>91</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Seleccione Locker</string>
+           </property>
+          </widget>
+          <widget class="QComboBox" name="cbx_num_locker">
+           <property name="geometry">
+            <rect>
+             <x>191</x>
+             <y>39</y>
+             <width>41</width>
+             <height>31</height>
+            </rect>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QFrame" name="frame_47">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>33</y>
+            <width>311</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background:grey;
+border-radius:15px;
+</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <widget class="QLabel" name="label_131">
+           <property name="geometry">
+            <rect>
+             <x>110</x>
+             <y>-1</y>
+             <width>151</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color:rgb(255, 255, 255);</string>
+           </property>
+           <property name="text">
+            <string>Almacenar en lockers</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QFrame" name="frame_48">
+          <property name="geometry">
+           <rect>
+            <x>340</x>
+            <y>114</y>
+            <width>401</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background:grey;
+border-radius:15px;
+</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <widget class="QLabel" name="label_132">
+           <property name="geometry">
+            <rect>
+             <x>161</x>
+             <y>-1</y>
+             <width>71</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color:rgb(255, 255, 255);</string>
+           </property>
+           <property name="text">
+            <string>Liberar locker</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QFrame" name="frame_49">
+          <property name="geometry">
+           <rect>
+            <x>340</x>
+            <y>40</y>
+            <width>401</width>
+            <height>71</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QFrame
+{
+background-color: rgb(207, 207, 207);
+}
+QPushButton{
+border-radius:15px;
+background:#DBC9D4;
+font-family: Calibri;
+font-size:14px;
+}</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <widget class="QPushButton" name="btn_buscar_locker">
+           <property name="geometry">
+            <rect>
+             <x>310</x>
+             <y>33</y>
+             <width>21</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>icons/search.png</normaloff>icons/search.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>12</width>
+             <height>12</height>
+            </size>
+           </property>
+           <property name="shortcut">
+            <string>Return</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="txt_buscar_locker">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>33</y>
+             <width>261</width>
+             <height>20</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_134">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>14</y>
+             <width>51</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(0, 0, 0);</string>
+           </property>
+           <property name="text">
+            <string>Asociado:</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QFrame" name="frame_50">
+          <property name="geometry">
+           <rect>
+            <x>340</x>
+            <y>32</y>
+            <width>401</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background:grey;
+border-radius:15px;
+</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <widget class="QLabel" name="label_133">
+           <property name="geometry">
+            <rect>
+             <x>161</x>
+             <y>-1</y>
+             <width>71</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color:rgb(255, 255, 255);</string>
+           </property>
+           <property name="text">
+            <string>Buscar pedido</string>
            </property>
           </widget>
          </widget>
@@ -8145,7 +8354,6 @@ background-color:rgb(235, 235, 235);</string>
   <tabstop>cbx_categoria_sp</tabstop>
   <tabstop>txt_subcamp</tabstop>
   <tabstop>btn_subingresar</tabstop>
-  <tabstop>btn_iniciarpedido</tabstop>
   <tabstop>btn_verpedidos</tabstop>
   <tabstop>btn_subvalidar</tabstop>
   <tabstop>tb_verpedidos</tabstop>

@@ -1,11 +1,11 @@
 DETALLE DE PEDIDO
 -----------------------------
-RAZON SOCIAL: COOP. AGROP. DE LOPEZ LTDA
-PEDIDO: 161
+RAZON SOCIAL: AGROSUDESTE S.A
+PEDIDO: 164
 -----------------------------
-RNCyFS: 346
-Fecha: 2023-07-10
-Rango: 10940001 - 10942000
+RNCyFS: 3076
+Fecha: 2023-07-17
+Rango: 10954001 - 10969000
 Serie: A
-Cantidad: 2000
+Cantidad: 15000
 -----------------------------

@@ -38,14 +38,17 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.btn_nuevagestion.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.p_gestion)) #cambia de pagina
 		self.btn_envios.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.p_envios))
 		self.btn_estampillas.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.p_estampillas))
+		self.btn_nuevopedido.clicked.connect(self.iniciarpedido)
 		
 		#FUNCION DE LOS BOTONES
 		#PAGINA PEDIDOS
-		self.btn_iniciarpedido.clicked.connect(self.iniciarpedido)
 		self.btn_ingresarpedido.clicked.connect(self.NuevoPedido)
 		self.btn_ingresarpedido.clicked.connect(self.limpiar)
 		self.cbx_manual.stateChanged.connect(lambda:self.frm_manual.show())
 		self.btn_printdetalle.clicked.connect(self.imprimirticket)
+		
+		self.rb_seriea.clicked.connect(self.iniciarpedido)
+		self.rb_serieb.clicked.connect(self.iniciarpedido)
 		
 		
 			
@@ -120,6 +123,11 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		headertb_asociados_pedidos2 = self.tb_asociados_pedidos2.horizontalHeader()
 		headertb_asociados_pedidos2.setResizeMode(QtGui.QHeaderView.ResizeToContents)
 		
+		headertb_pedidos_nuevopedido = self.tb_pedidos_nuevopedido.horizontalHeader()
+		headertb_pedidos_nuevopedido.setResizeMode(QtGui.QHeaderView.ResizeToContents)
+		
+	
+		
 		
 		
 		
@@ -129,7 +137,6 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.btn_almacenar.clicked.connect(self.almacenar)
 		self.tb_lockers.itemDoubleClicked.connect(self.lockerselected)
 		self.btn_despachar.clicked.connect(self.despachar)
-		self.btn_deposito.clicked.connect(self.listarlockers)
 		self.btn_buscar_locker.clicked.connect(self.filtrarlockers)
 		
 		#PAGINA ROTULOS
@@ -258,6 +265,29 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			
 		return ("".join(recuperado))
 		
+	def traepedidos(self):
+		
+		tablapedidos=q.getpedidos()
+		totalfilas=len(tablapedidos)
+		self.tb_pedidos_nuevopedido.setRowCount(totalfilas)
+		
+		fila=0
+		
+		
+		for i in tablapedidos:
+			
+						
+			self.tb_pedidos_nuevopedido.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
+			self.tb_pedidos_nuevopedido.setItem(fila,1,QtGui.QTableWidgetItem(str(i[1])))
+			self.tb_pedidos_nuevopedido.setItem(fila,2,QtGui.QTableWidgetItem(str(i[2])))
+			self.tb_pedidos_nuevopedido.setItem(fila,3,QtGui.QTableWidgetItem(str(i[3]))) 
+			self.tb_pedidos_nuevopedido.setItem(fila,4,QtGui.QTableWidgetItem(str(i[4]))) 
+			self.tb_pedidos_nuevopedido.setItem(fila,5,QtGui.QTableWidgetItem(str(i[5]))) 
+			
+			
+			fila=fila+1
+		
+		
 		
 	def NuevoPedido(self):
 		global INICIAL
@@ -357,6 +387,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 				q.actualizarangoenbd(INICIAL,FINAL,indice)
 				
 				self.iniciarpedido()
+				self.traepedidos()
 				
 			else:
 				
@@ -1188,6 +1219,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		
 		q.liberalocker(locker)
+		c.cartel("AVISO","LOCKER LIBERADO",1)
 		
 		self.cbx_num_locker.clear()
 		self.lockerdisponibles()
@@ -1823,6 +1855,8 @@ if __name__ == '__main__':
 	MyWindow.llenarcombo()
 	MyWindow.lockerdisponibles()
 	MyWindow.listarasociados()
+	MyWindow.traepedidos()
+	MyWindow.listarlockers()
 	MyWindow.show()
 	app.exec_()
 	
