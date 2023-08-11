@@ -1,11 +1,11 @@
 DETALLE DE PEDIDO
 -----------------------------
-RAZON SOCIAL: AGROSUDESTE S.A
-PEDIDO: 164
+RAZON SOCIAL: RIBOLDI S.A.
+PEDIDO: 170
 -----------------------------
-RNCyFS: 3076
-Fecha: 2023-07-17
-Rango: 10954001 - 10969000
+RNCyFS: 4592
+Fecha: 2023-08-08
+Rango: 10988301 - 10991000
 Serie: A
-Cantidad: 15000
+Cantidad: 2700
 -----------------------------

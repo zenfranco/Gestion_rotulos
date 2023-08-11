@@ -289,9 +289,9 @@ class bdquery():
 			cur.close()
 			
 			
-		def altarotulo(self,registro,especie,tipo,cantidad,estado,categoria,fecha):
+		def altarotulo(self,registro,especie,tipo,cantidad,estado,categoria,fecha,gestion):
 			cur= self.conexion.cursor()
-			cur.execute(''' insert into rotulos (num_reg,especie,tipo,cantidad,estado,categoria,fecha_impresion) values (?,?,?,?,?,?,?)''',([registro,especie,tipo,cantidad,estado,categoria,fecha]))
+			cur.execute(''' insert into rotulos (num_reg,especie,tipo,cantidad,estado,categoria,fecha_impresion,gestion) values (?,?,?,?,?,?,?,?)''',([registro,especie,tipo,cantidad,estado,categoria,fecha,gestion]))
 			self.conexion.commit()
 			cur.close()
 			
@@ -333,7 +333,16 @@ class bdquery():
 		def traergestiones(self,estado,nombre):
 			cur=self.conexion.cursor()
 			cur.execute('''select razon_social,estado,cantidad,(JulianDay(date()) - JulianDay(fecha_inicio)) demora,tipo,fecha_inicio, indice from gestiones g
-			inner join asociados a on a.num_reg = g.num_reg where estado LIKE ? and razon_social LIKE ? order by demora ASC''',([estado, nombre]))
+			inner join asociados a on a.num_reg = g.num_reg where estado LIKE ? and razon_social LIKE ? order by demora ASC ''',([estado, nombre]))
+			self.conexion.commit()
+			listado=cur.fetchall()
+			cur.close()
+			return listado
+		
+		def traergestionesActivas(self,estado,nombre):
+			cur=self.conexion.cursor()
+			cur.execute('''select razon_social,estado,cantidad,(JulianDay(date()) - JulianDay(fecha_inicio)) demora,tipo,fecha_inicio, indice from gestiones g
+			inner join asociados a on a.num_reg = g.num_reg where estado LIKE ? and estado != "FINALIZADO"  and razon_social LIKE ? order by demora ASC ''',([estado, nombre]))
 			self.conexion.commit()
 			listado=cur.fetchall()
 			cur.close()
@@ -362,6 +371,12 @@ class bdquery():
 		def definirestadorotulo(self,estado,indice):
 			cur=self.conexion.cursor()
 			cur.execute("UPDATE rotulos SET estado = (?) WHERE indice = (?)",([estado,indice]))
+			self.conexion.commit()
+			cur.close()
+		
+		def modificarCantidadImpresion(self,indice,cant):
+			cur=self.conexion.cursor()
+			cur.execute("UPDATE rotulos SET cantidad = (?) WHERE indice = (?)",([cant,indice]))
 			self.conexion.commit()
 			cur.close()
 			
@@ -493,6 +508,25 @@ class bdquery():
 			listado=cur.fetchall()
 			cur.close()
 			return listado
+			
+		def traeIndiceGestion(self):
+			cur=self.conexion.cursor()
+			cur.execute('''select max(indice)+1 from gestiones''')
+			self.conexion.commit()
+			gestion=cur.fetchone()
+			cur.close()
+			return gestion
+			
+		def traerIDgestion(self,indice):
+			cur=self.conexion.cursor()
+			cur.execute('''select gestion from rotulos where indice=?''',([indice]))
+			self.conexion.commit()
+			indice=cur.fetchone()
+			cur.close()
+			return indice
+			
+	
+			
 			
 
 		

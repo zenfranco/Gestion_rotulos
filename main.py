@@ -1,5 +1,5 @@
 import sqlite3,sys
-import clipboard as c
+import clipboard as clip
 from openpyxl import Workbook
 from openpyxl.styles import Font
 from querys import *
@@ -30,14 +30,12 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.btn_nuevopedido.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.p_nuevopedido)) #cambia de pagina
 		self.btn_nuevosubpedido.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.p_nuevosubpedido)) #cambia de pagina
 		self.btn_listar.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.p_listar)) #cambia de pagina
-		self.home.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.p_inicio)) #cambia de pagina
 		self.btn_rendicion.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.p_rendicion)) #cambia de pagina
 		self.btn_configuracion.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.p_config)) #cambia de pagina
 		self.btn_deposito.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.p_deposito)) #cambia de pagina
 		self.btn_rotulos.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.p_rotulos)) #cambia de pagina
 		self.btn_nuevagestion.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.p_gestion)) #cambia de pagina
 		self.btn_envios.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.p_envios))
-		self.btn_estampillas.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.p_estampillas))
 		self.btn_nuevopedido.clicked.connect(self.iniciarpedido)
 		
 		#FUNCION DE LOS BOTONES
@@ -61,6 +59,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.btn_subingresar.clicked.connect(self.nuevosubpedido)
 		self.btn_subingresar.clicked.connect(self.limpiar)
 		self.combo_asociados_subpedidos.activated.connect(self.traeregistrosp)
+		self.combo_asociados_subpedidos.activated.connect(self.verpedidos)
 		self.tb_verpedidos.itemDoubleClicked.connect(self.completanumpedido)
 		self.btn_copy_inicio.clicked.connect(self.clipinicio)
 		self.btn_refresh.clicked.connect(self.refresh_pedidos)
@@ -117,9 +116,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		headertb_asociados_envios = self.tb_asociados_envios.horizontalHeader()
 		headertb_asociados_envios.setResizeMode(QtGui.QHeaderView.ResizeToContents)
 		
-		headertb_asociados_estampillas = self.tb_asociados_estampillas.horizontalHeader()
-		headertb_asociados_estampillas.setResizeMode(QtGui.QHeaderView.ResizeToContents)
-		
+				
 		headertb_asociados_pedidos2 = self.tb_asociados_pedidos2.horizontalHeader()
 		headertb_asociados_pedidos2.setResizeMode(QtGui.QHeaderView.ResizeToContents)
 		
@@ -149,6 +146,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.tb_rotulos.itemDoubleClicked.connect(self.impresionselected)
 		self.btn_eliminar_impresion.clicked.connect(self.eliminarimpresion)
 		self.btn_ingresar_stock.clicked.connect(self.cargaStock)
+		self.btn_modificar_rotulos.clicked.connect(self.editarcantidadrotulo)
 		
 		#PAGINA GESTIONES
 		self.btn_agregar_nueva.clicked.connect(self.nuevagestion)
@@ -162,7 +160,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		#PAGINA ENVIOS
 		self.tb_asociados_envios.itemDoubleClicked.connect(self.asociado_selected)
-		self.tb_asociados_estampillas.itemDoubleClicked.connect(self.asociado_selected_estampillas)
+		
 		self.tb_subpedidos_envios.itemDoubleClicked.connect(self.pedido_envios_selected)
 		self.btn_buscar_asociados.clicked.connect(self.filtrar_asociados)
 		
@@ -228,6 +226,8 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 			
 		self.txt_rncyfs.setText("".join(recuperado))
+		
+		
 	def traeregistrosp(self):
 		nombre = str(self.combo_asociados_subpedidos.currentText())
 		
@@ -388,6 +388,11 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 				
 				self.iniciarpedido()
 				self.traepedidos()
+				tipo="Rotulo IQR"
+				estado="4-Esperando Nota por KG"
+				
+				q.altagestion(registro,tipo,estado,fechapedido,cantidad)
+				
 				
 			else:
 				
@@ -417,23 +422,27 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		campo= str(self.txt_verpedido.text())
 		
+		
 		tablapedidos=q.verpedido(campo)
 		totalfilas=len(tablapedidos)
 		self.tb_verpedidos.setRowCount(totalfilas)
+		if totalfilas >0:
 		
-		fila=0
-		
-		
-		for i in tablapedidos:
-			
-						
-			self.tb_verpedidos.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
-			self.tb_verpedidos.setItem(fila,1,QtGui.QTableWidgetItem(str(i[1])))
-			self.tb_verpedidos.setItem(fila,2,QtGui.QTableWidgetItem(str(i[2])))
-			self.tb_verpedidos.setItem(fila,3,QtGui.QTableWidgetItem(str(i[3])))  
+			fila=0
 			
 			
-			fila=fila+1
+			for i in tablapedidos:
+				
+							
+				self.tb_verpedidos.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
+				self.tb_verpedidos.setItem(fila,1,QtGui.QTableWidgetItem(str(i[1])))
+				self.tb_verpedidos.setItem(fila,2,QtGui.QTableWidgetItem(str(i[2])))
+				self.tb_verpedidos.setItem(fila,3,QtGui.QTableWidgetItem(str(i[3])))  
+				
+				
+				fila=fila+1
+		else:
+			c.cartel("ERROR","EL ASOCIADO NO POSEE SUBPEDIDOS",3)
 		
 	def completanumpedido(self):
 		
@@ -465,7 +474,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			
 	def clipinicio(self):
 		inicio=int(self.signal_disponibleinicio_sp.text())
-		c.copy(inicio)
+		clip.copy(inicio)
 		
 		
 	def nuevosubpedido(self):
@@ -560,7 +569,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 					
 					c.cartel("AVISO","SUBPEDIDO CREADO",1)
 					
-					c.copy(str(spini)+"-"+str(spfin))
+					clip.copy(str(spini)+"-"+str(spfin))
 					
 					q.cargasubepedido(numpedido,spini,spfin,cantidad,variedad,especie,int(camp),int(KG),categoria,registro,fechasubpedido)
 					
@@ -621,12 +630,17 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			
 			
 			if tipo == "Envio Inspecciones" or tipo== "Alta DT" or tipo =="Otra Gestion":
-				estado="8-Documentacion + Nota Enviadas"
+				estado="PENDIENTE"
 				
 			elif tipo =="Subpedido":
-				estado="5-En Impresion"
+				
+				
+				estado="EN IMPRESION"
+				num_gestion=q.traeIndiceGestion()
+				q.altarotulo(registro,"Soja","IQR",cantidad,"PENDIENTE","Primera",fechagestion,int(num_gestion[0]))
+				
 			else:
-				estado="0-Iniciado"
+				estado="PENDIENTE"
 				
 			
 			count=q.validarasociado(registro)
@@ -663,17 +677,20 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 	def listargestiones(self):
 		
 		nombre= "%"
-		if self.rb_gestiones_pendientes.isChecked():
-			estado="%-%"
-		elif self.rb_gestiones_finalizadas.isChecked():			
-			estado="Finalizado"
-		elif self.rb_gestiones_todas.isChecked():	
+		estado = str(self.combo_filtro_estados.currentText())
+		if estado == "-":
 			estado="%"
+			
+		if self.rb_activas.isChecked():
+			listarecuperada=q.traergestionesActivas(estado,nombre)
+		else:
+					
+			listarecuperada=q.traergestiones(estado,nombre)
 		
 		
 		
 		
-		listarecuperada=q.traergestiones(estado,nombre)
+		
 		totalfilas=len(listarecuperada)
 		self.tb_gestiones.setRowCount(totalfilas)
 			
@@ -694,6 +711,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 	def filtrargestiones(self):
 		if str(self.combo_estados_gestiones_filtro.currentText()) =="-":
+			
 			estado="%"
 		else:
 			estado=str(self.combo_estados_gestiones_filtro.currentText())
@@ -759,36 +777,22 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 	def eliminargestion(self):
 		
 		indice=int(self.signal_gestion_indice.text())
-		msgBox=QtGui.QMessageBox(self.centralwidget)
-		msgBox.setIcon(2)
-		msgBox.setStandardButtons(QtGui.QMessageBox.Yes | QtGui.QMessageBox.Cancel | QtGui.QMessageBox.No)
 		
-		msgBox.setWindowTitle(" * * ATENCION * * ")
-		msgBox.setText("DESEA ELIMINAR LA GESTION?")
-		r= msgBox.exec_()
-		
+		r=c.cartel_opcion("ATENCION","DESEA ELIMINAR LA GESTION",2)
 		
 		if r==16384:
 			q.borrargestion(indice)
 			c.cartel("ATENCION","REGISTRO ELIMINADO",1)
 			self.gestionupdate()
 						
-		elif r==4194304:
-			print "Cancelado"
-		elif r==65536:
-			print "no!"
+		
 			
 			
 	def eliminarimpresion(self):
 		
 		indice=int(self.txt_indice_rotulos.text())
-		msgBox=QtGui.QMessageBox(self.centralwidget)
-		msgBox.setIcon(2)
-		msgBox.setStandardButtons(QtGui.QMessageBox.Yes | QtGui.QMessageBox.Cancel | QtGui.QMessageBox.No)
+		r=c.cartel_opcion("ATENCION","DESEA ELIMINAR LA IMPRESION",2)
 		
-		msgBox.setWindowTitle(" * * ATENCION * * ")
-		msgBox.setText("DESEA ELIMINAR ESA IMPRESION")
-		r= msgBox.exec_()
 		
 		
 		if r==16384:
@@ -797,10 +801,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			c.cartel("ATENCION","REGISTRO ELIMINADO",1)
 			self.listarimpresiones()
 						
-		elif r==4194304:
-			pass
-		elif r==65536:
-			pass
+		
 			
 			
 	def nuevoEnvio(self):
@@ -1196,6 +1197,8 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			self.cbx_num_locker.clear()
 			self.lockerdisponibles()
 			self.listarlockers()
+			c.cartel("AVISO","PEDIDO ALMACENADO",1)
+			
 		else:
 			
 			c.cartel("ERROR","INGRESE PEDIDO A ALMACENAR",3)
@@ -1398,6 +1401,8 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			estado="%"
 		elif self.rb_rotulos_completos.isChecked():
 			estado="COMPLETO"
+		elif self.rb_rotulos_pendientesdav.isChecked():
+			estado="PENDIENTE DAV"
 			
 			
 		if self.cb_tipo.currentText() == "-":
@@ -1483,7 +1488,39 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		estado=str(self.txt_estado_rotulos.currentText())
 		
 		q.definirestadorotulo(estado,indice)
+		
+		#tambien actualizo estado en Gestiones
+		num_gestion=q.traerIDgestion(indice)
+		if estado =="COMPLETO":
+		
+			q.updategestion(int(num_gestion[0]),"DAV GESTIONADO")
+		elif estado =="FACTURADO":
+			q.updategestion(int(num_gestion[0]),"FINALIZADO")
+		else:
+			q.updategestion(int(num_gestion[0]),estado)
+			
 		self.listarimpresiones()
+		
+	def editarcantidadrotulo(self):
+		# * * * atencion: a este modulo le falta desarrollar validacion sobre si correponde actualizar stock si se modifican las cantidades * * *
+		
+		if self.signal_rotulos_cantidad.text():
+			r=c.cartel_opcion("ATENCION","DESEA MODIFICAR LA CANTIDAD",2)
+			
+			if r==16384:
+						
+				indice=int(self.txt_indice_rotulos.text())
+				cantidad=int(self.signal_rotulos_cantidad.text())
+				
+				q.modificarCantidadImpresion(indice,cantidad)
+				self.listarimpresiones()
+				c.cartel("IMPRESION","CANTIDAD MODIFICADA",1)
+		else:
+			c.cartel("ATENCION","NO HAY NADA QUE MODIFICAR",3)
+			
+			
+		
+		
 		
 		
 		
@@ -1612,7 +1649,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		listarecuperada=q.traerasociados()
 		totalfilas=len(listarecuperada)
 		self.tb_asociados_envios.setRowCount(totalfilas)
-		self.tb_asociados_estampillas.setRowCount(totalfilas)
+		
 		self.tb_asociados_pedidos2.setRowCount(totalfilas)
 		
 			
@@ -1621,7 +1658,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		for i in listarecuperada:
 			self.tb_asociados_envios.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
-			self.tb_asociados_estampillas.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
+			
 			self.tb_asociados_pedidos2.setItem(fila,0,QtGui.QTableWidgetItem(str(i[0])))
 			
 			
@@ -1641,11 +1678,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			
 			self.traerenvios()
 			
-	def asociado_selected_estampillas(self):
-			#ESTAMPILLAS
-			fila = self.tb_asociados_estampillas.currentRow()
-			asociado=self.tb_asociados_estampillas.item(fila, 0).text() #SELECCIONO EL CONTENIDO DE LA FILA DE LA COLUMNA 0 SELECCIONADA
-			self.signal_asociado_estampillas.setText(str(asociado))
+
 			
 	def asociado_selected_pedidos(self):
 			#ESTAMPILLAS
