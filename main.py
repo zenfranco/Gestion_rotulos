@@ -63,6 +63,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		self.tb_verpedidos.itemDoubleClicked.connect(self.completanumpedido)
 		self.btn_copy_inicio.clicked.connect(self.clipinicio)
 		self.btn_refresh.clicked.connect(self.refresh_pedidos)
+		self.btn_deshacer.clicked.connect(self.deshacerSubpedido)
 		
 		
 		#pagina listar
@@ -338,20 +339,17 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 					flag=True
 					
 					
+					
 				if flag is True:
-					pass
+					q.cargapedido(Numpedido,registro,cantidad,0,0,0,0,estado,fechapedido,serie)
+					
 					
 					
 				else:
 						
 					q.cargapedido(Numpedido,registro,cantidad,INICIAL,INICIAL+cantidad-1,INICIAL,INICIAL+cantidad-1,estado,fechapedido,serie)
-						
-						
-					q.incrementanpedido(Numpedido)
-						
-				
-					c.cartel("AVISO","RANGO ASIGNADO CORRECTAMENTE",1)
 					
+								
 					self.frame_detallepedido.show()			
 					self.signal_cantidad.setText(str(cantidad))
 					self.signal_rncyfs.setText(str(registro))
@@ -379,12 +377,13 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 						
 					ticket.write("-----------------------------\n")
 					ticket.close()
+					INICIAL=INICIAL+cantidad
+					q.actualizarangoenbd(INICIAL,FINAL,indice)
 								
 					
-					
-					
-				INICIAL=INICIAL+cantidad
-				q.actualizarangoenbd(INICIAL,FINAL,indice)
+				c.cartel("AVISO","RANGO ASIGNADO CORRECTAMENTE",1)	
+				q.incrementanpedido(Numpedido)	
+				
 				
 				self.iniciarpedido()
 				self.traepedidos()
@@ -442,7 +441,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 				
 				fila=fila+1
 		else:
-			c.cartel("ERROR","EL ASOCIADO NO POSEE SUBPEDIDOS",3)
+			c.cartel("ERROR","EL ASOCIADO NO POSEE PEDIDOS VIGENTES",3)
 		
 	def completanumpedido(self):
 		
@@ -590,8 +589,38 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 			c.cartel("ERROR","CAMPOS VACIOS",3)
 				
+	def deshacerSubpedido(self):
+		'''
+		num_pedido=int(self.txt_num_deshacer.text())
+		fecha_sub= str (self.txt_fecha_deshacer.text())
+		lista_recuperada=q.traeSubpedido(num_pedido,fecha_sub)
+		primer_rango=q.traeRangoInicial(num_pedido,fecha_sub)
+		cantidad=0
+		
+		for i in lista_recuperada:
+			
+			cantidad=int(i[1])+cantidad
+		
+		
+		q.deshacer(num_pedido,fecha_sub,int(cantidad),int(primer_rango[0]))
+		
+		
+			
+			
+				
+			
 				
 				
+				
+			
+			
+			
+			
+			
+		#recuperar cantidad de rotulos y rango inicial
+		#restablecer agregar la cantidad al stock y volver al rotulo de inicio
+					
+		'''	
 			
 	def altasocio(self):
 		
@@ -958,9 +987,11 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			sheet.append(i)
 			
 					
-						
+		path ="C:\detalle_{}.xlsx".format(date.today())
+							
 			
-		book.save('subpedido.xls')
+		book.save(path)
+		c.cartel("AVISO","DETALLE EXPORTADO",1)
 			
 		
 	def rendir(self):
@@ -1123,6 +1154,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 			
 			
 			
+			
 		else:
 			desde =str(self.fechadesde_rendicion.text())
 			hasta = str(self.fechahasta_rendicion.text())
@@ -1158,6 +1190,7 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 						
 			
 			book.save('rendicion_pedidos.xls')
+			c.cartel("DETALLE","RENDICION GENERADA",1)
 		
 					
 			
@@ -1325,14 +1358,16 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 						c.cartel("ERROR","NO HAY STOCK SUFICIENTE DE ESE TIPO DE ROTULO",3)
 					else:
 						q.actualizar_stock(stock_actualizado,indice)
-						q.altarotulo(registro,especie,tipo,cantidad,estado,categoria,fechaimpresion)
+						q.altarotulo(registro,especie,tipo,cantidad,estado,categoria,fechaimpresion,0)
 						self.traerstock()
+						c.cartel("AVISO","PEDIDO DE IMPRESION INGRESADO",1)						
 					
 					
 					
 				
 				else:
-					q.altarotulo(registro,especie,tipo,cantidad,estado,categoria,fechaimpresion)
+					q.altarotulo(registro,especie,tipo,cantidad,estado,categoria,fechaimpresion,0)
+					c.cartel("AVISO","PEDIDO DE IMPRESION INGRESADO",1)
 				
 				
 					
@@ -1491,15 +1526,21 @@ class VentanaPrincipal(QtGui.QMainWindow, form_class):
 		
 		#tambien actualizo estado en Gestiones
 		num_gestion=q.traerIDgestion(indice)
-		if estado =="COMPLETO":
 		
-			q.updategestion(int(num_gestion[0]),"DAV GESTIONADO")
-		elif estado =="FACTURADO":
-			q.updategestion(int(num_gestion[0]),"FINALIZADO")
-		else:
-			q.updategestion(int(num_gestion[0]),estado)
+		if num_gestion[0] != None:
+			if estado =="COMPLETO":
 			
+				q.updategestion(int(num_gestion[0]),"DAV GESTIONADO")
+			elif estado =="FACTURADO":
+				q.updategestion(int(num_gestion[0]),"FINALIZADO")
+			else:
+				q.updategestion(int(num_gestion[0]),estado)
+				
+		c.cartel("INFORMACION","ESTADO MODIFICADO",1)
+				
 		self.listarimpresiones()
+		
+			
 		
 	def editarcantidadrotulo(self):
 		# * * * atencion: a este modulo le falta desarrollar validacion sobre si correponde actualizar stock si se modifican las cantidades * * *

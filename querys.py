@@ -77,7 +77,7 @@ class bdquery():
 		
 		def getpedidos(self):
 			cur=self.conexion.cursor()
-			cur.execute('''SELECT a.razon_social,cantidad,inicio ||"-" || fin,serie,num_pedido,fecha_pedido FROM pedidos p INNER JOIN asociados a on a.num_reg = p.rncyfs ORDER BY fecha_pedido DESC LIMIT 5''')
+			cur.execute('''SELECT a.razon_social,cantidad,inicio ||"-" || fin,serie,num_pedido,fecha_pedido FROM pedidos p INNER JOIN asociados a on a.num_reg = p.rncyfs ORDER BY num_pedido DESC LIMIT 5''')
 			listapedidos=cur.fetchall()
 			self.conexion.commit()
 			cur.close()
@@ -524,6 +524,26 @@ class bdquery():
 			indice=cur.fetchone()
 			cur.close()
 			return indice
+			
+		def traeSubpedido(self,num_pedido,fechaSub):
+			cur=self.conexion.cursor()
+			cur.execute('''select * from subpedidos where num_pedido =? and fecha_subpedido=? order by inicio''',([num_pedido,fechaSub]))
+			self.conexion.commit()
+			listado=cur.fetchall()
+			cur.close()
+			return listado
+			
+			
+		def traeRangoInicial(self,num_pedido,fechaSub):
+			cur=self.conexion.cursor()
+			cur.execute('''select min(inicio) from subpedidos where num_pedido =? and fecha_subpedido=? order by inicio''',([num_pedido,fechaSub]))
+			self.conexion.commit()
+			inicial=cur.fetchone()
+			cur.close()
+			return inicial
+			
+		
+			
 			
 	
 			

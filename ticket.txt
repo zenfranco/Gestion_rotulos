@@ -1,11 +1,11 @@
 DETALLE DE PEDIDO
 -----------------------------
-RAZON SOCIAL: RIBOLDI S.A.
-PEDIDO: 170
+RAZON SOCIAL: COOP. LA UNION 
+PEDIDO: 228
 -----------------------------
-RNCyFS: 4592
-Fecha: 2023-08-08
-Rango: 10988301 - 10991000
+RNCyFS: 216
+Fecha: 2023-10-27
+Rango: 15966001 - 15969000
 Serie: A
-Cantidad: 2700
+Cantidad: 3000
 -----------------------------
